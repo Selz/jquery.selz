@@ -1,0 +1,27 @@
+{
+  "name": "selz",
+  "title": "jQuery Selz",
+  "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
+  "version": "0.1.2",
+  "author": { 
+	"name": "Selz.com",
+    "url": "https://selz.com"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "keywords": [
+    "selz",
+    "overlay",
+    "ecommerce"
+  ],
+  "homepage": "https://github.com/Selz/jquery.selz",
+  "docs": "https://github.com/Selz/jquery.selz",
+  "bugs": "https://github.com/Selz/jquery.selz/issues"
+}
