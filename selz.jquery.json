@@ -2,7 +2,7 @@
   "name": "selz",
   "title": "jQuery Selz",
   "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": { 
 	"name": "Selz.com",
     "url": "https://selz.com"

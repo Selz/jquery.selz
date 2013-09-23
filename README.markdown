@@ -13,7 +13,7 @@ See bundled `index.html` and `index.theme.html` file for examples.
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
         <script src="src/jquery.selz.min.js" type="text/javascript"></script>
 
-2. include `jquery.selz.min.css` and add `loading.gif` file into your project, or add your stylesheet.
+2. include `jquery.selz.min.css` or add your stylesheet.
 
         <link href="src/jquery.selz.min.css" type="text/css" rel="stylesheet">
 
