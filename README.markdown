@@ -10,7 +10,7 @@ See bundled `index.html` and `index.theme.html` file for examples.
 
 1. include jQuery and `jquery.selz.min.js` files.
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="src/jquery.selz.min.js"></script>
 
 2. include `jquery.selz.min.css` or add your stylesheet.
