@@ -20,7 +20,7 @@ See bundled `index.html` and `index.theme.html` file for examples.
 3. add your colors to customize overlay.
 
         <script>
-            $.selz({
+            jQuery.selz({
                 buttonBg: "#ff0000",
                 buttonText: "#fff"
             });
@@ -33,8 +33,8 @@ See bundled `index.html` and `index.theme.html` file for examples.
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:
 
-- `http://selzimg.s3.amazonaws.com/plugins/jquery/jquery.selz.min.js`
-- `http://selzimg.s3.amazonaws.com/plugins/jquery/jquery.selz.min.css`
+- `<link href="//selzimg.s3.amazonaws.com/plugins/jquery/jquery.selz.min.css" rel="stylesheet">`
+- `<script src="//selzimg.s3.amazonaws.com/plugins/jquery/jquery.selz.min.js"></script>`
 
 ### Licensed under the MIT
 
