@@ -30,6 +30,11 @@ See bundled `index.html` and `index.theme.html` file for examples.
 
         <a href="http://selz.co/19HmDA4">Buy now</a>
 
+### CDN Hosting
+You can use our CDN for the JavaScript and CSS files:
+
+- `http://selzimg.s3.amazonaws.com/plugins/jquery/jquery.selz.min.js`
+- `http://selzimg.s3.amazonaws.com/plugins/jquery/jquery.selz.min.css`
 
 ### Licensed under the MIT
 
