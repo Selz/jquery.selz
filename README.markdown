@@ -1,6 +1,6 @@
 # jQuery.selz
 
-## Open [Selz.com](https://selz.com) product hyperlinks in overlay to let your customers complete their purchase directly onto your site.
+Open [Selz.com](https://selz.com) product hyperlinks in overlay to let your customers complete their purchase directly onto your site.
 
 ### Examples
 
@@ -15,7 +15,7 @@ See bundled `index.html` and `index.theme.html` file for examples.
 
 2. include `jquery.selz.min.css` or add your stylesheet.
 
-        <link href="src/jquery.selz.min.css" type="text/css" rel="stylesheet">
+        <link href="src/jquery.selz.min.css" rel="stylesheet">
 
 3. add your colors to customize overlay.
 
