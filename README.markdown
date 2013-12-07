@@ -17,7 +17,11 @@ See bundled `index.html` and `index.options.html` file for examples.
 
         <link href="src/jquery.selz.min.css" rel="stylesheet">
 
-3. if u like add options to customize overlay.
+3. add hyperlinks to your [Selz.com](https://selz.com) products into `<body>`.
+
+        <a href="http://selz.co/19HmDA4">Buy now</a>
+
+4. and if u like, add options to customize overlay.
 
         <script>
             jQuery.selz({
@@ -36,9 +40,6 @@ See bundled `index.html` and `index.options.html` file for examples.
             });
         </script>
 
-4. add hyperlinks to your [Selz.com](https://selz.com) products into `<body>`.
-
-        <a href="http://selz.co/19HmDA4">Buy now</a>
 
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:
