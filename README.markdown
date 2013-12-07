@@ -4,7 +4,7 @@ Open [Selz.com](https://selz.com) product hyperlinks in overlay to let your cust
 
 ### Examples
 
-See bundled `index.html` and `index.theme.html` file for examples.
+See bundled `index.html` and `index.options.html` file for examples.
 
 ### Usage
 
@@ -17,12 +17,22 @@ See bundled `index.html` and `index.theme.html` file for examples.
 
         <link href="src/jquery.selz.min.css" rel="stylesheet">
 
-3. add your colors to customize overlay.
+3. if u like add options to customize overlay.
 
         <script>
             jQuery.selz({
                 buttonBg: "#ff0000",
-                buttonText: "#fff"
+                buttonText: "#fff",
+                prefetch: true,
+                onDataReady: function ($link, data) {
+                    // triggered when item data are fetched
+                    // you can customise your hyperlinks here if 'prefetch: true'
+                    $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
+                },
+                onModalOpen: function ($link) {
+                    // triggered on modal open
+                    // add some event tracking here
+                }
             });
         </script>
 
