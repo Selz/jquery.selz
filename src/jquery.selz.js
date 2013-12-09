@@ -86,7 +86,7 @@ var _$elz = _$elz || {};
             msg = e.data;
         }
 
-        if (msg === "$elz_modal_colors") {
+        if (msg === "_$elz_modal_colors") {
             var reply = config.settings.colors.buttonText + "," + config.settings.colors.buttonBg;
             e.source.postMessage(reply, config.domain);
         }
