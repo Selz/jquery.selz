@@ -3,7 +3,9 @@
   "version": "0.1.4",
   "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
   "main": "gulpfile.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-hogan-compile": "^0.2.1",
     "gulp-changed": "~0.3.0",
     "gulp-concat": "~2.2.0",
     "gulp-less": "~1.2.3",
@@ -12,9 +14,8 @@
     "gulp-util": "~2.2.14",
     "gulp": "~3.6.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": ""
+    "preinstall": "npm install -g gulp"
   },
   "repository": {
     "type": "git",
