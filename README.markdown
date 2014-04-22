@@ -8,9 +8,9 @@ See bundled `index.html` and `index.options.html` file for examples.
 
 ### Usage
 
-1. include jQuery and `jquery.selz.min.js` files.
+1. include jQuery (if you haven't already) and `jquery.selz.min.js` files.
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="src/jquery.selz.min.js"></script>
 
 2. include `jquery.selz.min.css` or add your stylesheet.
@@ -19,9 +19,9 @@ See bundled `index.html` and `index.options.html` file for examples.
 
 3. add hyperlinks to your [Selz.com](https://selz.com) products into `<body>`.
 
-        <a href="http://selz.co/19HmDA4">Buy now</a>
+        <a href="http://selz.co/1gfLTzi">Buy now</a>
 
-4. and if u like, add options to customize overlay.
+4. and if you like, add options to customize overlay.
 
         <script>
             jQuery.selz({
@@ -39,7 +39,6 @@ See bundled `index.html` and `index.options.html` file for examples.
                 }
             });
         </script>
-
 
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:

@@ -1,0 +1,33 @@
+{
+  "name": "jquery.selz",
+  "version": "0.1.4",
+  "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-hogan-compile": "^0.2.1",
+    "gulp-changed": "~0.3.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-less": "~1.2.3",
+    "gulp-minify-css": "~0.3.1",
+    "gulp-uglify": "~0.2.1",
+    "gulp-util": "~2.2.14",
+    "gulp": "~3.6.1"
+  },
+  "scripts": {
+    "preinstall": "npm install -g gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Selz/jquery.selz.git"
+  },
+  "keywords": [
+    "selz"
+  ],
+  "author": "selz.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Selz/jquery.selz/issues"
+  },
+  "homepage": "https://github.com/Selz/jquery.selz"
+}
