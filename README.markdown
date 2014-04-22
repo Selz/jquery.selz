@@ -43,8 +43,8 @@ See bundled `index.html` and `index.options.html` file for examples.
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:
 
-- `<link href="http://selzstatic.s3.amazonaws.com/jqueryselz/jquery.selz.min.css" rel="stylesheet">`
-- `<script src="http://selzstatic.s3.amazonaws.com/jqueryselz/jquery.selz.min.js"></script>`
+- `<link href="http://selzstatic.s3.amazonaws.com/0.1.5/jquery/jquery.selz.min.css" rel="stylesheet">`
+- `<script src="http://selzstatic.s3.amazonaws.com/0.1.5/jquery/jquery.selz.min.js"></script>`
 
 ### Licensed under the MIT
 
