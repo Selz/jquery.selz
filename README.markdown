@@ -140,8 +140,6 @@ You can use our CDN for the JavaScript and CSS files:
 <script src="http://cdn.selz.com/jquery/1.0.1/jquery.selz.min.js"></script>
 ```
 
-Currently the CDN hosted version does not support SSL (https). 
-
 ## Licensed under the MIT
 
 [License text](http://www.opensource.org/licenses/mit-license.php)
