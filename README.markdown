@@ -21,7 +21,11 @@ See bundled `index.html` and `index.options.html` file for examples.
 
         <a href="http://selz.co/1gfLTzi">Buy now</a>
 
-4. and if you like, add options to customize overlay.
+4. and if you like, you can add options to customize the plugin.
+
+**Options** 
+
+Button
 
         <script>
             jQuery.selz({
