@@ -3,9 +3,17 @@
 Open your [Selz.com](https://selz.com) item links in an overlay to let your customers complete their purchase directly onto your site. 
 
 ## Changelog
-| Version | Comments |
-|---------|----------|
-| 1.0.0   | Added callbacks and option to prefect item data. |
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Comments</th>
+  </tr>
+  <tr>
+    <td>1.0.1</td> 
+    <td>Added callbacks and option to prefect item data.</td>
+  </tr>
+</table>
 
 
 ## Examples
@@ -31,43 +39,70 @@ For a very simple installation where you only want the overlay functionality for
 ## Installation
 To install the Selz plugin, you will have to include the following resources in your page. The JS files should be loaded in the order below. For the CSS file, you can either incorporate it with your site's stylesheet, or load it externally through the `<link>` element in `<head>`.
 
-| Type | File Name            | Description                                                                                                            |
-|------|----------------------|------------------------------------------------------------------------------------------------------------------------|
-| JS   | [jQuery 1.x](http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js) | **External Dependency**: The *latest verson* of jQuery 1.x library is needed for the Selz plugin functionality. |
-| JS   | `jquery.selz.js` 	| Confers the main functionality of the Selz plugin. Alternatively, you can load the minified version, `jquery.selz.min.js` |
-| CSS  | `jquery.selz.min.css`   | Offers styles that are crucial for the correct display of the Selz overlay. The appearance will break if this is not included. You can customise the styles in the source less file `jquery.selz.less` or write your own **at your own risk**. |
+<table>
+  <tr>
+    <th>Type</th>
+    <th>File Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>JS</td> 
+    <td><a href="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" target="_blank">jQuery 1.x</a></td>
+    <td><strong>External Dependency</strong>: The <em>latest verson</em> of jQuery 1.x library is needed for the Selz plugin functionality.</td>
+  </tr>
+  <tr>
+    <td>JS</td>
+    <td><code>jquery.selz.js</code></td>
+    <td>Confers the main functionality of the Selz plugin. Alternatively, you can load the minified version, <code>jquery.selz.min.js</code></td>
+  </tr>
+  <tr>
+    <td>CSS</td>
+    <td><code>jquery.selz.min.css</code></td>
+    <td>Offers styles that are crucial for the correct display of the Selz overlay. The appearance will break if this is not included. You can customise the styles in the source less file <code>jquery.selz.less</code> or write your own <strong>at your own risk</strong>.</td>
+  </tr>
+</table>
 
 
 ## Options
 
 You can also fetch data about your product, customise overlay button colors and add event callbacks. 
 
-| Option           | Type      | Default value | Description                           |
-|------------------|-----------|---------------|---------------------------------------|
-| `buttonBg`   		| String 	| `#6d48cc`    | The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.  |
-| `buttonText`   	| String    | `#ff` 		| Sets the `color` for the button text. Defaults to white. |
-| `prefetch` 		| Boolean   | `false`      | Whether to prefecth data on plugin load so it is available to the `onDataReady` callback. Defaults to false. |
-| `onDataReady`   	| Function  | `null` 		| If `prefetch` is `true` then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link. |
-| `onModalOpen`  	| Function  | `null`       | Callback for when the overlay is shown. The function gets passed a single parameter, a jQuery object for the link that triggered the overlay being opened. |
-
 <table>
   <tr>
     <th>Option</th>
     <th>Type</th>
     <th>Default</th>
-    <td>Description</th>
+    <th>Description</th>
   </tr>
   <tr>
-    <td>`buttonText`</td>
+    <td><code>buttonBg</code></td>
     <td>String</td>
-    <td>`#fff`</td>
+    <td><code>#6d48cc</code></td>
+    <td>Sets the <code>color</code> for the button text. Defaults to white.</td>
+  </tr>
+  <tr>
+    <td><code>buttonText</code></td>
+    <td>String</td>
+    <td><code>#fff</code></td>
     <td>The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.</td>
   </tr>
   <tr>
-    <td>`buttonBg`</td>
-    <td>String</td>
-    <td>`#6d48cc`</td>
-    <td>Sets the `color` for the button text. Defaults to white.</td>
+    <td><code>prefetch</code></td>
+    <td>Boolean</td>
+    <td><code>false</code></td>
+    <td>Whether to prefecth data on plugin load so it is available to the <code>onDataReady</code> callback. Defaults to false.</td>
+  </tr>
+  <tr>
+    <td><code>onDataReady</code></td>
+    <td>Function</td>
+    <td><code>null</code></td>
+    <td>If <code>prefetch</code> is <code>true</code> then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link.</td>
+  </tr>
+  <tr>
+    <td><code>onModalOpen</code></td>
+    <td>Function</td>
+    <td><code>null</code></td>
+    <td>Callback for when the overlay is shown. The function gets passed a single parameter, a jQuery object for the link that triggered the overlay being opened.</td>
   </tr>
 </table>
 
@@ -90,8 +125,8 @@ You can also fetch data about your product, customise overlay button colors and 
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:
 
-- `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0.0/jquery.selz.min.css" rel="stylesheet">`
-- `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0.0/jquery.selz.min.js"></script>`
+- `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0/jquery.selz.min.css" rel="stylesheet">`
+- `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0/jquery.selz.min.js"></script>`
 
 Currently the CDN hosted version does not support SSL (https). 
 
