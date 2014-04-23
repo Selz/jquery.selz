@@ -50,6 +50,27 @@ You can also fetch data about your product, customise overlay button colors and 
 | `onDataReady`   	| Function  | `null` 		| If `prefetch` is `true` then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link. |
 | `onModalOpen`  	| Function  | `null`       | Callback for when the overlay is shown. The function gets passed a single parameter, a jQuery object for the link that triggered the overlay being opened. |
 
+<table>
+  <tr>
+    <th>Option</th>
+    <th>Type</th>
+    <th>Default</th>
+    <td>Description</th>
+  </tr>
+  <tr>
+    <td>`buttonText`</td>
+    <td>String</td>
+    <td>`#fff`</td>
+    <td>The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.</td>
+  </tr>
+  <tr>
+    <td>`buttonBg`</td>
+    <td>String</td>
+    <td>`#6d48cc`</td>
+    <td>Sets the `color` for the button text. Defaults to white.</td>
+  </tr>
+</table>
+
 #### Example using options
 
 	jQuery.selz({
