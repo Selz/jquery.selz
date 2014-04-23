@@ -21,22 +21,29 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 See bundled `index.html` and `index.options.html` file for examples.
 
 ## Basic Setup
+
 For a very simple installation where you only want the overlay functionality for any Selz item, the setup is very easy. 
 
 1. Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
 
+```html
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script src="src/jquery.selz.min.js"></script>
-
+```
 2. Include `jquery.selz.min.css` or add your stylesheet into the `<head>` of your page
 
+```html
         <link href="src/jquery.selz.min.css" rel="stylesheet">
+```
 
 3. Add the short link to your [Selz.com](https://selz.com) products into the `<body>` of your page. This can be found on the share item page within Selz
 
+```html
         <a href="http://selz.co/1gfLTzi">Buy now</a>
-        
+```
+
 ## Installation
+
 To install the Selz plugin, you will have to include the following resources in your page. The JS files should be loaded in the order below. For the CSS file, you can either incorporate it with your site's stylesheet, or load it externally through the `<link>` element in `<head>`.
 
 <table>
@@ -108,6 +115,7 @@ You can also fetch data about your product, customise overlay button colors and 
 
 #### Example using options
 
+```javascript
 	jQuery.selz({
     	buttonBg: "#60aae0",
         buttonText: "#fff",
@@ -121,16 +129,17 @@ You can also fetch data about your product, customise overlay button colors and 
 			ga('send', 'pageview', $link.attr("href")); 
     	}
 	});
+```
 
-### CDN Hosting
+## CDN Hosting
+
 You can use our CDN for the JavaScript and CSS files:
 
-- `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0/jquery.selz.min.css" rel="stylesheet">`
-- `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0/jquery.selz.min.js"></script>`
+- `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0.1/jquery.selz.min.css" rel="stylesheet">`
+- `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0.1/jquery.selz.min.js"></script>`
 
 Currently the CDN hosted version does not support SSL (https). 
 
-
-### Licensed under the MIT
+## Licensed under the MIT
 
 [License text](http://www.opensource.org/licenses/mit-license.php)
