@@ -5,7 +5,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 ## Changelog
 | Version | Comments |
 |---------|----------|
-| 1.0.0   | Added callbacks and option to prefect item data. |
+| 1.0.1   | Added callbacks and option to prefect item data. |
 
 
 ## Examples
@@ -69,8 +69,8 @@ You can also fetch data about your product, customise overlay button colors and 
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:
 
-- `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0.0/jquery.selz.min.css" rel="stylesheet">`
-- `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0.0/jquery.selz.min.js"></script>`
+- `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0.1/jquery.selz.min.css" rel="stylesheet">`
+- `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0.1/jquery.selz.min.js"></script>`
 
 
 ### Licensed under the MIT
