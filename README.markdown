@@ -136,8 +136,8 @@ jQuery.selz({
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0.1/jquery.selz.min.css" rel="stylesheet">
-<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0.1/jquery.selz.min.js"></script>
+<link href="http://cdn.selz.com/jquery/1.0.1/jquery.selz.min.css" rel="stylesheet">
+<script src="http://cdn.selz.com/jquery/1.0.1/jquery.selz.min.js"></script>
 ```
 
 Currently the CDN hosted version does not support SSL (https). 
