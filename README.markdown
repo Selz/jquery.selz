@@ -27,19 +27,19 @@ For a very simple installation where you only want the overlay functionality for
 1. Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
 
 ```html
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <script src="src/jquery.selz.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="src/jquery.selz.min.js"></script>
 ```
 2. Include `jquery.selz.min.css` or add your stylesheet into the `<head>` of your page
 
 ```html
-        <link href="src/jquery.selz.min.css" rel="stylesheet">
+<link href="src/jquery.selz.min.css" rel="stylesheet">
 ```
 
 3. Add the short link to your [Selz.com](https://selz.com) products into the `<body>` of your page. This can be found on the share item page within Selz
 
 ```html
-        <a href="http://selz.co/1gfLTzi">Buy now</a>
+<a href="http://selz.co/1gfLTzi">Buy now</a>
 ```
 
 ## Installation
@@ -116,19 +116,19 @@ You can also fetch data about your product, customise overlay button colors and 
 #### Example using options
 
 ```javascript
-	jQuery.selz({
-    	buttonBg: "#60aae0",
-        buttonText: "#fff",
-    	prefetch: true,
-    	onDataReady: function ($link, data) {
-    		// Customise the link with item data
-        	$link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
-    	},
-    	onModalOpen: function ($link) {
-    		// Track open in Google Analytics
-			ga('send', 'pageview', $link.attr("href")); 
-    	}
-	});
+jQuery.selz({
+    buttonBg: "#60aae0",
+    buttonText: "#fff",
+   	prefetch: true,
+    onDataReady: function ($link, data) {
+    	// Customise the link with item data
+        $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
+    },
+    onModalOpen: function ($link) {
+    	// Track open in Google Analytics
+		ga('send', 'pageview', $link.attr("href")); 
+    }
+});
 ```
 
 ## CDN Hosting
