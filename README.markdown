@@ -53,8 +53,8 @@ You can also fetch data about your product, customise overlay button colors and 
 #### Example using options
 
 	jQuery.selz({
-    	buttonBg: "#ff0000",
-    	buttonText: "#fff",
+    	buttonBg: "#60aae0",
+        buttonText: "#fff",
     	prefetch: true,
     	onDataReady: function ($link, data) {
     		// Customise the link with item data
