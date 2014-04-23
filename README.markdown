@@ -72,8 +72,6 @@ You can use our CDN for the JavaScript and CSS files:
 - `<link href="http://selzstatic.s3.amazonaws.com/jquery/1.0.0/jquery.selz.min.css" rel="stylesheet">`
 - `<script src="http://selzstatic.s3.amazonaws.com/jquery/1.0.0/jquery.selz.min.js"></script>`
 
-Currently the CDN hosted version does not support SSL (https). 
-
 
 ### Licensed under the MIT
 
