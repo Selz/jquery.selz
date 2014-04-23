@@ -44,8 +44,8 @@ You can also fetch data about your product, customise overlay button colors and 
 
 | Option           | Type      | Default value | Description                           |
 |------------------|-----------|---------------|---------------------------------------|
-| `buttonBg`   		| String 	| `#6D48CC`    | The button background color for primary call to actions within the overlay. This needs to be hex color code.  |
-| `buttonText`   	| String    | `#fff` 		| Sets the `background-color` property of Fluidbox overlay. Defaults to white with an opacity of 0.85. |
+| `buttonBg`   		| String 	| `#6d48cc`    | The button background color for primary call to actions within the overlay. This needs to be hex color code.  |
+| `buttonText`   	| String    | `#ff` 		| Sets the `background-color` property of Fluidbox overlay. Defaults to white with an opacity of 0.85. |
 | `prefetch` 		| Boolean   | `false`      | Whether to prefecth data on plugin load so it is available to the `onDataReady` callback. |
 | `onDataReady`   	| Function  | `null` 		| If `prefetch` is `true` then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link. |
 | `onModalOpen`  	| Function  | `null`       | Callback for when the overlay is shown. The function gets passed a single parameter, a jQuery object for the link that triggered the overlay being opened. |
