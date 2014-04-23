@@ -17,17 +17,22 @@ For a very simple installation where you only want the overlay functionality for
 
 1. Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
 
+```html
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script src="src/jquery.selz.min.js"></script>
-
+```
 2. Include `jquery.selz.min.css` or add your stylesheet into the `<head>` of your page
 
+```html
         <link href="src/jquery.selz.min.css" rel="stylesheet">
+```
 
 3. Add the short link to your [Selz.com](https://selz.com) products into the `<body>` of your page. This can be found on the share item page within Selz
 
+```html
         <a href="http://selz.co/1gfLTzi">Buy now</a>
-        
+```
+
 ## Installation
 To install the Selz plugin, you will have to include the following resources in your page. The JS files should be loaded in the order below. For the CSS file, you can either incorporate it with your site's stylesheet, or load it externally through the `<link>` element in `<head>`.
 
@@ -51,7 +56,7 @@ You can also fetch data about your product, customise overlay button colors and 
 | `onModalOpen`  	| Function  | `null`       | Callback for when the overlay is shown. The function gets passed a single parameter, a jQuery object for the link that triggered the overlay being opened. |
 
 #### Example using options
-
+```javascript
 	jQuery.selz({
     	buttonBg: "#60aae0",
         buttonText: "#fff",
@@ -65,7 +70,7 @@ You can also fetch data about your product, customise overlay button colors and 
 			ga('send', 'pageview', $link.attr("href")); 
     	}
 	});
-
+```
 ### CDN Hosting
 You can use our CDN for the JavaScript and CSS files:
 
