@@ -133,7 +133,7 @@ $(function() {
 });
 ```
 
-**Reminder:** If you don't use `$` as your jQuery variable name (which is default) then you need to use `jQuery.` rather than `$.` when referencing the jQuery core library incuding in your callbacks. For the majority of users, this won't be an issue.
+**Reminder:** If you don't use the default `$` as your jQuery variable name then you will need to use `jQuery.` rather than `$.` when referencing the jQuery core library, incuding in callbacks. For the majority of users, this won't be an issue.
 
 ## CDN Hosting
 
