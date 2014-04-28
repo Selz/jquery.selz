@@ -116,20 +116,24 @@ You can also fetch data about your product, customise overlay button colors and 
 #### Example using options
 
 ```javascript
-jQuery.selz({
-    buttonBg: "#60aae0",
-    buttonText: "#fff",
-   	prefetch: true,
-    onDataReady: function ($link, data) {
-    	// Customise the link with item data
-        $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
-    },
-    onModalOpen: function ($link) {
-    	// Track open in Google Analytics
-		ga('send', 'pageview', $link.attr("href")); 
-    }
+$(function() {
+	$.selz({
+    	buttonBg: "#60aae0",
+    	buttonText: "#fff",
+   		prefetch: true,
+    	onDataReady: function ($link, data) {
+    		// Customise the link with item data
+        	$link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
+    	},
+    	onModalOpen: function ($link) {
+    		// Track open in Google Analytics
+			ga('send', 'pageview', $link.attr("href")); 
+    	}
+    });
 });
 ```
+
+**Note:** If you don't use `$` as your jQuery variable name (which is default) then you need to use `jQuery.` rather than `$.` when referencing the jQuery core library. 
 
 ## CDN Hosting
 
