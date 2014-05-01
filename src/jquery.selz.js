@@ -19,7 +19,7 @@ var _$elz = _$elz || {};
     // listeners
     function listeners() {
         $(document.body).on("click", 'a[href^="http://selz.co/"]', openOverlay);
-        $(window).on("message", setTheme);
+        $(window).on("message", onMessage);
     }
     
     function getItemData($link, callback) {
@@ -71,7 +71,7 @@ var _$elz = _$elz || {};
         return false;
     }
     
-    function setTheme($e) {
+    function onMessage($e) {
         var msg = null,
            e = $e.originalEvent;
 
@@ -90,6 +90,18 @@ var _$elz = _$elz || {};
             var reply = config.settings.colors.buttonText + "," + config.settings.colors.buttonBg;
             e.source.postMessage(reply, config.domain);
         }
+		
+		var keyValue = msg.split('|'),
+				key = keyValue[0],
+				value = keyValue[1];
+		
+		switch (key) {
+			case "purchase":
+				if ($.isFunction(config.settings.onPurchase)) {
+					config.settings.onPurchase(JSON.parse(value));
+				}
+				break;
+		}
     }
 
     function addModalTheme(type, color) {
@@ -135,6 +147,10 @@ var _$elz = _$elz || {};
 
         if (typeof options.onModalOpen !== "undefined") {
             config.settings.onModalOpen = options.onModalOpen;
+        }
+		
+		if (typeof options.onPurchase !== "undefined") {
+            config.settings.onPurchase = options.onPurchase;
         }
 
         if (options.prefetch) {
