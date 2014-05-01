@@ -11,7 +11,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.1</td> 
-    <td>Added callbacks and option to prefect item data.</td>
+    <td>Added callbacks and option to prefecth item data.</td>
   </tr>
 </table>
 
