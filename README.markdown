@@ -10,7 +10,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th>Comments</th>
   </tr>
   <tr>
-    <td>1.0.1</td> 
+    <td>1.0.2</td> 
     <td>Added callbacks and option to prefetch item data.</td>
   </tr>
 </table>
