@@ -109,13 +109,13 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onModalOpen</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the overlay is shown. The function gets passed a single parameter, a jQuery object for the link that triggered the overlay being opened.</td>
+    <td>Callback for when the overlay is shown. The function gets passed a single argument, a jQuery object for the link that triggered the overlay being opened.</td>
   </tr>
   <tr>
     <td><code>onPurchase</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the item is purchased. The function gets passed a single parameter, the data for successful order.</td>
+    <td>Callback for when the item is purchased. The function gets passed a single argument, the data for successful order.</td>
   </tr>
 </table>
 
