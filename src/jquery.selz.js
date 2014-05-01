@@ -9,6 +9,7 @@ var _$elz = _$elz || {};
     // plugin config
     var config = {
         domain: "https://selz.com",
+        shortDomain: "http://selz.co",
         settings: {
             colors: null,
             prefetch: false
@@ -18,7 +19,7 @@ var _$elz = _$elz || {};
     
     // listeners
     function listeners() {
-        $(document.body).on("click", 'a[href^="http://selz.co/"]', openOverlay);
+        $(document.body).on("click", 'a[href^="' + config.shortDomain + '/"]', openOverlay);
         $(window).on("message", onMessage);
     }
     
@@ -114,7 +115,7 @@ var _$elz = _$elz || {};
     }
     
     function prefetch() {
-        $('a[href^="http://selz.co/"]').each(function (i, link) {
+        $('a[href^="' + config.shortDomain + '/"]').each(function (i, link) {
             getItemData($(link), null);
         });
     }

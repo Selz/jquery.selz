@@ -115,11 +115,68 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onPurchase</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the item is purchased. The function gets passed a single parameter, a data for successful order.</td>
+    <td>Callback for when the item is purchased. The function gets passed a single parameter, the data for successful order.</td>
   </tr>
 </table>
 
-#### Example using options
+#### Example data returned by onDataReady
+
+Here's some example data returned by the `onDataReady` callback:
+
+```javascript
+{
+	CanPickup: true
+	CanShip: true
+	Description: "Example of an item description"
+	DirectClicks: 200
+	DownloadFileName: null
+	DownloadFileSize: null
+	DownloadUrl: null
+	FacebookClicks: 100
+	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg"
+	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg"
+	IsSoldOut: false
+	PinterestClicks: 100
+	Price: "A$9.99"
+	Quantity: 8
+	QuantityLeft: 8
+	RegularPrice: "$29.99"
+	SellerCountryCode: "US"
+	ShipInternationalPrice: "$20.00"
+	ShipPrice: "$10.00"
+	ShortUrl: "http://selz.co/xxxxxx"
+	Title: "Example Item"
+	TotalSales: 0
+	TotalViews: 0
+	TwitterClicks: 100
+	Url: "https://selz.com/items/detail/xxxx"
+}
+```
+
+#### Example data returned by onPurchase 
+
+Here's some example data returned by the `onPurchase` callback:
+
+```javascript
+{
+	BuyerEmail: "johnny@selz.com"
+	BuyerFirstName: "Johnny"
+	BuyerLastName: "Appleseed"
+	Currency: "USD"
+	DiscountCode: ""
+	ItemId: "xxxx"
+	ItemTitle: "Example Item"
+	ItemVariantTitle: "Variant 1"
+	Quantity: 1
+	ReferenceId: "xxxx"
+	Shipping: 20
+	Timestamp: 1398921408
+	TotalPrice: 29.99
+	UnitPrice: 9.99
+}
+```
+
+#### Example setup using options
 
 ```javascript
 $(function() {
