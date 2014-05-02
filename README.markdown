@@ -46,7 +46,7 @@ Add the short link to your [Selz.com](https://selz.com) products into the `<body
 
 To install the Selz plugin, you will have to include the following resources in your page. The JS files should be loaded in the order below. For the CSS file, you can either incorporate it with your site's stylesheet, or load it externally through the `<link>` element in `<head>`.
 
-<table class="table-basic">
+<table class="table">
   <tr>
     <th>Type</th>
     <th>File Name</th>
@@ -74,7 +74,7 @@ To install the Selz plugin, you will have to include the following resources in 
 
 You can also fetch data about your product, customise overlay button colors and add event callbacks. 
 
-<table class="table-basic">
+<table class="table">
   <tr>
     <th>Option</th>
     <th>Type</th>
