@@ -4,14 +4,18 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 
 ## Changelog
 
-<table class="table-basic">
+<table class="table">
   <tr>
     <th>Version</th>
     <th>Comments</th>
   </tr>
   <tr>
     <td>1.0.2</td> 
-    <td>Added onPurchase callback.</td>
+    <td>Added <code>onPurchase</code> callback.</td>
+  </tr>
+  <tr>
+    <td>1.0.1</td> 
+    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefect item data.</td>
   </tr>
 </table>
 
