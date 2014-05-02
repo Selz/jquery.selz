@@ -101,13 +101,13 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>prefetch</code></td>
     <td>Boolean</td>
     <td><code>false</code></td>
-    <td>Whether to prefecth data on plugin load so it is available to the <code>onDataReady</code> callback. Defaults to false.</td>
+    <td>Whether to prefetch data on plugin load so it is available to the <code>onDataReady</code> callback. Defaults to false.</td>
   </tr>
   <tr>
     <td><code>onDataReady</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>If <code>prefetch</code> is <code>true</code> then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link.</td>
+    <td>If <code>prefetch</code> is <code>true</code> then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link as below.</td>
   </tr>
   <tr>
     <td><code>onModalOpen</code></td>
@@ -119,7 +119,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onPurchase</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the item is purchased. The function gets passed a single argument, the data for successful order.</td>
+    <td>Callback for when the item is purchased. The function gets passed a single argument, the data for the order as below.</td>
   </tr>
 </table>
 
