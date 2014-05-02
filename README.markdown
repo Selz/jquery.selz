@@ -89,13 +89,13 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>buttonBg</code></td>
     <td>String</td>
     <td><code>#6d48cc</code></td>
-    <td>Sets the <code>color</code> for the button text. Defaults to white.</td>
+    <td>The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.</td>
   </tr>
   <tr>
     <td><code>buttonText</code></td>
     <td>String</td>
     <td><code>#fff</code></td>
-    <td>The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.</td>
+    <td>Sets the <code>color</code> for the button text. Defaults to white.</td>
   </tr>
   <tr>
     <td><code>prefetch</code></td>
