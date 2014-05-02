@@ -15,7 +15,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.1</td> 
-    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefecth item data.</td>
+    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data.</td>
   </tr>
 </table>
 
