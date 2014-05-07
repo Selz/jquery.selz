@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th>Comments</th>
   </tr>
   <tr>
+    <td>1.0.3</td> 
+    <td>Added <code>onProcessing</code> callback.</td>
+  </tr>
+  <tr>
     <td>1.0.2</td> 
     <td>Added <code>onPurchase</code> callback.</td>
   </tr>
@@ -121,6 +125,12 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>null</code></td>
     <td>Callback for when the item is purchased. The function gets passed a single argument, the data for the order as below.</td>
   </tr>
+  <tr>
+    <td><code>onProcessing</code></td>
+    <td>Function</td>
+    <td><code>null</code></td>
+    <td>Callback for when the item purchase is pending processing. The function gets passed a single argument, the data for the processing order.</td>
+  </tr>
 </table>
 
 #### Example data returned by onDataReady
@@ -129,30 +139,30 @@ Here's some example data returned by the `onDataReady` callback:
 
 ```javascript
 {
-	CanPickup: true
-	CanShip: true
-	Description: "Example of an item description"
-	DirectClicks: 200
-	DownloadFileName: null
-	DownloadFileSize: null
-	DownloadUrl: null
-	FacebookClicks: 100
-	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg"
-	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg"
-	IsSoldOut: false
-	PinterestClicks: 100
-	Price: "A$9.99"
-	Quantity: 8
-	QuantityLeft: 8
-	RegularPrice: "$29.99"
-	SellerCountryCode: "US"
-	ShipInternationalPrice: "$20.00"
-	ShipPrice: "$10.00"
-	ShortUrl: "http://selz.co/xxxxxx"
-	Title: "Example Item"
-	TotalSales: 0
-	TotalViews: 0
-	TwitterClicks: 100
+	CanPickup: true,
+	CanShip: true,
+	Description: "Example of an item description",
+	DirectClicks: 200,
+	DownloadFileName: null,
+	DownloadFileSize: null,
+	DownloadUrl: null,
+	FacebookClicks: 100,
+	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg",
+	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg",
+	IsSoldOut: false,
+	PinterestClicks: 100,
+	Price: "A$9.99",
+	Quantity: 8,
+	QuantityLeft: 8,
+	RegularPrice: "$29.99",
+	SellerCountryCode: "US",
+	ShipInternationalPrice: "$20.00",
+	ShipPrice: "$10.00",
+	ShortUrl: "http://selz.co/xxxxxx",
+	Title: "Example Item",
+	TotalSales: 0,
+	TotalViews: 0,
+	TwitterClicks: 100,
 	Url: "https://selz.com/items/detail/xxxx"
 }
 ```
@@ -163,20 +173,31 @@ Here's some example data returned by the `onPurchase` callback:
 
 ```javascript
 {
-	BuyerEmail: "johnny@selz.com"
-	BuyerFirstName: "Johnny"
-	BuyerLastName: "Appleseed"
-	Currency: "USD"
-	DiscountCode: ""
-	ItemId: "xxxx"
-	ItemTitle: "Example Item"
-	ItemVariantTitle: "Variant 1"
-	Quantity: 1
-	ReferenceId: "xxxx"
-	Shipping: 20
-	Timestamp: 1398921408
-	TotalPrice: 29.99
+	BuyerEmail: "johnny@selz.com",
+	BuyerFirstName: "Johnny",
+	BuyerLastName: "Appleseed",
+	Currency: "USD",
+	DiscountCode: "",
+	ItemId: "xxxx",
+	ItemTitle: "Example Item",
+	ItemVariantTitle: "Variant 1",
+	Quantity: 1,
+	ReferenceId: "XXXXXXXX",
+	Shipping: 20,
+	Timestamp: 1398921408,
+	TotalPrice: 29.99,
 	UnitPrice: 9.99
+}
+```
+
+#### Example data returned by onProcessing 
+
+Here's some example data returned by the `onProcessing` callback:
+
+```javascript
+{
+	ReferenceId: "XXXXXXXX",
+	Timestamp: 1398921408
 }
 ```
 
@@ -198,6 +219,9 @@ $(function() {
     	},
         onPurchase: function (data) {
             // Track purchase
+        },
+        onProcessing: function (data) {
+            // Track purchases
         }
     });
 });
