@@ -221,7 +221,7 @@ $(function() {
             // Track purchase
         },
         onProcessing: function (data) {
-            // Track purchases
+            // Track processing
         }
     });
 });
