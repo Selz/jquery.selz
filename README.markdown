@@ -6,8 +6,8 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 
 <table class="table" width="100%">
   <tr>
-    <th width="20%">Version</th>
-    <th width="80%">Comments</th>
+    <th width="15%">Version</th>
+    <th width="85%">Comments</th>
   </tr>
   <tr>
     <td>1.0.3</td> 
@@ -56,9 +56,9 @@ To install the Selz plugin, you will have to include the following resources in 
 
 <table class="table" width="100%">
   <tr>
-    <th width="5%">Type</th>
-    <th width="10%">File Name</th>
-    <th width="85%">Description</th>
+    <th width="10%">Type</th>
+    <th width="25%">File Name</th>
+    <th width="65%">Description</th>
   </tr>
   <tr>
     <td>JS</td> 
@@ -84,10 +84,10 @@ You can also fetch data about your product, customise overlay button colors and 
 
 <table class="table" width="100%">
   <tr>
-    <th width="10%">Option</th>
-    <th width="10%">Type</th>
-    <th width="10%">Default</th>
-    <th width="70%">Description</th>
+    <th width="20%">Option</th>
+    <th width="15%">Type</th>
+    <th width="15%">Default</th>
+    <th width="50%">Description</th>
   </tr>
   <tr>
     <td><code>buttonBg</code></td>
