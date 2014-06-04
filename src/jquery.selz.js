@@ -8,10 +8,8 @@ var _$elz = _$elz || {};
 
     // plugin config
     var config = {
-        //domain: "https://selz.com",
-        //shortDomain: "http://selz.co",
-        domain: "https://local.drachma.communityengine.com",
-        shortDomain: "http://bit.ly",
+        domain: "https://selz.com",
+        shortDomain: "http://selz.co",
         settings: {
             colors: null,
             prefetch: false
