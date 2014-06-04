@@ -6,8 +6,8 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 
 <table class="table" width="100%">
   <tr>
-    <th>Version</th>
-    <th>Comments</th>
+    <th width="20%">Version</th>
+    <th width="80%">Comments</th>
   </tr>
   <tr>
     <td>1.0.3</td> 
