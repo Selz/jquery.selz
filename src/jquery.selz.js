@@ -8,8 +8,10 @@ var _$elz = _$elz || {};
 
     // plugin config
     var config = {
-        domain: "https://selz.com",
-        shortDomain: "http://selz.co",
+        //domain: "https://selz.com",
+        //shortDomain: "http://selz.co",
+        domain: "https://local.drachma.communityengine.com",
+        shortDomain: "http://bit.ly",
         settings: {
             colors: null,
             prefetch: false
@@ -101,7 +103,13 @@ var _$elz = _$elz || {};
 				if ($.isFunction(config.settings.onPurchase)) {
 					config.settings.onPurchase(JSON.parse(value));
 				}
-				break;
+                break;
+
+            case "processing":
+				if ($.isFunction(config.settings.onProcessing)) {
+					config.settings.onProcessing(JSON.parse(value));
+				}
+                break;
 		}
     }
 
@@ -152,6 +160,10 @@ var _$elz = _$elz || {};
 		
 		if (typeof options.onPurchase !== "undefined") {
             config.settings.onPurchase = options.onPurchase;
+        }
+
+        if (typeof options.onProcessing !== "undefined") {
+            config.settings.onProcessing = options.onProcessing;
         }
 
         if (options.prefetch) {
