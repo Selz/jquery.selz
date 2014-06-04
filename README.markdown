@@ -4,10 +4,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 
 ## Changelog
 
-<table class="table-basic">
+<table class="table" width="100%">
   <tr>
-    <th>Version</th>
-    <th>Comments</th>
+    <th width="10%">Version</th>
+    <th width="90%">Comments</th>
   </tr>
   <tr>
     <td>1.0.1</td> 
@@ -46,11 +46,11 @@ Add the short link to your [Selz.com](https://selz.com) products into the `<body
 
 To install the Selz plugin, you will have to include the following resources in your page. The JS files should be loaded in the order below. For the CSS file, you can either incorporate it with your site's stylesheet, or load it externally through the `<link>` element in `<head>`.
 
-<table class="table">
+<table class="table" width="100%">
   <tr>
-    <th>Type</th>
-    <th>File Name</th>
-    <th>Description</th>
+    <th width="5%">Type</th>
+    <th width="10%">File Name</th>
+    <th width="85%">Description</th>
   </tr>
   <tr>
     <td>JS</td> 
@@ -74,12 +74,12 @@ To install the Selz plugin, you will have to include the following resources in 
 
 You can also fetch data about your product, customise overlay button colors and add event callbacks. 
 
-<table class="table">
+<table class="table" width="100%">
   <tr>
-    <th>Option</th>
-    <th>Type</th>
-    <th>Default</th>
-    <th>Description</th>
+    <th width="10%">Option</th>
+    <th width="10%">Type</th>
+    <th width="10%">Default</th>
+    <th width="70%">Description</th>
   </tr>
   <tr>
     <td><code>buttonBg</code></td>
