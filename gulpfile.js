@@ -60,8 +60,7 @@ gulp.task('upload', function () {
     var headers = {
         "Cache-Control": "max-age=" + maxAge,
         "Expires": new Date(Date.now() + (maxAge * 1000)).toUTCString(),
-        "Content-Encoding": "gzip",
-        "Vary": "Accept-Encoding"
+        "Content-Encoding": "gzip"
     };
 
     return gulp.src('src/jquery.selz.min**')
