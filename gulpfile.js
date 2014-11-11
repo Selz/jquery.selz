@@ -8,6 +8,7 @@ var less = require('gulp-less');
 var minifyCss = require('gulp-minify-css');
 var rename = require("gulp-rename");
 var awspublish = require('gulp-awspublish');
+var prefixer = require('gulp-autoprefixer');
 
 var paths = {
 	scripts: ['src/jquery.selz.js'],
@@ -28,6 +29,7 @@ gulp.task('css', function() {
 		//.pipe(changed(paths.build, { extension: '.less' }))
 		.pipe(less()).on('error', gutil.log)
 		.pipe(concat('jquery.selz.min.css'))
+		.pipe(prefixer(["last 2 versions", "> 1%", "ie 9"], { cascade: true }))
 		.pipe(minifyCss())
 		.pipe(gulp.dest(paths.build));
 });
@@ -50,7 +52,8 @@ var aws = {
 
 try {
 	aws = JSON.parse(fs.readFileSync('./aws.json'));
-} catch (e) {
+} 
+catch (e) {
 }
 
 gulp.task('upload', function () {
@@ -70,7 +73,7 @@ gulp.task('upload', function () {
 		}))
 		.pipe(awspublish.gzip())
 		.pipe(publisher.publish(headers))
-    //.pipe(publisher.cache())
+    	//.pipe(publisher.cache())
 		.pipe(awspublish.reporter());
 });
 
