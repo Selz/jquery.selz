@@ -177,16 +177,19 @@ Here's some example data returned by the `onPurchase` callback:
 	BuyerFirstName: "Johnny",
 	BuyerLastName: "Appleseed",
 	Currency: "USD",
-	DiscountCode: "",
-	ItemId: "xxxx",
-	ItemTitle: "Example Item",
-	ItemVariantTitle: "Variant 1",
-	Quantity: 1,
 	ReferenceId: "XXXXXXXX",
 	Shipping: 20,
 	Timestamp: 1398921408,
 	TotalPrice: 29.99,
-	UnitPrice: 9.99
+	Items = [{
+		ItemId: "xxxx",
+		ItemTitle: "Example Item",
+		ItemVariantTitle: "Variant 1",
+		UnitPrice: 9.99,
+		DiscountCode: "",
+		Quantity: 1,
+		Currency: "USD"
+	}]
 }
 ```
 
