@@ -77,7 +77,7 @@ var _$elz = _$elz || {};
            e = $e.originalEvent;
 
         // listen only selz messages
-        if (e.origin !== config.domain || config.settings.colors === null) {
+        if (e.origin !== config.domain) {
             return;
         }
 
@@ -87,9 +87,10 @@ var _$elz = _$elz || {};
             msg = e.data;
         }
 
-        if (msg === "_$elz_modal_colors") {
+        if (msg === "modaltheme|get" && config.settings.colors !== null) {
             var reply = config.settings.colors.buttonText + "," + config.settings.colors.buttonBg;
             e.source.postMessage(reply, config.domain);
+			return;
         }
 		
 		var keyValue = msg.split('|'),
