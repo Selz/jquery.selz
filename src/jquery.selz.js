@@ -146,6 +146,14 @@
 
 	// Plugin
 	$.selz = function (options) {
+		// For testing
+		if (typeof options.domain !== "undefined") {
+			config.domain = options.domain;
+		}
+		if (typeof options.shortDomain !== "undefined") {
+			config.shortDomain = options.shortDomain;
+		}
+
 		// NOTE: only 2 colors now, but it would be better to have options.theme object, so we can simply use extend
 		addModalTheme("buttonBg", options.buttonBg);
 		addModalTheme("buttonText", options.buttonText);
