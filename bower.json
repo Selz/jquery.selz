@@ -19,7 +19,7 @@
     "src/jquery.selz.min.css"
   ],
   "ignore": [
-    "/*.*"
+    "/*"
   ],
   "repository": {
     "type": "git",
