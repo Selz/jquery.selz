@@ -9,7 +9,7 @@
     "overlay",
     "ecommerce"
   ],
-  "authors": "selz.com",
+  "authors": ["selz.com"],
   "dependencies": {
     "jquery": ">=1.7"
   },
