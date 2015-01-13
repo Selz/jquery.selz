@@ -1,7 +1,6 @@
 {
   "name": "jquery-selz",
   "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
-  "version": "1.0.3",
   "homepage": "https://github.com/Selz/jquery.selz",
   "keywords": [
     "jquery",
@@ -14,10 +13,10 @@
     "jquery": ">=1.7"
   },
   "main": [
-    "src/jquery.selz.min.js",
-    "src/jquery.selz.min.css",
     "src/jquery.selz.js",
-    "src/jquery.selz.less"
+    "src/jquery.selz.less",
+    "src/jquery.selz.min.js",
+    "src/jquery.selz.min.css"
   ],
   "ignore": [
     "/*.*"
