@@ -11,7 +11,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.4</td> 
-    <td>Added to Bower packages - <code>bower install jquery-selz</code>.</td>
+    <td>Added to Bower packages - <code>$ bower install jquery-selz</code>.</td>
   </tr>
   <tr>
     <td>1.0.3</td> 
