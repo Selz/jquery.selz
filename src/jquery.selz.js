@@ -9,11 +9,11 @@
 
 	// Plugin config
 	var config = {
-		domain: "https://selz.com",
-		shortDomain: "http://selz.co",
+		domain: 		"https://local.selz.com",
+		shortDomain: 	"http://bit.ly",
 		settings: {
-			colors: null,
-			prefetch: false
+			colors: 	null,
+			prefetch: 	false
 		},
 		items: {}
 	};
@@ -72,44 +72,44 @@
 		return false;
 	};
 	
-	function onMessage($e) {
-		var msg = null,
-		   e = $e.originalEvent;
+	function onMessage(event) {
+		event = event.originalEvent;
+		var message = event.data;
 
 		// Listen only to Selz messages
-		if (e.origin !== config.domain) {
+		if (event.origin !== config.domain || typeof message !== "string") {
 			return;
 		}
 
-		if (typeof e.message !== "undefined") {
-			msg = e.message;
-		} else if (typeof e.data !== "undefined") {
-			msg = e.data;
-		}
+		// Handle message
+		try {
+			var json = JSON.parse(message);
 
-		if (msg === "modaltheme|get" && config.settings.colors !== null) {
-			var reply = config.settings.colors.buttonText + "," + config.settings.colors.buttonBg;
-			e.source.postMessage(reply, config.domain);
-			return;
-		}
-		
-		var keyValue = msg.split("|"),
-				key = keyValue[0],
-				value = keyValue[1];
-		
-		switch (key) {
-			case "purchase":
-				if ($.isFunction(config.settings.onPurchase)) {
-					config.settings.onPurchase(JSON.parse(value));
-				}
-				break;
+			switch(json.key) {
+				case "modal-theme":
+					if (config.settings.colors !== null) {
+						event.source.postMessage(JSON.stringify({ 
+	                        key: 	"modal-theme", 
+	                        data: 	config.settings.colors.buttonText + "," + config.settings.colors.buttonBg 
+	                    }), config.domain);
+					}
+					break;
 
-			case "processing":
-				if ($.isFunction(config.settings.onProcessing)) {
-					config.settings.onProcessing(JSON.parse(value));
-				}
-				break;
+				case "purchase":
+					if ($.isFunction(config.settings.onPurchase)) {
+						config.settings.onPurchase(json.data);
+					}
+					break;
+
+				case "processing":
+					if ($.isFunction(config.settings.onProcessing)) {
+						config.settings.onProcessing(json.data);
+					}
+					break;
+			}
 		}
+		// Invalid JSON, do nothing
+		catch (exception) {}
 	}
 
 	function addModalTheme(type, color) {

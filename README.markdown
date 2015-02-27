@@ -10,8 +10,12 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.5</td> 
+    <td>Minor bug fixes</td>
+  </tr>
+  <tr>
     <td>1.0.4</td> 
-    <td>Added to Bower packages - <code>$ bower install jquery-selz</code>.</td>
+    <td>Added to Bower packages: <code>bower install jquery-selz</code>.</td>
   </tr>
   <tr>
     <td>1.0.3</td> 
@@ -241,8 +245,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="http://cdn.selz.com/jquery/1.0.4/jquery.selz.min.css" rel="stylesheet">
-<script src="http://cdn.selz.com/jquery/1.0.4/jquery.selz.min.js"></script>
+<link href="http://cdn.selz.com/jquery/1.0.5/jquery.selz.min.css" rel="stylesheet">
+<script src="http://cdn.selz.com/jquery/1.0.5/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
