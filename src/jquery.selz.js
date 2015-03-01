@@ -1,4 +1,4 @@
-﻿// NOTE: works with _$elz embeded scripts
+// NOTE: works with _$elz embeded scripts
 // requires jQuery
 
 ;(function ($) {
@@ -9,8 +9,8 @@
 
 	// Plugin config
 	var config = {
-		domain: 		"https://local.selz.com",
-		shortDomain: 	"http://bit.ly",
+		domain: 			"https://selz.com",
+		shortDomain: 	"http://selz.co",
 		settings: {
 			colors: 	null,
 			prefetch: 	false
