@@ -1,5 +1,8 @@
-// NOTE: works with _$elz embeded scripts
-// requires jQuery
+// ==========================================================================
+// Selz jQuery Plugin
+// NOTE: Also works with _$elz embeded scripts
+// Issues - https://github.com/selz/jquery.selz/issues
+// ==========================================================================
 
 ;(function ($) {
 	"use strict";
@@ -23,6 +26,10 @@
 		$(document.body).on("click", "a[href^='" + config.shortDomain + "/']", openOverlay);
 		$(window).on("message", onMessage);
 	}
+
+	function isNullOrEmpty(value) {
+        return (typeof value === "undefined" || value === null || value === "");
+    }
 	
 	function getItemData($link, callback) {
 		// Check cache first
@@ -51,26 +58,29 @@
 		}
 	}
 
-	var openOverlay = function() {
-		var $this = $(this),
-			modalUrl = $this.data("modal-url");
+	function openOverlay(event) {
+		var $trigger = $(event.target),
+			modalUrl = $trigger.data("modal-url");
 
 		if (typeof modalUrl === "string" && modalUrl.length > 0) {
 			window._$elz.m.open(modalUrl, null);
 		} 
 		else {
-			getItemData($this, function (res) {
+			getItemData($trigger, function (res) {
 				window._$elz.m.open(res.Url, null);
 			});
 		}
 
 		// User defined callback
 		if ($.isFunction(config.settings.onModalOpen)) {
-			config.settings.onModalOpen($this);
+			config.settings.onModalOpen($trigger);
 		}
 
-		return false;
-	};
+		config.currentTrigger = $trigger;
+
+		// Prevent the link click
+		event.preventDefault();
+	}
 	
 	function onMessage(event) {
 		event = event.originalEvent;
@@ -92,6 +102,19 @@
 	                        key: 	"modal-theme", 
 	                        data: 	config.settings.colors.buttonText + "," + config.settings.colors.buttonBg 
 	                    }), config.domain);
+
+						// Get custom parameter if it's set
+						if($.isFunction(config.settings.getCustomParameter)) {
+							var customParameter = config.settings.getCustomParameter(config.currentTrigger);
+
+							// Send to modal frame
+							if(!isNullOrEmpty(customParameter)) {
+								event.source.postMessage(JSON.stringify({
+									key: 	"custom-parameter",
+									data: 	customParameter
+								}), config.domain);
+							}
+						}
 					}
 					break;
 
@@ -104,6 +127,12 @@
 				case "processing":
 					if ($.isFunction(config.settings.onProcessing)) {
 						config.settings.onProcessing(json.data);
+					}
+					break;
+
+				case "modal-close":
+					if ($.isFunction(config.settings.onClose)) {
+						config.settings.onClose(json.data);
 					}
 					break;
 			}
@@ -172,6 +201,14 @@
 
 		if (typeof options.onProcessing !== "undefined") {
 			config.settings.onProcessing = options.onProcessing;
+		}
+
+		if (typeof options.onClose !== "undefined") {
+			config.settings.onClose = options.onClose;
+		}
+
+		if(typeof options.getCustomParameter !== "undefined") {
+			config.settings.getCustomParameter = options.getCustomParameter;
 		}
 
 		if (options.prefetch) {
