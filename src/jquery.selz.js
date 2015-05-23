@@ -23,8 +23,16 @@
 	
 	// Listeners
 	function listeners() {
-		$(document.body).on("click", "a[href^='" + config.shortDomain + "/']", openOverlay);
-		$(window).on("message", onMessage);
+		$(document.body)
+			.on("click", "a[href^='" + config.shortDomain + "/']", openOverlay);
+		
+		$(window)
+			.on("message", onMessage)
+			.on("unload", function() {
+				if ($.isFunction(config.settings.onClose) && "checkoutData" in config) {
+					config.settings.onClose(config.checkoutData);
+				}
+			});
 	}
 
 	function isNullOrEmpty(value) {
@@ -37,12 +45,15 @@
 			onDataReady($link, config.items[$link.attr("href")], callback, false);
 		}
 		else {
-			$.getJSON(config.domain + "/embed/itemdata/?itemUrl=" + $link.attr("href") + "&callback=?", function (data) {
+			$.getJSON(config.domain + "/embed/itemdata/?itemurl=" + $link.attr("href") + "&callback=?", function (data) {
 				// Cache url & data
 				$link.data("modal-url", data.Url);
 				config.items[$link.attr("href")] = data;
 
 				onDataReady($link, data, callback, true);
+			})
+			.fail(function() {
+				console.error("Woops. It looks like your link is to a product that can't be found!");
 			});
 		}
 	}
@@ -103,15 +114,15 @@
 	                        data: 	config.settings.colors.buttonText + "," + config.settings.colors.buttonBg 
 	                    }), config.domain);
 
-						// Get custom parameter if it's set
-						if($.isFunction(config.settings.getCustomParameter)) {
-							var customParameter = config.settings.getCustomParameter(config.currentTrigger);
+						// Get tracking parameter if it's set
+						if($.isFunction(config.settings.getTracking)) {
+							var tracking = config.settings.getTracking(config.currentTrigger);
 
 							// Send to modal frame
-							if(!isNullOrEmpty(customParameter)) {
+							if(!isNullOrEmpty(tracking)) {
 								event.source.postMessage(JSON.stringify({
-									key: 	"custom-parameter",
-									data: 	customParameter
+									key: 	"set-tracking",
+									data: 	tracking
 								}), config.domain);
 							}
 						}
@@ -134,6 +145,10 @@
 					if ($.isFunction(config.settings.onClose)) {
 						config.settings.onClose(json.data);
 					}
+					break;
+
+				case "beforeunload":
+					config.checkoutData = json.data;
 					break;
 			}
 		}
@@ -207,8 +222,8 @@
 			config.settings.onClose = options.onClose;
 		}
 
-		if(typeof options.getCustomParameter !== "undefined") {
-			config.settings.getCustomParameter = options.getCustomParameter;
+		if(typeof options.getTracking !== "undefined") {
+			config.settings.getTracking = options.getTracking;
 		}
 
 		if (options.prefetch) {
