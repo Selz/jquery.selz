@@ -1,6 +1,6 @@
-# jQuery.selz
+# jQuery.Selz
 
-Open your [Selz.com](https://selz.com) item links in an overlay to let your customers complete their purchase directly onto your site. 
+Open your [Selz.com](https://selz.com) item links in an overlay to let your customers complete their purchase directly on your site. 
 
 ## Changelog
 
