@@ -1,4 +1,4 @@
-# jQuery.Selz
+# Selz jQuery Plugin
 
 Open your [Selz.com](https://selz.com) item links in an overlay to let your customers complete their purchase directly on your site. 
 
