@@ -110,9 +110,14 @@
 				case "modal-theme":
 					if (config.settings.colors !== null) {
 						event.source.postMessage(JSON.stringify({ 
-	                        key: 	"modal-theme", 
-	                        data: 	config.settings.colors.buttonText + "," + config.settings.colors.buttonBg 
-	                    }), config.domain);
+							key: 	"modal-theme", 
+							data: 	{
+								ct: 	config.settings.colors.buttonText,
+								cb: 	config.settings.colors.buttonBg,
+								chbg: 	config.settings.colors.checkoutHeaderBg,
+								chtx: 	config.settings.colors.checkoutHeaderText
+							}
+						}), config.domain);
 
 						// Get tracking parameter if it's set
 						if($.isFunction(config.settings.getTracking)) {
