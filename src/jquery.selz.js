@@ -12,12 +12,15 @@
 
 	// Plugin config
 	var config = {
-		domain: 			"https://selz.com",
+		domain: 		"https://selz.com",
 		shortDomain: 	"http://selz.co",
-		settings: {
-			colors: 	null,
-			prefetch: 	false
-		},
+		prefetch: 		false,
+		items: 			{},
+		theme: 			{ checkout: {}, button: {} }
+	},
+
+	// Cache object
+	cache = {
 		items: {}
 	};
 	
@@ -29,8 +32,8 @@
 		$(window)
 			.on("message", onMessage)
 			.on("unload", function() {
-				if ($.isFunction(config.settings.onClose) && "checkoutData" in config) {
-					config.settings.onClose(config.checkoutData);
+				if ($.isFunction(config.onClose) && "checkoutData" in config) {
+					config.onClose(cache.checkoutData);
 				}
 			});
 	}
@@ -41,14 +44,14 @@
 	
 	function getItemData($link, callback) {
 		// Check cache first
-		if (typeof config.items[$link.attr("href")] !== "undefined") {
-			onDataReady($link, config.items[$link.attr("href")], callback, false);
+		if (typeof cache.items[$link.attr("href")] !== "undefined") {
+			onDataReady($link, cache.items[$link.attr("href")], callback, false);
 		}
 		else {
 			$.getJSON(config.domain + "/embed/itemdata/?itemurl=" + $link.attr("href") + "&callback=?", function (data) {
 				// Cache url & data
 				$link.data("modal-url", data.Url);
-				config.items[$link.attr("href")] = data;
+				cache.items[$link.attr("href")] = data;
 
 				onDataReady($link, data, callback, true);
 			})
@@ -64,8 +67,8 @@
 			callback(data);
 		}
 		// User defined callback
-		if ($.isFunction(config.settings.onDataReady) && trigger) {
-			config.settings.onDataReady($link, data);
+		if ($.isFunction(config.onDataReady) && trigger) {
+			config.onDataReady($link, data);
 		}
 	}
 
@@ -83,11 +86,12 @@
 		}
 
 		// User defined callback
-		if ($.isFunction(config.settings.onModalOpen)) {
-			config.settings.onModalOpen($trigger);
+		if ($.isFunction(config.onModalOpen)) {
+			config.onModalOpen($trigger);
 		}
 
-		config.currentTrigger = $trigger;
+		// Cache the current trigger
+		cache.currentTrigger = $trigger;
 
 		// Prevent the link click
 		event.preventDefault();
@@ -108,66 +112,60 @@
 
 			switch(json.key) {
 				case "modal-theme":
-					if (config.settings.colors !== null) {
+					console.log(config.theme.checkout.headerBg);
+
+					if (config.theme !== null) {
 						event.source.postMessage(JSON.stringify({ 
 							key: 	"modal-theme", 
 							data: 	{
-								ct: 	config.settings.colors.buttonText,
-								cb: 	config.settings.colors.buttonBg,
-								chbg: 	config.settings.colors.checkoutHeaderBg,
-								chtx: 	config.settings.colors.checkoutHeaderText
+								ct: 	config.theme.button.text,
+								cb: 	config.theme.button.bg,
+								chbg: 	config.theme.checkout.headerBg,
+								chtx: 	config.theme.checkout.headerText
 							}
 						}), config.domain);
+					}
 
-						// Get tracking parameter if it's set
-						if($.isFunction(config.settings.getTracking)) {
-							var tracking = config.settings.getTracking(config.currentTrigger);
+					// Get tracking parameter if it's set
+					if($.isFunction(config.getTracking)) {
+						var tracking = config.getTracking(cache.currentTrigger);
 
-							// Send to modal frame
-							if(!isNullOrEmpty(tracking)) {
-								event.source.postMessage(JSON.stringify({
-									key: 	"set-tracking",
-									data: 	tracking
-								}), config.domain);
-							}
+						// Send to modal frame
+						if(!isNullOrEmpty(tracking)) {
+							event.source.postMessage(JSON.stringify({
+								key: 	"set-tracking",
+								data: 	tracking
+							}), config.domain);
 						}
 					}
+
 					break;
 
 				case "purchase":
-					if ($.isFunction(config.settings.onPurchase)) {
-						config.settings.onPurchase(json.data);
+					if ($.isFunction(config.onPurchase)) {
+						config.onPurchase(json.data);
 					}
 					break;
 
 				case "processing":
-					if ($.isFunction(config.settings.onProcessing)) {
-						config.settings.onProcessing(json.data);
+					if ($.isFunction(config.onProcessing)) {
+						config.onProcessing(json.data);
 					}
 					break;
 
 				case "modal-close":
-					if ($.isFunction(config.settings.onClose)) {
-						config.settings.onClose(json.data);
+					if ($.isFunction(config.onClose)) {
+						config.onClose(config.currentTrigger, json.data);
 					}
 					break;
 
 				case "beforeunload":
-					config.checkoutData = json.data;
+					cache.checkoutData = json.data;
 					break;
 			}
 		}
 		// Invalid JSON, do nothing
 		catch (exception) {}
-	}
-
-	function addModalTheme(type, color) {
-		if (typeof color === "string" && color.length > 0) {
-			if (config.settings.colors === null) {
-				config.settings.colors = {};
-			}
-			config.settings.colors[type] = color;
-		}
 	}
 	
 	function prefetch() {
@@ -195,44 +193,11 @@
 
 	// Plugin
 	$.selz = function (options) {
-		// For testing
-		if (typeof options.domain !== "undefined") {
-			config.domain = options.domain;
-		}
-		if (typeof options.shortDomain !== "undefined") {
-			config.shortDomain = options.shortDomain;
-		}
+		// Extend users options with base config
+		$.extend(true, config, options);
 
-		// NOTE: only 2 colors now, but it would be better to have options.theme object, so we can simply use extend
-		addModalTheme("buttonBg", options.buttonBg);
-		addModalTheme("buttonText", options.buttonText);
-
-		if (typeof options.onDataReady !== "undefined") {
-			config.settings.onDataReady = options.onDataReady;
-		}
-
-		if (typeof options.onModalOpen !== "undefined") {
-			config.settings.onModalOpen = options.onModalOpen;
-		}
-		
-		if (typeof options.onPurchase !== "undefined") {
-			config.settings.onPurchase = options.onPurchase;
-		}
-
-		if (typeof options.onProcessing !== "undefined") {
-			config.settings.onProcessing = options.onProcessing;
-		}
-
-		if (typeof options.onClose !== "undefined") {
-			config.settings.onClose = options.onClose;
-		}
-
-		if(typeof options.getTracking !== "undefined") {
-			config.settings.getTracking = options.getTracking;
-		}
-
-		if (options.prefetch) {
-			config.settings.prefetch = true;
+		// Prefetch data
+		if (config.prefetch) {
 			prefetch();
 		}
 	};   
