@@ -56,7 +56,11 @@
 				onDataReady($link, data, callback, true);
 			})
 			.fail(function() {
-				//console.error("Woops. It looks like your link is to a product that can't be found!");
+				// Check for support 
+				// https://developer.mozilla.org/en-US/docs/Web/API/Console/error
+				if("console" in window) {
+					console.error("Woops. It looks like your link is to a product that can't be found!");
+				}
 			});
 		}
 	}
@@ -112,8 +116,6 @@
 
 			switch(json.key) {
 				case "modal-theme":
-					//console.log(config.theme.checkout.headerBg);
-
 					if (config.theme !== null) {
 						event.source.postMessage(JSON.stringify({ 
 							key: 	"modal-theme", 
