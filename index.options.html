@@ -13,6 +13,13 @@
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="http://cdn.selz.com/jquery/1.0.5/jquery.selz.min.js"></script>
 		<script>
+			// Send beacon fallback
+			navigator.sendBeacon = navigator.sendBeacon || function (url, data) {
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", url, false);
+				xhr.send(data);
+			};
+
 			$(function () { 
 				$.selz({
 					theme: {
@@ -30,10 +37,10 @@
 						return $link.data("tracking");
 					},
 					onDataReady: function ($link, data) {
-						$link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '"><br>' + data.Title);
+						$link.html("<img src='" + data.ImageUrlSmall + "' alt='" + data.Title + "'><br>" + data.Title);
 					},
 					onModalOpen: function ($link) {
-						console.log("Overlay opened!");
+						console.log("Overlay opened for " + $link.attr("href"));
 					},
 					onPurchase: function (data) {
 						console.log(data);
@@ -45,6 +52,9 @@
 						if(typeof data.modal_url === "string"){
 							$link.data("modal-url", data.modal_url);
 						}
+
+						// Send data to your server on modal/tab/window close
+						navigator.sendBeacon("http://requestb.in/1abpybo1", JSON.stringify(data));
 					}
 				});
 			});
