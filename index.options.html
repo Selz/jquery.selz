@@ -15,7 +15,6 @@
 		<script>
 			$(function () { 
 				$.selz({
-					prefetch: true,
 					theme: {
 						button: {
 							bg:             "#5fa9df",
@@ -26,6 +25,7 @@
 							headerText:     "#fff"
 						}
 					},
+					prefetch: true,
 					getTracking: function($link) {
 						return $link.data("tracking");
 					},
@@ -42,8 +42,8 @@
 						console.log(data);
 					},
 					onClose: function ($link, data) {
-						if(typeof data.original_url === "string"){
-							$link.data("modal-url", data.original_url);
+						if(typeof data.modal_url === "string"){
+							$link.data("modal-url", data.modal_url);
 						}
 					}
 				});

@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.6</td> 
+    <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options.</td>
+  </tr>
+  <tr>
     <td>1.0.5</td> 
     <td>Minor bug fixes</td>
   </tr>
@@ -98,22 +102,40 @@ You can also fetch data about your product, customise overlay button colors and 
     <th width="50%">Description</th>
   </tr>
   <tr>
-    <td><code>buttonBg</code></td>
+    <td><code>theme.button.bg</code></td>
     <td>String</td>
     <td><code>#6d48cc</code></td>
     <td>The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.</td>
   </tr>
   <tr>
-    <td><code>buttonText</code></td>
+    <td><code>theme.button.text</code></td>
     <td>String</td>
     <td><code>#fff</code></td>
     <td>Sets the <code>color</code> for the button text. Defaults to white.</td>
+  </tr>
+  <tr>
+    <td><code>theme.checkout.headerBg</code></td>
+    <td>String</td>
+    <td><code>#6d48cc</code></td>
+    <td>The checkout header base gradient <code>color</code>. Defaults to the Selz purple.</td>
+  </tr>
+  <tr>
+    <td><code>theme.checkout.headerText</code></td>
+    <td>String</td>
+    <td><code>#fff</code></td>
+    <td>Sets the <code>color</code> for the checkout header text. Defaults to white.</td>
   </tr>
   <tr>
     <td><code>prefetch</code></td>
     <td>Boolean</td>
     <td><code>false</code></td>
     <td>Whether to prefetch data on plugin load so it is available to the <code>onDataReady</code> callback. Defaults to false.</td>
+  </tr>
+  <tr>
+    <td><code>getTracking</code></td>
+    <td>Function</td>
+    <td><code>null</code></td>
+    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID that can be received after successful purchase within webhook. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
   </tr>
   <tr>
     <td><code>onDataReady</code></td>
@@ -138,6 +160,12 @@ You can also fetch data about your product, customise overlay button colors and 
     <td>Function</td>
     <td><code>null</code></td>
     <td>Callback for when the item purchase is pending processing. The function gets passed a single argument, the data for the processing order.</td>
+  </tr>
+  <tr>
+    <td><code>onClose</code></td>
+    <td>Function</td>
+    <td><code>null</code></td>
+    <td>Callback for when the overlay is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and the data for the abandoned cart as below.</td>
   </tr>
 </table>
 
@@ -212,28 +240,70 @@ Here's some example data returned by the `onProcessing` callback:
 }
 ```
 
+#### Example data returned by onClose 
+
+Here's some example data returned by the `onClose` callback:
+
+```javascript
+{
+  id: "{abandoned-cart-id}",
+  expires: "{abandoned-cart-expiry-date-in-unix-time}",
+  modal_url: "{modal-URL}",
+  url: "{page-URL}",
+  buyer: {
+    firstname: "John",
+    lastname: "Appleseed",
+    email: "john.appleseed@selz.com",
+    delivery: {
+      city: "San Francisco",
+      country: "US"
+    },
+    billing: {
+      city: "San Francisco",
+      country: "US"
+    }
+}
+```
+
 #### Example setup using options
 
 ```javascript
 $(function() {
-	$.selz({
-    	buttonBg: "#60aae0",
-    	buttonText: "#fff",
-   		prefetch: true,
-    	onDataReady: function ($link, data) {
-    		// Customise the link with item data
-        	$link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
-    	},
-    	onModalOpen: function ($link) {
-    		// Track open in Google Analytics
-			ga('send', 'pageview', $link.attr("href")); 
-    	},
-        onPurchase: function (data) {
-            // Track purchase
+  $.selz({
+      theme: {
+        button: {
+          bg:             "#5fa9df",
+          text:           "#fff"
         },
-        onProcessing: function (data) {
-            // Track processing
+        checkout: {
+          headerBg:       "#5fa9df",
+          headerText:     "#fff"
         }
+      },
+      prefetch: true,
+      getTracking: function($link) {
+        return $link.data("tracking");
+      },
+      onDataReady: function ($link, data) {
+        // Customise the link with item data
+        $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
+      },
+      onModalOpen: function ($link) {
+        // Track open in Google Analytics
+        ga('send', 'pageview', $link.attr("href")); 
+      },
+      onPurchase: function (data) {
+        // Track purchase
+      },
+      onProcessing: function (data) {
+        // Track processing
+      },
+      onClose: function ($link, data) {
+        // Continue checkout flow
+        if(typeof data.modal_url === "string"){
+          $link.data("modal-url", data.modal_url);
+        }
+      }
     });
 });
 ```
