@@ -315,8 +315,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="http://cdn.selz.com/jquery/1.0.5/jquery.selz.min.css" rel="stylesheet">
-<script src="http://cdn.selz.com/jquery/1.0.5/jquery.selz.min.js"></script>
+<link href="http://cdn.selz.com/jquery/1.0.6/jquery.selz.min.css" rel="stylesheet">
+<script src="http://cdn.selz.com/jquery/1.0.6/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
