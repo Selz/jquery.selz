@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<ul>
-			<li><a href="http://selz.co/1gfLTzi">Buy now</a></li>
+			<li><a href="http://selz.co/1gfLTzi" data-tracking="ABCD1234">Buy now</a></li>
 		</ul>
 		
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -15,9 +15,20 @@
 		<script>
 			$(function () { 
 				$.selz({
-					buttonBg: "#60aae0",
-					buttonText: "#fff",
 					prefetch: true,
+					theme: {
+						button: {
+							bg:             "#5fa9df",
+							text:           "#fff"
+						},
+						checkout: {
+							headerBg:       "#5fa9df",
+							headerText:     "#fff"
+						}
+					},
+					getTracking: function($link) {
+						return $link.data("tracking");
+					},
 					onDataReady: function ($link, data) {
 						$link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '"><br>' + data.Title);
 					},
@@ -27,8 +38,13 @@
 					onPurchase: function (data) {
 						console.log(data);
 					},
-                    onProcessing: function (data) {
+					onProcessing: function (data) {
 						console.log(data);
+					},
+					onClose: function ($link, data) {
+						if(typeof data.original_url === "string"){
+							$link.data("modal-url", data.original_url);
+						}
 					}
 				});
 			});

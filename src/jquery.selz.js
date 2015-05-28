@@ -56,7 +56,7 @@
 				onDataReady($link, data, callback, true);
 			})
 			.fail(function() {
-				console.error("Woops. It looks like your link is to a product that can't be found!");
+				//console.error("Woops. It looks like your link is to a product that can't be found!");
 			});
 		}
 	}
@@ -112,7 +112,7 @@
 
 			switch(json.key) {
 				case "modal-theme":
-					console.log(config.theme.checkout.headerBg);
+					//console.log(config.theme.checkout.headerBg);
 
 					if (config.theme !== null) {
 						event.source.postMessage(JSON.stringify({ 
@@ -155,7 +155,7 @@
 
 				case "modal-close":
 					if ($.isFunction(config.onClose)) {
-						config.onClose(config.currentTrigger, json.data);
+						config.onClose(cache.currentTrigger, json.data);
 					}
 					break;
 
@@ -200,6 +200,6 @@
 		if (config.prefetch) {
 			prefetch();
 		}
-	};   
+	};
 
 })(window.jQuery);
