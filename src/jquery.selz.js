@@ -16,7 +16,7 @@
 		shortDomain: 	"http://selz.co",
 		prefetch: 		false,
 		items: 			{},
-		theme: 			{ checkout: {}, button: {} }
+		theme: 			{}
 	},
 
 	// Cache object
@@ -38,9 +38,21 @@
 			});
 	}
 
+	// Check if value is null or empty
 	function isNullOrEmpty(value) {
         return (typeof value === "undefined" || value === null || value === "");
     }
+
+    // Get size/length of an object
+	Object.size = function(obj) {
+		var size = 0, key;
+		for (key in obj) {
+			if (obj.hasOwnProperty(key)) { 
+				size++;
+			}
+		}
+		return size;
+	};
 	
 	function getItemData($link, callback) {
 		// Check cache first
@@ -116,17 +128,43 @@
 
 			switch(json.key) {
 				case "modal-theme":
-					if (config.theme !== null) {
-						event.source.postMessage(JSON.stringify({ 
-							key: 	"modal-theme", 
-							data: 	{
-								ct: 	config.theme.button.text,
-								cb: 	config.theme.button.bg,
-								chbg: 	config.theme.checkout.headerBg,
-								chtx: 	config.theme.checkout.headerText
-							}
-						}), config.domain);
-					}
+					var theme = {};
+
+					// Convert into new object
+					$.each(config.theme, function(element, colors) {
+						switch(element) {
+							case "button": 
+								$.each(colors, function(key, color) {
+									switch(key) {
+										case "bg": 
+											theme.cb = color;
+											break;
+										case "text":
+											theme.ct = color;
+											break;
+									}
+								});
+								break;
+
+							case "checkout": 
+								$.each(colors, function(key, color) {
+									switch(key) {
+										case "headerBg": 
+											theme.chbg = color;
+											break;
+										case "headerText":
+											theme.chtx = color;
+											break;
+									}
+								});
+								break;
+						}
+					});
+
+					event.source.postMessage(JSON.stringify({ 
+						key: 	"modal-theme", 
+						data: 	(!!Object.size(theme) ? theme : null)
+					}), config.domain);
 
 					// Get tracking parameter if it's set
 					if($.isFunction(config.getTracking)) {
