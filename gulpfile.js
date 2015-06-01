@@ -69,7 +69,7 @@ gulp.task('upload', function () {
 
     return gulp.src('src/jquery.selz.min**')
 		.pipe(rename(function (path) {
-		    path.dirname += '/jquery/1.0.5';
+		    path.dirname += '/jquery/1.0.6';
 		}))
 		.pipe(awspublish.gzip())
 		.pipe(publisher.publish(headers))
