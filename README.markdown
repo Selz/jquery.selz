@@ -135,7 +135,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>getTracking</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after successful purchase within webhook. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
+    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within webhook or in your dashboard order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
   </tr>
   <tr>
     <td><code>onDataReady</code></td>
@@ -165,7 +165,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onClose</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the overlay is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and the data for the abandoned cart as below.</td>
+    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the abandoned cart as below id the user had entered any data into the checkout.</td>
   </tr>
 </table>
 
@@ -246,14 +246,14 @@ Here's some example data returned by the `onClose` callback:
 
 ```javascript
 {
-  id: "{abandoned-cart-id}",
-  expires: "{abandoned-cart-expiry-date-in-unix-time}",
-  modal_url: "{modal-URL}",
-  url: "{page-URL}",
+  id: "xxxx",					// Unique checkout ID
+  expires: "1433122978", 		// Unix time that the cart will expire
+  modal_url: "https://...", 	// URL used for a modal
+  url: "https://...", 		// URL used for a page tab
   buyer: {
     firstname: "John",
     lastname: "Appleseed",
-    email: "john.appleseed@selz.com",
+    email: "example@domain.com",
     delivery: {
       city: "San Francisco",
       country: "US"
