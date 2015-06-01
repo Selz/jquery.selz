@@ -165,7 +165,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onClose</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the abandoned cart as below id the user had entered any data into the checkout.</td>
+    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the abandoned cart as below if the user had entered any data into the checkout and not completed (otherwise an empty object).</td>
   </tr>
 </table>
 
