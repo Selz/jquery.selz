@@ -135,7 +135,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>getTracking</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within <a href="https://selz.com/support/using-webhooks-selz" target="_blank">webhook</a> or in your dashboard order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
+    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within the data in your <code>onPurchase</code> callback, a <a href="https://selz.com/support/using-webhooks-selz" target="_blank">webhook</a>, or in your dashboard's order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
   </tr>
   <tr>
     <td><code>onDataReady</code></td>
@@ -216,6 +216,7 @@ Here's some example data returned by the `onPurchase` callback:
 	ReferenceId: "XXXXXXXX",
 	Shipping: 20,
 	Timestamp: 1398921408,
+	TrackingId: "123456",
 	TotalPrice: 29.99,
 	Items = [{
 		ItemId: "xxxx",
