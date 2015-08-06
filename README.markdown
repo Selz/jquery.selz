@@ -11,11 +11,11 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.7</td> 
-    <td>Bug fix for click event propogation.</td>
+    <td>Bug fix for click event propagation</td>
   </tr>
   <tr>
     <td>1.0.6</td> 
-    <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options.</td>
+    <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options</td>
   </tr>
   <tr>
     <td>1.0.5</td> 
@@ -23,19 +23,19 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.4</td> 
-    <td>Added to Bower packages: <code>bower install jquery-selz</code>.</td>
+    <td>Added to Bower packages: <code>bower install jquery-selz</code></td>
   </tr>
   <tr>
     <td>1.0.3</td> 
-    <td>Added <code>onProcessing</code> callback.</td>
+    <td>Added <code>onProcessing</code> callback</td>
   </tr>
   <tr>
     <td>1.0.2</td> 
-    <td>Added <code>onPurchase</code> callback.</td>
+    <td>Added <code>onPurchase</code> callback</td>
   </tr>
   <tr>
     <td>1.0.1</td> 
-    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data.</td>
+    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data</td>
   </tr>
 </table>
 
