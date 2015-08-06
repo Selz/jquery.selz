@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.7</td> 
+    <td>Bug fix for click event propogation.</td>
+  </tr>
+  <tr>
     <td>1.0.6</td> 
     <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options.</td>
   </tr>
@@ -316,8 +320,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.6/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.6/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.7/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.7/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
