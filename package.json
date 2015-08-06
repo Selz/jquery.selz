@@ -1,6 +1,6 @@
 {
   "name": "jquery.selz",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
   "main": "gulpfile.js",
   "dependencies": {},

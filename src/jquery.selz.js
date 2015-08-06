@@ -1,6 +1,5 @@
 // ==========================================================================
 // Selz jQuery Plugin
-// NOTE: Also works with _$elz embeded scripts
 // Issues - https://github.com/selz/jquery.selz/issues
 // ==========================================================================
 
@@ -54,6 +53,7 @@
 		return size;
 	};
 	
+	// Fetch the item data
 	function getItemData($link, callback) {
 		// Check cache first
 		if (typeof cache.items[$link.attr("href")] !== "undefined") {
@@ -71,12 +71,13 @@
 				// Check for support 
 				// https://developer.mozilla.org/en-US/docs/Web/API/Console/error
 				if("console" in window) {
-					console.error("Woops. It looks like your link is to a product that can't be found!");
+					console.error("Whoops. It looks like your link is to a product that can't be found!");
 				}
 			});
 		}
 	}
 
+	// Data ready callback
 	function onDataReady($link, data, callback, trigger) {
 		// Plugin callback
 		if ($.isFunction(callback)) {
@@ -88,16 +89,18 @@
 		}
 	}
 
+	// Open the actual overlay
 	function openOverlay(event) {
-		var $trigger = $(event.target),
+		/*jshint validthis: true */
+		var $trigger = $(this),
 			modalUrl = $trigger.data("modal-url");
 
 		if (typeof modalUrl === "string" && modalUrl.length > 0) {
 			window._$elz.m.open(modalUrl, null);
 		} 
 		else {
-			getItemData($trigger, function (res) {
-				window._$elz.m.open(res.Url, null);
+			getItemData($trigger, function(data) {
+				window._$elz.m.open(data.Url, null);
 			});
 		}
 
@@ -113,6 +116,7 @@
 		event.preventDefault();
 	}
 	
+	// Message handler
 	function onMessage(event) {
 		event = event.originalEvent;
 		var message = event.data;
@@ -208,9 +212,10 @@
 		catch (exception) {}
 	}
 	
+	// Prefetch data
 	function prefetch() {
-		$("a[href^='" + config.shortDomain + "/']").each(function (i, link) {
-			getItemData($(link), null);
+		$("a[href^='" + config.shortDomain + "/']").each(function() {
+			getItemData($(this), null);
 		});
 	}
 		

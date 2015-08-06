@@ -10,7 +10,7 @@
     "couch"         : false,
     "wsh"           : true,   // Windows Scripting Host.
     "jquery"        : true,
-    "predef"        : [ "jQuery", "$", "engine", "Modernizr", "ga", "mixpanel", "log", "fullScreenApi", "_sift", "Raven", "templates", "Hogan", "locale_json" ],
+    "predef"        : [ "jQuery", "$" ],
 
     // Development.
     "debug"         : false,  // Allow debugger statements e.g. browser breakpoints.
