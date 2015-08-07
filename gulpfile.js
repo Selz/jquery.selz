@@ -5,6 +5,7 @@
 /*jshint -W079 */
 
 var fs 			= require("fs"),
+	path        = require("path"),
 	gulp 		= require("gulp"),
 	gutil 		= require("gulp-util"),
 	concat 		= require("gulp-concat"),
@@ -12,9 +13,11 @@ var fs 			= require("fs"),
 	less 		= require("gulp-less"),
 	minifyCss 	= require("gulp-minify-css"),
 	rename 		= require("gulp-rename"),
-	awspublish 	= require("gulp-awspublish"),
+	s3          = require("gulp-s3"),
+	gzip        = require("gulp-gzip"),
 	prefixer 	= require("gulp-autoprefixer"),
-	replace     = require("gulp-replace");
+	replace     = require("gulp-replace"),
+	size        = require("gulp-size");
 
 // Load json
 function loadJSON(path) {
@@ -24,14 +27,15 @@ function loadJSON(path) {
 // Set paths
 var root = __dirname,
 	paths = {
-	scripts: 	["src/jquery.selz.js"],
-	css: 		["src/jquery.selz.less"],
-	build: 		"src",
-	docs: 		["README.markdown", "*.html"],
-	cdn: {
-		root: 	"cdn.selz.com/jquery"
-	}
-};
+		scripts: 	["src/jquery.selz.js"],
+		css: 		["src/jquery.selz.less"],
+		build: 		"dist",
+		docs: 		["README.markdown", "*.html"],
+		cdn: {
+			root: 	"cdn.selz.com/jquery",
+			upload: path.join(root, "dist/**")
+		}
+	};
 
 // Default development tasks
 // ------------------------------------------
@@ -64,6 +68,14 @@ gulp.task("default", ["scripts", "css", "watch"]);
 var package = loadJSON("package.json"),
 	aws 	= loadJSON("aws.json"),
 	version = package.version,
+	maxAge  = 31536000, // seconds 1 year
+	options = {
+        headers: {
+            "Cache-Control": "max-age=" + maxAge,
+            "Vary": "Accept-Encoding"
+        },
+        gzippedOnly: true
+	},
 	cdnpath = new RegExp(paths.cdn.root + "\/(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)","gi");
 
 // Update version references
@@ -77,23 +89,16 @@ gulp.task("docs", function () {
 
 // Upload to S3
 gulp.task("upload", function () {
-    var publisher = awspublish.create(aws),
-    	maxAge = 31536000; // seconds 1 year
-
-    var headers = {
-        "Cache-Control": "max-age=" + maxAge,
-        "Content-Encoding": "gzip",
-        "Vary": "Accept-Encoding"
-    };
-
-    return gulp.src("src/jquery.selz.min**")
-		.pipe(rename(function (path) {
+    return gulp.src(paths.cdn.upload)
+    	.pipe(size({
+            showFiles: true,
+            gzip: true
+        }))
+ 		.pipe(rename(function (path) {
 		    path.dirname += "/jquery/" + version;
 		}))
-		.pipe(awspublish.gzip())
-		.pipe(publisher.publish(headers))
-    	//.pipe(publisher.cache())
-		.pipe(awspublish.reporter());
+		.pipe(gzip())
+        .pipe(s3(aws, options));
 });
 
 gulp.task("publish", ["scripts", "css", "upload", "docs"]);
