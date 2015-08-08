@@ -11,7 +11,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.8</td> 
-    <td>Prefetching *always* (no longer an option), to fix a bug with mobile browsers.</td>
+    <td>Prefetching <em>always</em> (no longer an option), to fix a bug with mobile browsers.</td>
   </tr>
   <tr>
     <td>1.0.7</td> 
