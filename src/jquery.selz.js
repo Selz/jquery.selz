@@ -95,6 +95,10 @@
 		var $trigger = $(this),
 			modalUrl = $trigger.data("modal-url");
 
+		// Prevent the link click
+		event.preventDefault();
+
+		// If the modal url is specified, use that
 		if (typeof modalUrl === "string" && modalUrl.length > 0) {
 			// Prevent the link click
 			event.preventDefault();
@@ -117,8 +121,6 @@
 
 		// Cache the current trigger
 		cache.currentTrigger = $trigger;
-
-		
 	}
 	
 	// Message handler
@@ -252,9 +254,7 @@
 		}
 
 		// Prefetch data
-		if (config.prefetch) {
-			prefetch();
-		}
+		prefetch();
 	};
 
 })(window.jQuery);

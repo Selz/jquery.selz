@@ -14,8 +14,15 @@
 @loader-size-base:                      24px;
 @loader-border-width-base:              3px;
 @loader-bg-base:                        #6F7E86;
-@loader-border-width:                   2px;
+@loader-border-width:                   1px;
 @loader-border-color:                   #fff;
+
+// Loader border
+// ---------------------------------------
+.loader-border-color(@color) {
+    border-color: rgba(red(@color), green(@color), blue(@color), .2);
+    border-left-color: @color;
+}
 
 // Animations
 // --------------------------------------------
@@ -23,15 +30,9 @@
     0%      { opacity: 0 }
     100%    { opacity: 1 }
 }
-@keyframes spinner {
-    0% { 
-        transform: scale(.1);
-        border-width: (@loader-border-width * 3);
-    } 
-    100% {
-        transform: scale(1.0);
-        opacity: 0;
-    }
+@keyframes spin {
+    0%      { transform: rotate(0deg); }
+    100%    { transform: rotate(360deg); }
 }
 
 #_selz-modal {
@@ -80,7 +81,7 @@
     transform: translate(-50%, -50%);
 
     // Style
-    border-radius: @border-radius-base;
+    border-radius: 50px;
     background: rgba(red(@gray-dark), green(@gray-dark), blue(@gray-dark), .75);
 
     // Text
@@ -110,8 +111,10 @@
         height: @loader-size-base;
         margin: -(@loader-size-base / 2) 0 0 -(@loader-size-base / 2);
 
-        border: @loader-border-width solid @loader-border-color;
-        animation: spinner 1s infinite ease;
+        border-width: @loader-border-width;
+        border-style: solid;
+        .loader-border-color(@loader-border-color);
+        animation: spin .6s infinite linear;
         border-radius: 50%;
 
         // Hide text
