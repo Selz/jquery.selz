@@ -12,7 +12,7 @@
 	// Plugin config
 	var config = {
 		domain: 		"https://selz.com",
-		shortDomain: 	"http://selz.co",
+		shortDomain: 	["http://selz.co/", "http://bit.ly/", "https://selz.com/item/"],
 		prefetch: 		false,
 		items: 			{},
 		theme: 			{}
@@ -26,7 +26,7 @@
 	// Listeners
 	function listeners() {
 		$(document.body)
-			.on("click", "a[href^='" + config.shortDomain + "/']", openOverlay);
+			.on("click", "a[href^='" + config.shortDomain.join(",") + "']", openOverlay);
 		
 		$(window)
 			.on("message", onMessage)
@@ -71,7 +71,7 @@
 				// Check for support 
 				// https://developer.mozilla.org/en-US/docs/Web/API/Console/error
 				if("console" in window) {
-					console.error("Whoops. It looks like your link is to a product that can't be found!");
+					console.warn("We couldn't find a matching item for that link.");
 				}
 			});
 		}
@@ -96,10 +96,16 @@
 			modalUrl = $trigger.data("modal-url");
 
 		if (typeof modalUrl === "string" && modalUrl.length > 0) {
+			// Prevent the link click
+			event.preventDefault();
+
 			window._$elz.m.open(modalUrl, null);
 		} 
 		else {
 			getItemData($trigger, function(data) {
+				// Prevent the link click
+				event.preventDefault();
+
 				window._$elz.m.open(data.Url, null);
 			});
 		}
@@ -112,8 +118,7 @@
 		// Cache the current trigger
 		cache.currentTrigger = $trigger;
 
-		// Prevent the link click
-		event.preventDefault();
+		
 	}
 	
 	// Message handler
@@ -240,6 +245,11 @@
 	$.selz = function (options) {
 		// Extend users options with base config
 		$.extend(true, config, options);
+
+		// Make shortDomain an array
+		if(!$.isArray(config.shortDomain)) {
+			config.shortDomain = [config.shortDomain];
+		}
 
 		// Prefetch data
 		if (config.prefetch) {
