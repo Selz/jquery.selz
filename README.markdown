@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.9</td> 
+    <td>Added support for bit.ly (fallback) and full selz.com URLs</td>
+  </tr>
+  <tr>
     <td>1.0.8</td> 
     <td>Prefetching <em>always</em> (no longer an option), to fix a bug with mobile browsers.</td>
   </tr>
@@ -317,8 +321,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.8/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.8/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.9/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.9/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT

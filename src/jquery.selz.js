@@ -12,7 +12,8 @@
 	// Plugin config
 	var config = {
 		domain: 		"https://selz.com",
-		shortDomain: 	["http://selz.co/", "http://bit.ly/", "https://selz.com/item/"],
+		shortDomain: 	["http://selz.co/", "http://bit.ly/"],
+		longDomain: 	".selz.com/item/",
 		prefetch: 		false,
 		items: 			{},
 		theme: 			{}
@@ -26,7 +27,7 @@
 	// Listeners
 	function listeners() {
 		$(document.body)
-			.on("click", "a[href^='" + config.shortDomain.join(",") + "']", openOverlay);
+			.on("click", generateSelector(), openOverlay);
 		
 		$(window)
 			.on("message", onMessage)
@@ -52,6 +53,25 @@
 		}
 		return size;
 	};
+
+	// Generate the selector for the links
+	function generateSelector() {
+		var selector = "";
+
+		// Short links
+		// e.g. http://selz.co/1abc234 or http://bit.ly/1abc234 
+		$.each(config.shortDomain, function(index, value) { 
+			selector += "a[href^='" + value + "']" + (index < (config.shortDomain.length - 1) ? "," : "");
+		});
+
+		// Add support for full links 
+		// e.g. https://store.selz.com/item/563809ddf...
+		if(typeof config.longDomain === "string") {
+			selector += ",a[href*='" + config.longDomain + "']";
+		}
+
+		return selector;
+	}
 	
 	// Fetch the item data
 	function getItemData($link, callback) {
@@ -100,16 +120,12 @@
 
 		// If the modal url is specified, use that
 		if (typeof modalUrl === "string" && modalUrl.length > 0) {
-			// Prevent the link click
-			event.preventDefault();
-
+			// Open specified URL
 			window._$elz.m.open(modalUrl, null);
 		} 
 		else {
 			getItemData($trigger, function(data) {
-				// Prevent the link click
-				event.preventDefault();
-
+				// Open ajax URL
 				window._$elz.m.open(data.Url, null);
 			});
 		}
