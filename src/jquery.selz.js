@@ -72,7 +72,7 @@
 				result = JSON.parse(window.localStorage[key]);
 			}
 			catch(e) {
-				result = window.localStorage[key]
+				result = window.localStorage[key];
 			}
 
 			return result;
