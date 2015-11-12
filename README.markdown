@@ -10,8 +10,24 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.10</td> 
+    <td>Performance improvements, caching option, small bug fix for prefetching</td>
+  </tr>
+  <tr>
+    <td>1.0.9</td> 
+    <td>Added support for bit.ly (fallback) and full selz.com URLs</td>
+  </tr>
+  <tr>
+    <td>1.0.8</td> 
+    <td>Prefetching <em>always</em> (no longer an option), to fix a bug with mobile browsers</td>
+  </tr>
+  <tr>
+    <td>1.0.7</td> 
+    <td>Bug fix for click event propagation</td>
+  </tr>
+  <tr>
     <td>1.0.6</td> 
-    <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options.</td>
+    <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options</td>
   </tr>
   <tr>
     <td>1.0.5</td> 
@@ -19,19 +35,19 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.4</td> 
-    <td>Added to Bower packages: <code>bower install jquery-selz</code>.</td>
+    <td>Added to Bower packages: <code>bower install jquery-selz</code></td>
   </tr>
   <tr>
     <td>1.0.3</td> 
-    <td>Added <code>onProcessing</code> callback.</td>
+    <td>Added <code>onProcessing</code> callback</td>
   </tr>
   <tr>
     <td>1.0.2</td> 
-    <td>Added <code>onPurchase</code> callback.</td>
+    <td>Added <code>onPurchase</code> callback</td>
   </tr>
   <tr>
     <td>1.0.1</td> 
-    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data.</td>
+    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data</td>
   </tr>
 </table>
 
@@ -102,6 +118,12 @@ You can also fetch data about your product, customise overlay button colors and 
     <th width="50%">Description</th>
   </tr>
   <tr>
+    <td><code>cache</code></td>
+    <td>number</td>
+    <td><code>300</code></td>
+    <td>How long to cache the item data, using local storage (if supported). This will improve performance for end users when navigating your site. The default is <code>300</code> (5 minutes). To disable caching, set this to <code>false</code>.</td>
+  </tr>
+  <tr>
     <td><code>theme.button.bg</code></td>
     <td>String</td>
     <td><code>#6d48cc</code></td>
@@ -126,22 +148,16 @@ You can also fetch data about your product, customise overlay button colors and 
     <td>Sets the <code>color</code> for the checkout header text. Defaults to white.</td>
   </tr>
   <tr>
-    <td><code>prefetch</code></td>
-    <td>Boolean</td>
-    <td><code>false</code></td>
-    <td>Whether to prefetch data on plugin load so it is available to the <code>onDataReady</code> callback. Defaults to false.</td>
-  </tr>
-  <tr>
     <td><code>getTracking</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within webhook or in your dashboard order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
+    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within the data in your <code>onPurchase</code> callback, a <a href="https://selz.com/support/using-webhooks-selz" target="_blank">webhook</a>, or in your dashboard's order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
   </tr>
   <tr>
     <td><code>onDataReady</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>If <code>prefetch</code> is <code>true</code> then this callback is fired as soon as the plugin is loaded allowing you to customise your link with item data. Otherwise, the callback is fired when the overlay is opened (see below). The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link as below.</td>
+    <td>This callback is fired as soon as the item data has loaded allowing you to customise your link with data about the item. The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link as below.</td>
   </tr>
   <tr>
     <td><code>onModalOpen</code></td>
@@ -165,7 +181,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onClose</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the abandoned cart as below id the user had entered any data into the checkout.</td>
+    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the abandoned cart as below if the user had entered any data into the checkout and not completed (otherwise an empty object).</td>
   </tr>
 </table>
 
@@ -216,6 +232,7 @@ Here's some example data returned by the `onPurchase` callback:
 	ReferenceId: "XXXXXXXX",
 	Shipping: 20,
 	Timestamp: 1398921408,
+	TrackingId: "123456",
 	TotalPrice: 29.99,
 	Items = [{
 		ItemId: "xxxx",
@@ -280,7 +297,6 @@ $(function() {
           headerText:     "#fff"
         }
       },
-      prefetch: true,
       getTracking: function($link) {
         return $link.data("tracking");
       },
@@ -315,8 +331,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="http://cdn.selz.com/jquery/1.0.6/jquery.selz.min.css" rel="stylesheet">
-<script src="http://cdn.selz.com/jquery/1.0.6/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.9/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.9/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT

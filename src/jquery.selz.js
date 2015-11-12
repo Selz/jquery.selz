@@ -1,6 +1,5 @@
 // ==========================================================================
 // Selz jQuery Plugin
-// NOTE: Also works with _$elz embeded scripts
 // Issues - https://github.com/selz/jquery.selz/issues
 // ==========================================================================
 
@@ -13,22 +12,104 @@
 	// Plugin config
 	var config = {
 		domain: 		"https://selz.com",
-		shortDomain: 	"http://selz.co",
-		prefetch: 		false,
-		items: 			{},
-		theme: 			{ checkout: {}, button: {} }
+		shortDomain: 	["http://selz.co/", "http://bit.ly/"],
+		longDomain: 	".selz.com/item/",
+		theme: 			{},
+		cache: 			300
 	},
+
+	// Callbacks
+	callbacks = {},
 
 	// Cache object
 	cache = {
-		items: {}
+		supported: function() {
+			return ("localStorage" in window);
+		},
+		set: function(key, data, ttl) {
+			// Bail if no support or no key specified
+			if (!this.supported || typeof key === "undefined") {
+				return;
+			}
+
+			// Default TTL to one hour
+			if (!(typeof ttl === "boolean" && !ttl) && typeof ttl !== "number") {
+				ttl = 3600;
+			}
+
+			// Stringify objects to JSON
+			if (data !== null && typeof data === "object") {
+				data = JSON.stringify(data);
+			}
+
+			// Store it
+			window.localStorage[key] = data;
+
+			// Set a ttl (time to live)
+			if (!(typeof ttl === "boolean" && !ttl)) {
+				window.localStorage[key + "_ttl"] = Date.now() + (ttl * 1000);
+			}
+		},
+		get: function(key) {
+			// Bail if no support
+			if (!this.supported) {
+				return null;
+			}
+
+			// If it doesn't exist, return null
+			if (!(key in window.localStorage)) {
+				return null;
+			}		
+
+			// Check if it's stale
+			if (!this.validity(key)) {
+				return null;
+			}
+
+			var result;
+
+			try {
+				result = JSON.parse(window.localStorage[key]);
+			}
+			catch(e) {
+				result = window.localStorage[key]
+			}
+
+			return result;
+		},
+		clean: function() {
+			// Bail if no support
+			if (!this.supported) {
+				return;
+			}
+
+			for (var key in window.localStorage) {
+				this.validity(key);
+			}
+		},
+		validity: function(key) {
+			if (key + "_ttl" in window.localStorage && window.localStorage[key + "_ttl"] < Date.now()) {
+				delete window.localStorage[key];
+				delete window.localStorage[key + "_ttl"];
+				return false;
+			}
+			return true;
+		},
+		exists: function(key) {
+			// Bail if no support
+			if (!this.supported) {
+				return false;
+			}
+
+			return (key in window.localStorage);
+		}
 	};
-	
+
 	// Listeners
 	function listeners() {
 		$(document.body)
-			.on("click", "a[href^='" + config.shortDomain + "/']", openOverlay);
-		
+			.on("click", generateSelector(), openOverlay);
+
 		$(window)
 			.on("message", onMessage)
 			.on("unload", function() {
@@ -38,56 +119,124 @@
 			});
 	}
 
+	// Check if value is null or empty
 	function isNullOrEmpty(value) {
-        return (typeof value === "undefined" || value === null || value === "");
-    }
-	
+		return (typeof value === "undefined" || value === null || value === "");
+	}
+
+	// Get size/length of an object
+	Object.size = function(obj) {
+		var size = 0, key;
+		for (key in obj) {
+			if (obj.hasOwnProperty(key)) { 
+				size++;
+			}
+		}
+		return size;
+	};
+
+	// Generate the selector for the links
+	function generateSelector() {
+		var selector = "";
+
+		// Short links
+		// e.g. http://selz.co/1abc234 or http://bit.ly/1abc234 
+		$.each(config.shortDomain, function(index, value) { 
+			selector += "a[href^='" + value + "']" + (index < (config.shortDomain.length - 1) ? "," : "");
+		});
+
+		// Add support for full links 
+		// e.g. https://store.selz.com/item/563809ddf...
+		if (typeof config.longDomain === "string") {
+			selector += ",a[href*='" + config.longDomain + "']";
+		}
+
+		return selector;
+	}
+
+	// Fetch the item data
 	function getItemData($link, callback) {
-		// Check cache first
-		if (typeof cache.items[$link.attr("href")] !== "undefined") {
-			onDataReady($link, cache.items[$link.attr("href")], callback, false);
+		// Get the URL for item
+		var url = $link.attr("href"),
+			useCache = (typeof config.cache === "number");
+
+		// Process the callbacks queue
+		function processCallbacks(data) {
+			// This should never happen, but just in case
+			if (!(url in callbacks)) {
+				return;
+			}
+
+			// Run all callbacks
+			for (var i = callbacks[url].length - 1; i >= 0; i--) {
+				var $link 		= callbacks[url][i][0];
+					callback 	= callbacks[url][i][1];
+
+				// Plugin callback
+				if ($.isFunction(callback)) {
+					callback(data);
+				}
+
+				// User defined callback
+				if ($.isFunction(config.onDataReady)) {
+					config.onDataReady($link, data);
+				}
+
+				// Set modal url
+				$link.data("modal-url", data.Url);
+			}
+
+			// Delete from queue
+			delete callbacks[url];
+		}
+
+		// Callbacks queue
+		// If queue exists for url, then just add and wait
+		if (url in callbacks) {
+			callbacks[url].push([$link, callback]);
+			return;
+		}
+		// If no queue, create and add to it
+		callbacks[url] = [];
+		callbacks[url].push([$link, callback]);
+
+		// Try from cache first
+		if (useCache && cache.exists(url)) {
+			processCallbacks(cache.get(url));
 		}
 		else {
-			$.getJSON(config.domain + "/embed/itemdata/?itemurl=" + $link.attr("href") + "&callback=?", function (data) {
-				// Cache url & data
-				$link.data("modal-url", data.Url);
-				cache.items[$link.attr("href")] = data;
-
-				onDataReady($link, data, callback, true);
+			$.getJSON(config.domain + "/embed/itemdata/?itemurl=" + url + "&callback=?", function(data) {
+				if(useCache) {
+					cache.set(url, data, config.cache);
+				}
+				processCallbacks(data);
 			})
 			.fail(function() {
 				// Check for support 
 				// https://developer.mozilla.org/en-US/docs/Web/API/Console/error
-				if("console" in window) {
-					console.error("Woops. It looks like your link is to a product that can't be found!");
+				if ("console" in window) {
+					console.warn("We couldn't find a matching item for that link.");
 				}
 			});
 		}
 	}
 
-	function onDataReady($link, data, callback, trigger) {
-		// Plugin callback
-		if ($.isFunction(callback)) {
-			callback(data);
-		}
-		// User defined callback
-		if ($.isFunction(config.onDataReady) && trigger) {
-			config.onDataReady($link, data);
-		}
-	}
-
+	// Open the actual overlay
 	function openOverlay(event) {
-		var $trigger = $(event.target),
-			modalUrl = $trigger.data("modal-url");
+		/*jshint validthis: true */
+		var $trigger = $(this),
+			url 	 = $trigger.data("modal-url");
 
-		if (typeof modalUrl === "string" && modalUrl.length > 0) {
-			window._$elz.m.open(modalUrl, null);
-		} 
-		else {
-			getItemData($trigger, function (res) {
-				window._$elz.m.open(res.Url, null);
-			});
+		// Bail if the url is not set
+		if(typeof url !== "string") {
+			return;
 		}
+
+		// Prevent the link click
+		event.preventDefault();
+
+		// Open modal
+		window._$elz.m.open(url, null);
 
 		// User defined callback
 		if ($.isFunction(config.onModalOpen)) {
@@ -96,11 +245,9 @@
 
 		// Cache the current trigger
 		cache.currentTrigger = $trigger;
-
-		// Prevent the link click
-		event.preventDefault();
 	}
-	
+
+	// Message handler
 	function onMessage(event) {
 		event = event.originalEvent;
 		var message = event.data;
@@ -116,24 +263,50 @@
 
 			switch(json.key) {
 				case "modal-theme":
-					if (config.theme !== null) {
-						event.source.postMessage(JSON.stringify({ 
-							key: 	"modal-theme", 
-							data: 	{
-								ct: 	config.theme.button.text,
-								cb: 	config.theme.button.bg,
-								chbg: 	config.theme.checkout.headerBg,
-								chtx: 	config.theme.checkout.headerText
-							}
-						}), config.domain);
-					}
+					var theme = {};
+
+					// Convert into new object
+					$.each(config.theme, function(element, colors) {
+						switch(element) {
+							case "button": 
+								$.each(colors, function(key, color) {
+									switch(key) {
+										case "bg": 
+											theme.cb = color;
+											break;
+										case "text":
+											theme.ct = color;
+											break;
+									}
+								});
+								break;
+
+							case "checkout": 
+								$.each(colors, function(key, color) {
+									switch(key) {
+										case "headerBg": 
+											theme.chbg = color;
+											break;
+										case "headerText":
+											theme.chtx = color;
+											break;
+									}
+								});
+								break;
+						}
+					});
+
+					event.source.postMessage(JSON.stringify({ 
+						key: 	"modal-theme", 
+						data: 	(!!Object.size(theme) ? theme : null)
+					}), config.domain);
 
 					// Get tracking parameter if it's set
-					if($.isFunction(config.getTracking)) {
+					if ($.isFunction(config.getTracking)) {
 						var tracking = config.getTracking(cache.currentTrigger);
 
 						// Send to modal frame
-						if(!isNullOrEmpty(tracking)) {
+						if (!isNullOrEmpty(tracking)) {
 							event.source.postMessage(JSON.stringify({
 								key: 	"set-tracking",
 								data: 	tracking
@@ -169,13 +342,7 @@
 		// Invalid JSON, do nothing
 		catch (exception) {}
 	}
-	
-	function prefetch() {
-		$("a[href^='" + config.shortDomain + "/']").each(function (i, link) {
-			getItemData($(link), null);
-		});
-	}
-		
+
 	// Mock _$elz modal
 	window._$elz.m = window._$elz.m || {
 		s: {
@@ -198,10 +365,15 @@
 		// Extend users options with base config
 		$.extend(true, config, options);
 
-		// Prefetch data
-		if (config.prefetch) {
-			prefetch();
+		// Make shortDomain an array
+		if (!$.isArray(config.shortDomain)) {
+			config.shortDomain = [config.shortDomain];
 		}
+
+		// Prefetch data
+		$(generateSelector()).each(function() {
+			getItemData($(this));
+		});
 	};
 
 })(window.jQuery);
