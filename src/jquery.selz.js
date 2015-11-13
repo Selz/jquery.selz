@@ -51,18 +51,8 @@
 			}
 		},
 		get: function(key) {
-			// Bail if no support
-			if (!this.supported) {
-				return null;
-			}
-
-			// If it doesn't exist, return null
-			if (!(key in window.localStorage)) {
-				return null;
-			}		
-
-			// Check if it's stale
-			if (!this.validity(key)) {
+			// If there's no support, the kye doesn't exist or it's stale, return null
+			if (!this.supported || !this.exists(key)) {
 				return null;
 			}
 
@@ -83,6 +73,7 @@
 				return;
 			}
 
+			// Check each key is valid
 			for (var key in window.localStorage) {
 				this.validity(key);
 			}
@@ -96,8 +87,8 @@
 			return true;
 		},
 		exists: function(key) {
-			// Bail if no support
-			if (!this.supported) {
+			// Bail if no support or key is stale
+			if (!this.supported || !this.validity(key)) {
 				return false;
 			}
 
