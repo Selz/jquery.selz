@@ -17,7 +17,8 @@ var fs 			= require("fs"),
 	gzip        = require("gulp-gzip"),
 	prefixer 	= require("gulp-autoprefixer"),
 	replace     = require("gulp-replace"),
-	size        = require("gulp-size");
+	size        = require("gulp-size"),
+	run 		= require("run-sequence");
 
 // Load json
 function loadJSON(path) {
@@ -101,4 +102,6 @@ gulp.task("upload", function () {
         .pipe(s3(aws, options));
 });
 
-gulp.task("publish", ["scripts", "css", "upload", "docs"]);
+gulp.task("publish", function() { 
+	run("scripts", "css", "upload", "docs");
+});

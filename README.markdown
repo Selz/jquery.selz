@@ -331,8 +331,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.9/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.9/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.10/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.10/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
