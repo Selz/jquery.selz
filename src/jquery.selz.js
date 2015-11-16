@@ -24,11 +24,26 @@
 	// Cache object
 	cache = {
 		supported: function() {
-			return ("localStorage" in window);
+			if(!("localStorage" in window)) {
+				return false;
+			}
+
+			// Try to use it (it might be disabled, e.g. user is in private/porn mode)
+			try {
+				window.localStorage.setItem("___support_test", "OK");
+				var result = window.localStorage.getItem("___support_test");
+				window.localStorage.removeItem("___support_test");
+				return (result === "OK");
+			}
+			catch (e) {
+				return false;
+			}
+
+			return false;
 		},
 		set: function(key, data, ttl) {
 			// Bail if no support or no key specified
-			if (!this.supported || typeof key === "undefined") {
+			if (!this.supported() || typeof key === "undefined") {
 				return;
 			}
 
@@ -43,52 +58,51 @@
 			}
 
 			// Store it
-			window.localStorage[key] = data;
+			window.localStorage.setItem(key, data);
 
 			// Set a ttl (time to live)
 			if (!(typeof ttl === "boolean" && !ttl)) {
-				window.localStorage[key + "_ttl"] = Date.now() + (ttl * 1000);
+				window.localStorage.setItem(key + "_ttl", Date.now() + (ttl * 1000));
 			}
 		},
 		get: function(key) {
 			// If there's no support, the kye doesn't exist or it's stale, return null
-			if (!this.supported || !this.exists(key)) {
+			if (!this.supported() || !this.exists(key) || !this.validity(key)) {
 				return null;
 			}
 
 			var result;
 
 			try {
-				result = JSON.parse(window.localStorage[key]);
+				result = JSON.parse(window.localStorage.getItem(key));
 			}
 			catch(e) {
-				result = window.localStorage[key];
+				result = window.localStorage.getItem(key);
 			}
 
 			return result;
 		},
 		clean: function() {
 			// Bail if no support
-			if (!this.supported) {
+			if (!this.supported()) {
 				return;
 			}
 
-			// Check each key is valid
 			for (var key in window.localStorage) {
 				this.validity(key);
 			}
 		},
 		validity: function(key) {
 			if (key + "_ttl" in window.localStorage && window.localStorage[key + "_ttl"] < Date.now()) {
-				delete window.localStorage[key];
-				delete window.localStorage[key + "_ttl"];
+				window.localStorage.removeItem(key);
+				window.localStorage.removeItem(key + "_ttl");
 				return false;
 			}
 			return true;
 		},
 		exists: function(key) {
-			// Bail if no support or key is stale
-			if (!this.supported || !this.validity(key)) {
+			// Bail if no support
+			if (!this.supported()) {
 				return false;
 			}
 

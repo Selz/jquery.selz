@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.11</td> 
+    <td>Bug fix for privacy mode and client side caching</td>
+  </tr>
+  <tr>
     <td>1.0.10</td> 
     <td>Performance improvements, caching option, small bug fix for prefetching</td>
   </tr>
@@ -331,8 +335,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.10/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.10/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.11/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.11/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
