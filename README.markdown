@@ -219,7 +219,8 @@ Here's some example data returned by the `onDataReady` callback:
 	TotalSales: 0,
 	TotalViews: 0,
 	TwitterClicks: 100,
-	Url: "https://selz.com/items/detail/xxxx"
+	Url: "https://selz.com/items/detail/xxxx",
+	CheckoutUrl: "https://selz.com/checkout/item/xxxx"
 }
 ```
 
@@ -307,6 +308,8 @@ $(function() {
       onDataReady: function ($link, data) {
         // Customise the link with item data
         $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
+        // Skip to checkout
+        $link.data('modal-url', data.CheckoutUrl);
       },
       onModalOpen: function ($link) {
         // Track open in Google Analytics
