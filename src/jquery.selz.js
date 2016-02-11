@@ -182,13 +182,13 @@
 					callback(data);
 				}
 
-				// User defined callback
+				// Set modal url
+				$link.data("modal-url", data.Url);
+
+				// User defined callback - allow overwriting "modal-url" with data.CheckoutUrl (skip to checkout)
 				if ($.isFunction(config.onDataReady)) {
 					config.onDataReady($link, data);
 				}
-
-				// Set modal url
-				$link.data("modal-url", data.Url);
 			}
 
 			// Delete from queue
