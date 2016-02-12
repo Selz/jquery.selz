@@ -15,7 +15,8 @@
 		shortDomain: 	["http://selz.co/", "http://bit.ly/"],
 		longDomain: 	".selz.com/item/",
 		theme: 			{},
-		cache: 			300
+		cache: 			300,
+		checkout: 		false
 	},
 
 	// Callbacks
@@ -133,7 +134,7 @@
 	Object.size = function(obj) {
 		var size = 0, key;
 		for (key in obj) {
-			if (obj.hasOwnProperty(key)) { 
+			if (obj.hasOwnProperty(key)) {
 				size++;
 			}
 		}
@@ -145,12 +146,12 @@
 		var selector = "";
 
 		// Short links
-		// e.g. http://selz.co/1abc234 or http://bit.ly/1abc234 
-		$.each(config.shortDomain, function(index, value) { 
+		// e.g. http://selz.co/1abc234 or http://bit.ly/1abc234
+		$.each(config.shortDomain, function(index, value) {
 			selector += "a[href^='" + value + "']" + (index < (config.shortDomain.length - 1) ? "," : "");
 		});
 
-		// Add support for full links 
+		// Add support for full links
 		// e.g. https://store.selz.com/item/563809ddf...
 		if (typeof config.longDomain === "string") {
 			selector += ",a[href*='" + config.longDomain + "']";
@@ -183,7 +184,14 @@
 				}
 
 				// Set modal url
-				$link.data("modal-url", data.Url);
+				if (config.checkout) {
+					$link
+						.data("modal-url", data.CheckoutUrl)
+						.attr("href", data.CheckoutUrl);
+				}
+				else {
+					$link.data("modal-url", data.Url);
+				}
 
 				// User defined callback - allow overwriting "modal-url" with data.CheckoutUrl (skip to checkout)
 				if ($.isFunction(config.onDataReady)) {
@@ -217,7 +225,7 @@
 				processCallbacks(data);
 			})
 			.fail(function() {
-				// Check for support 
+				// Check for support
 				// https://developer.mozilla.org/en-US/docs/Web/API/Console/error
 				if ("console" in window) {
 					console.warn("We couldn't find a matching item for that link.");
@@ -273,10 +281,10 @@
 					// Convert into new object
 					$.each(config.theme, function(element, colors) {
 						switch(element) {
-							case "button": 
+							case "button":
 								$.each(colors, function(key, color) {
 									switch(key) {
-										case "bg": 
+										case "bg":
 											theme.cb = color;
 											break;
 										case "text":
@@ -286,10 +294,10 @@
 								});
 								break;
 
-							case "checkout": 
+							case "checkout":
 								$.each(colors, function(key, color) {
 									switch(key) {
-										case "headerBg": 
+										case "headerBg":
 											theme.chbg = color;
 											break;
 										case "headerText":
@@ -301,8 +309,8 @@
 						}
 					});
 
-					event.source.postMessage(JSON.stringify({ 
-						key: 	"modal-theme", 
+					event.source.postMessage(JSON.stringify({
+						key: 	"modal-theme",
 						data: 	(!!Object.size(theme) ? theme : null)
 					}), config.domain);
 
@@ -360,7 +368,7 @@
 		$.getScript(window._$elz.m.s.src, function () {
 			listeners();
 		});
-	} 
+	}
 	else {
 		listeners();
 	}
@@ -374,6 +382,9 @@
 		if (!$.isArray(config.shortDomain)) {
 			config.shortDomain = [config.shortDomain];
 		}
+
+		// Push domain to trigger domains to allow skip to checkout
+		config.shortDomain.push(config.domain + "/checkout/item/");
 
 		// Prefetch data
 		$(generateSelector()).each(function() {

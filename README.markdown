@@ -1,6 +1,6 @@
 # Selz jQuery Plugin
 
-Open your [Selz.com](https://selz.com) item links in an overlay to let your customers complete their purchase directly on your site. 
+Open your [Selz.com](https://selz.com) item links in an overlay to let your customers complete their purchase directly on your site.
 
 ## Changelog
 
@@ -10,47 +10,51 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
-    <td>1.0.11</td> 
+    <td>1.0.12</td>
+    <td>Added a new option to skip the item overlay and go straight to the checkout</td>
+  </tr>
+  <tr>
+    <td>1.0.11</td>
     <td>Bug fix for privacy mode and client side caching</td>
   </tr>
   <tr>
-    <td>1.0.10</td> 
+    <td>1.0.10</td>
     <td>Performance improvements, caching option, small bug fix for prefetching</td>
   </tr>
   <tr>
-    <td>1.0.9</td> 
+    <td>1.0.9</td>
     <td>Added support for bit.ly (fallback) and full selz.com URLs</td>
   </tr>
   <tr>
-    <td>1.0.8</td> 
+    <td>1.0.8</td>
     <td>Prefetching <em>always</em> (no longer an option), to fix a bug with mobile browsers</td>
   </tr>
   <tr>
-    <td>1.0.7</td> 
+    <td>1.0.7</td>
     <td>Bug fix for click event propagation</td>
   </tr>
   <tr>
-    <td>1.0.6</td> 
+    <td>1.0.6</td>
     <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options</td>
   </tr>
   <tr>
-    <td>1.0.5</td> 
+    <td>1.0.5</td>
     <td>Minor bug fixes</td>
   </tr>
   <tr>
-    <td>1.0.4</td> 
+    <td>1.0.4</td>
     <td>Added to Bower packages: <code>bower install jquery-selz</code></td>
   </tr>
   <tr>
-    <td>1.0.3</td> 
+    <td>1.0.3</td>
     <td>Added <code>onProcessing</code> callback</td>
   </tr>
   <tr>
-    <td>1.0.2</td> 
+    <td>1.0.2</td>
     <td>Added <code>onPurchase</code> callback</td>
   </tr>
   <tr>
-    <td>1.0.1</td> 
+    <td>1.0.1</td>
     <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data</td>
   </tr>
 </table>
@@ -62,7 +66,7 @@ See bundled `index.html` and `index.options.html` file for examples.
 
 ## Basic Setup
 
-For a very simple installation where you only want the overlay functionality for any Selz item, the setup is very easy. 
+For a very simple installation where you only want the overlay functionality for any Selz item, the setup is very easy.
 
 Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
 
@@ -93,7 +97,7 @@ To install the Selz plugin, you will have to include the following resources in 
     <th width="65%">Description</th>
   </tr>
   <tr>
-    <td>JS</td> 
+    <td>JS</td>
     <td><a href="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" target="_blank">jQuery 1.x</a></td>
     <td><strong>External Dependency</strong>: The <em>latest verson</em> of jQuery 1.x library is needed for the Selz plugin functionality.</td>
   </tr>
@@ -112,7 +116,7 @@ To install the Selz plugin, you will have to include the following resources in 
 
 ## Options
 
-You can also fetch data about your product, customise overlay button colors and add event callbacks. 
+You can also fetch data about your product, customise overlay button colors and add event callbacks.
 
 <table class="table" width="100%">
   <tr>
@@ -126,6 +130,12 @@ You can also fetch data about your product, customise overlay button colors and 
     <td>number</td>
     <td><code>300</code></td>
     <td>How long to cache the item data, using local storage (if supported). This will improve performance for end users when navigating your site. The default is <code>300</code> (5 minutes). To disable caching, set this to <code>false</code>.</td>
+  </tr>
+  <tr>
+    <td><code>checkout</code></td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>Bypass the item detail page and go straight to the checkout with the item already in the cart. This speeds up the purchase process.</td>
   </tr>
   <tr>
     <td><code>theme.button.bg</code></td>
@@ -224,7 +234,7 @@ Here's some example data returned by the `onDataReady` callback:
 }
 ```
 
-#### Example data returned by onPurchase 
+#### Example data returned by onPurchase
 
 Here's some example data returned by the `onPurchase` callback:
 
@@ -251,7 +261,7 @@ Here's some example data returned by the `onPurchase` callback:
 }
 ```
 
-#### Example data returned by onProcessing 
+#### Example data returned by onProcessing
 
 Here's some example data returned by the `onProcessing` callback:
 
@@ -262,7 +272,7 @@ Here's some example data returned by the `onProcessing` callback:
 }
 ```
 
-#### Example data returned by onClose 
+#### Example data returned by onClose
 
 Here's some example data returned by the `onClose` callback:
 
@@ -308,12 +318,14 @@ $(function() {
       onDataReady: function ($link, data) {
         // Customise the link with item data
         $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
+
         // Skip to checkout
+        // You can set the 'checkout' config option or set the URL yourself
         $link.data('modal-url', data.CheckoutUrl);
       },
       onModalOpen: function ($link) {
         // Track open in Google Analytics
-        ga('send', 'pageview', $link.attr("href")); 
+        ga('send', 'pageview', $link.attr("href"));
       },
       onPurchase: function (data) {
         // Track purchase

@@ -5,24 +5,13 @@
 
 // Variables
 // --------------------------------------------
-@gray-dark:                             #343f4a;
-@gray:                                  #55646b;
-
-@overlay-bg:                            rgba(red(@gray-dark), green(@gray-dark), blue(@gray-dark), .75);
-@border-radius-base:                    3px;
-
-@loader-size-base:                      24px;
-@loader-border-width-base:              3px;
-@loader-bg-base:                        #6F7E86;
-@loader-border-width:                   1px;
-@loader-border-color:                   #fff;
-
-// Loader border
-// ---------------------------------------
-.loader-border-color(@color) {
-    border-color: rgba(red(@color), green(@color), blue(@color), .2);
-    border-left-color: @color;
-}
+@gray-dark:              #343f4a;
+@gray:                   #55646b;
+@overlay-bg:             fade(@gray-dark, 75%);
+@loader-size:            22px;
+@loader-bg:              fade(#fff, 90%);
+@loader-width:           2px;
+@loader-color:           @gray;
 
 // Animations
 // --------------------------------------------
@@ -36,11 +25,12 @@
 }
 
 #_selz-modal {
+    box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
     position: fixed;
     transform: translateZ(0);
-    z-index: 999999999; // Always on top
+    z-index: 999999999; // Always on top (you never know)
     top: 0;
     left: 0;
     right: 0;
@@ -49,6 +39,12 @@
     height: 100%;
     background: @overlay-bg;
     animation: fade-in .3s 0s 1 ease forwards;
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 }
 
 #_selz-modal-body {
@@ -69,8 +65,6 @@
 // Loader block
 // ---------------------------
 #_selz-modal-spinner {
-    box-sizing: border-box;
-    
     display: none;
     position: absolute;
     z-index: 20;
@@ -82,18 +76,18 @@
 
     // Style
     border-radius: 50px;
-    background: rgba(red(@gray-dark), green(@gray-dark), blue(@gray-dark), .75);
+    background: @loader-bg;
 
     // Text
-    color: #fff;
-    text-align: center;
+    color: @loader-color;
 }
 
 #_selz-modal.cssanimations #_selz-modal-spinner {
-    @size: floor(@loader-size-base * 1.75);
+    @size: floor(@loader-size * 1.8); // 36px
     width: @size;
     height: @size;
-    
+    padding: 0;
+
     // Hide text
     text-indent: 99em;
     text-overflow: clip;
@@ -107,15 +101,16 @@
         top: 50%;
         left: 50%;
         display: inline-block;
-        width: @loader-size-base;
-        height: @loader-size-base;
-        margin: -(@loader-size-base / 2) 0 0 -(@loader-size-base / 2);
+        width: @loader-size;
+        height: @loader-size;
+        margin: -(@loader-size / 2) 0 0 -(@loader-size / 2);
 
-        border-width: @loader-border-width;
-        border-style: solid;
-        .loader-border-color(@loader-border-color);
-        animation: spin .6s infinite linear;
+        border: @loader-width solid currentColor;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        animation: spin .45s infinite linear;
         border-radius: 50%;
+        color: inherit;
 
         // Hide text
         text-indent: 99em;
