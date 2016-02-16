@@ -195,7 +195,7 @@ You can also fetch data about your product, customise overlay button colors and 
     <td><code>onClose</code></td>
     <td>Function</td>
     <td><code>null</code></td>
-    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the abandoned cart as below if the user had entered any data into the checkout and not completed (otherwise an empty object).</td>
+    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the cart (items, buyers details and address etc) as below if the user had entered any data into the checkout and not completed. Otherwise the object will be empty.</td>
   </tr>
 </table>
 
@@ -350,8 +350,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.11/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.11/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.12/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.12/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
