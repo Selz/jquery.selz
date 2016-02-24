@@ -268,7 +268,7 @@ Here's some example data returned by the `onPurchase` callback:
 		Quantity: 1,
 		Currency: "USD"
 	}],
-	RedirectUrl: : "http://yourdomain.com/purchased?selz_refid=XXXXXXXX&selz_tracking=123456"
+	RedirectUrl: "http://yourdomain.com/purchased?selz_refid=XXXXXXXX&selz_tracking=123456"
 }
 ```
 
