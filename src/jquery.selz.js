@@ -16,7 +16,8 @@
 		longDomain: 	".selz.com/item/",
 		theme: 			{},
 		cache: 			300,
-		checkout: 		false
+		checkout: 		false,
+		redirect: 		false
 	},
 
 	// Callbacks
@@ -314,6 +315,14 @@
 						data: 	(!!Object.size(theme) ? theme : null)
 					}), config.domain);
 
+					if(!config.redirect)
+					{
+						event.source.postMessage(JSON.stringify({
+							key: 	"set-redirect",
+							data: 	config.redirect
+						}), config.domain);
+					}
+					
 					// Get tracking parameter if it's set
 					if ($.isFunction(config.getTracking)) {
 						var tracking = config.getTracking(cache.currentTrigger);
