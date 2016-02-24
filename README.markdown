@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.13</td>
+    <td>Added a new option to override your store redirect checkout settings</td>
+  </tr>
+  <tr>
     <td>1.0.12</td>
     <td>Added a new option to skip the item overlay and go straight to the checkout</td>
   </tr>
@@ -138,6 +142,12 @@ You can also fetch data about your product, customise overlay button colors and 
     <td>Bypass the item detail page and go straight to the checkout with the item already in the cart. This speeds up the purchase process.</td>
   </tr>
   <tr>
+    <td><code>redirect</code></td>
+    <td>boolean</td>
+    <td><code>false</code></td>
+    <td>Disables redirect after successful purchase (if it's enabled in your store checkout settings).</td>
+  </tr>
+  <tr>
     <td><code>theme.button.bg</code></td>
     <td>String</td>
     <td><code>#6d48cc</code></td>
@@ -257,7 +267,8 @@ Here's some example data returned by the `onPurchase` callback:
 		DiscountCode: "",
 		Quantity: 1,
 		Currency: "USD"
-	}]
+	}],
+  RedirectUrl: : "http://yourdomain.com/purchased?selz_refId=XXXXXXXX&selz_tracking=123456"
 }
 ```
 
