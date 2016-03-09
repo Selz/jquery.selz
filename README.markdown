@@ -11,7 +11,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
   </tr>
   <tr>
     <td>1.0.13</td>
-    <td>Added a new option to override your store redirect checkout settings</td>
+    <td>Added a new option to override your store auto-redirect checkout settings</td>
   </tr>
   <tr>
     <td>1.0.12</td>
@@ -361,8 +361,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.12/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.12/jquery.selz.min.js"></script>
+<link href="https://cdn.selz.com/jquery/1.0.13/jquery.selz.min.css" rel="stylesheet">
+<script src="https://cdn.selz.com/jquery/1.0.13/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
