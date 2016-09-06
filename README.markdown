@@ -72,17 +72,32 @@ See bundled `index.html` and `index.options.html` file for examples.
 
 For a very simple installation where you only want the overlay functionality for any Selz item, the setup is very easy.
 
+#### JavaScript
+
 Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
 
 ```html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="src/jquery.selz.min.js"></script>
 ```
+
+Then in your document.ready block add the following:
+
+```javascript
+$.selz();
+```
+
+You can pass extra options as outlined below.
+
+#### CSS
+
 Include `jquery.selz.min.css` or add your stylesheet into the `<head>` of your page
 
 ```html
 <link href="src/jquery.selz.min.css" rel="stylesheet">
 ```
+
+#### HTML
 
 Add the short link to your [Selz.com](https://selz.com) products into the `<body>` of your page. This can be found on the share item page within Selz
 
@@ -116,7 +131,6 @@ To install the Selz plugin, you will have to include the following resources in 
     <td>Offers styles that are crucial for the correct display of the Selz overlay. The appearance will break if this is not included. You can customise the styles in the source less file <code>jquery.selz.less</code> or write your own <strong>at your own risk</strong>.</td>
   </tr>
 </table>
-
 
 ## Options
 
