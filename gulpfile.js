@@ -11,7 +11,7 @@ var fs 			= require("fs"),
 	concat 		= require("gulp-concat"),
 	uglify 		= require("gulp-uglify"),
 	less 		= require("gulp-less"),
-	minifyCss 	= require("gulp-minify-css"),
+	cleanCss 	= require("gulp-clean-css"),
 	rename 		= require("gulp-rename"),
 	s3          = require("gulp-s3"),
 	gzip        = require("gulp-gzip"),
@@ -51,8 +51,8 @@ gulp.task("css", function() {
 	return gulp.src(paths.css)
 		.pipe(less()).on("error", gutil.log)
 		.pipe(concat("jquery.selz.min.css"))
-		.pipe(prefixer(["last 2 versions", "> 1%", "ie 9"], { cascade: true }))
-		.pipe(minifyCss())
+		.pipe(prefixer({ cascade: false }))
+		.pipe(cleanCss({ keepSpecialComments: 0 }))
 		.pipe(gulp.dest(paths.build));
 });
 

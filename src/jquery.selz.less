@@ -26,18 +26,16 @@
 
 #_selz-modal {
     box-sizing: border-box;
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
+    overflow: auto;
     position: fixed;
-    transform: translateZ(0);
-    z-index: 999999999; // Always on top (you never know)
+    z-index: 999999999; // Always on top
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: @overlay-bg;
+    background: @overlay-bg;  
     animation: fade-in .3s 0s 1 ease forwards;
 
     *,
@@ -50,14 +48,14 @@
 #_selz-modal-body {
     position: relative;
     text-align: center;
+    height: 100%;
 
     iframe {
+        display: block;
         width: 100%;
         height: 100%;
         border: 0;
-        background: transparent;
-        transform: translate3d(0,0,0);
-        transition: opacity .3s 2s ease;
+        transition: opacity .3s .2s ease;
         opacity: 0;
     }
 }
