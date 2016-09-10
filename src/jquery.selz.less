@@ -9,7 +9,7 @@
 @gray:                   #55646b;
 @overlay-bg:             fade(@gray-dark, 75%);
 @loader-size:            20px;
-@loader-bg:              fade(#fff, 90%);
+@loader-bg:              #fff;
 @loader-width:           2px;
 @loader-color:           @gray;
 
@@ -105,8 +105,8 @@
         margin: -(@loader-size / 2) 0 0 -(@loader-size / 2);
 
         border: @loader-width solid currentColor;
-        border-left-color: transparent;
-        border-bottom-color: transparent;
+        border-left-color: fade(#000, 10%);
+        border-bottom-color: fade(#000, 10%);
         animation: spin .45s infinite linear;
         border-radius: 50%;
         color: inherit;
