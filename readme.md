@@ -236,15 +236,12 @@ Here's some example data returned by the `onDataReady` callback:
 	CanPickup: true,
 	CanShip: true,
 	Description: "Example of an item description",
-	DirectClicks: 200,
 	DownloadFileName: null,
 	DownloadFileSize: null,
 	DownloadUrl: null,
-	FacebookClicks: 100,
 	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg",
 	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg",
 	IsSoldOut: false,
-	PinterestClicks: 100,
 	Price: "A$9.99",
 	Quantity: 8,
 	QuantityLeft: 8,
@@ -254,9 +251,6 @@ Here's some example data returned by the `onDataReady` callback:
 	ShipPrice: "$10.00",
 	ShortUrl: "http://selz.co/xxxxxx",
 	Title: "Example Item",
-	TotalSales: 0,
-	TotalViews: 0,
-	TwitterClicks: 100,
 	Url: "https://selz.com/items/detail/xxxx",
 	CheckoutUrl: "https://selz.com/checkout/item/xxxx"
 }
@@ -379,8 +373,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.14/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.14/jquery.selz.min.js"></script>
+<link href="https://jquery.selzstatic.com/1.0.14/jquery.selz.min.css" rel="stylesheet">
+<script src="https://jquery.selzstatic.com/jquery/1.0.14/jquery.selz.min.js"></script>
 ```
 
 ## Licensed under the MIT
