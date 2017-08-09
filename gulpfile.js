@@ -14,7 +14,6 @@ var less = require("gulp-less");
 var cleanCss = require("gulp-clean-css");
 var rename = require("gulp-rename");
 var s3 = require("gulp-s3");
-var gzip = require("gulp-gzip");
 var prefixer = require("gulp-autoprefixer");
 var replace = require("gulp-replace");
 var size = require("gulp-size");
@@ -28,7 +27,7 @@ function loadJSON(path) {
 // Set paths
 var root = __dirname;
 var paths = {
-	scripts: ["src/jquery.selz.js"],
+	js: ["src/jquery.selz.js"],
 	css: ["src/jquery.selz.less"],
 	build: "dist",
 	docs: ["readme.md", "*.html"],
@@ -40,8 +39,8 @@ var paths = {
 
 // Default development tasks
 // ------------------------------------------
-gulp.task("scripts", function () {
-	return gulp.src(paths.scripts)
+gulp.task("js", function () {
+	return gulp.src(paths.js)
 		.pipe(uglify())
 		.pipe(concat("jquery.selz.js"))
 		.pipe(gulp.dest(paths.build));
@@ -61,11 +60,11 @@ gulp.task("css", function () {
 });
 
 gulp.task("watch", function () {
-	gulp.watch(paths.scripts, ["scripts"]);
+	gulp.watch(paths.js, ["js"]);
 	gulp.watch(paths.css, ["css"]);
 });
 
-gulp.task("default", ["scripts", "css", "watch"]);
+gulp.task("default", ["js", "css", "watch"]);
 
 // Publish to production
 // ------------------------------------------
@@ -78,8 +77,7 @@ var options = {
 	headers: {
 		"Cache-Control": "max-age=" + maxAge,
 		"Vary": "Accept-Encoding"
-	},
-	gzippedOnly: true
+	}
 };
 var cdnpath = new RegExp(paths.cdn.root + "\/(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)", "gi");
 
@@ -102,10 +100,9 @@ gulp.task("upload", function () {
 		.pipe(rename(function (path) {
 			path.dirname += "/jquery/" + version;
 		}))
-		.pipe(gzip())
 		.pipe(s3(aws, options));
 });
 
 gulp.task("publish", function () {
-	run("scripts", "css", "upload", "docs");
+	run("js", "css", "upload", "docs");
 });

@@ -3,7 +3,8 @@
 // Issues - https://github.com/selz/jquery.selz/issues
 // ==========================================================================
 
-;(function ($) {
+;
+(function ($) {
     "use strict";
 
     // Set _$elz global variable
@@ -11,106 +12,104 @@
 
     // Plugin config
     var config = {
-        domain:         "https://selz.com",
-        shortDomain:    ["http://selz.co/", "http://bit.ly/"],
-        longDomain:     ".selz.com/item/",
-        theme:          {},
-        cache:          300,
-        checkout:       false,
-        redirect:       false
-    },
+            domain: "https://selz.com",
+            shortDomain: ["http://selz.co/", "http://bit.ly/"],
+            longDomain: ".selz.com/item/",
+            theme: {},
+            cache: 300,
+            checkout: false,
+            redirect: false
+        },
 
-    // Callbacks
-    callbacks = {},
+        // Callbacks
+        callbacks = {},
 
-    // Cache object
-    cache = {
-        supported: function() {
-            if(!("localStorage" in window)) {
+        // Cache object
+        cache = {
+            supported: function () {
+                if (!("localStorage" in window)) {
+                    return false;
+                }
+
+                // Try to use it (it might be disabled, e.g. user is in private/porn mode)
+                try {
+                    window.localStorage.setItem("___support_test", "OK");
+                    var result = window.localStorage.getItem("___support_test");
+                    window.localStorage.removeItem("___support_test");
+                    return (result === "OK");
+                } catch (e) {
+                    return false;
+                }
+
                 return false;
-            }
+            },
+            set: function (key, data, ttl) {
+                // Bail if no support or no key specified
+                if (!this.supported() || typeof key === "undefined") {
+                    return;
+                }
 
-            // Try to use it (it might be disabled, e.g. user is in private/porn mode)
-            try {
-                window.localStorage.setItem("___support_test", "OK");
-                var result = window.localStorage.getItem("___support_test");
-                window.localStorage.removeItem("___support_test");
-                return (result === "OK");
-            }
-            catch (e) {
-                return false;
-            }
+                // Default TTL to one hour
+                if (!(typeof ttl === "boolean" && !ttl) && typeof ttl !== "number") {
+                    ttl = 3600;
+                }
 
-            return false;
-        },
-        set: function(key, data, ttl) {
-            // Bail if no support or no key specified
-            if (!this.supported() || typeof key === "undefined") {
-                return;
-            }
+                // Stringify objects to JSON
+                if (data !== null && typeof data === "object") {
+                    data = JSON.stringify(data);
+                }
 
-            // Default TTL to one hour
-            if (!(typeof ttl === "boolean" && !ttl) && typeof ttl !== "number") {
-                ttl = 3600;
-            }
+                // Store it
+                window.localStorage.setItem(key, data);
 
-            // Stringify objects to JSON
-            if (data !== null && typeof data === "object") {
-                data = JSON.stringify(data);
-            }
+                // Set a ttl (time to live)
+                if (!(typeof ttl === "boolean" && !ttl)) {
+                    window.localStorage.setItem(key + "_ttl", Date.now() + (ttl * 1000));
+                }
+            },
+            get: function (key) {
+                // If there's no support, the kye doesn't exist or it's stale, return null
+                if (!this.supported() || !this.exists(key) || !this.validity(key)) {
+                    return null;
+                }
 
-            // Store it
-            window.localStorage.setItem(key, data);
+                var result;
 
-            // Set a ttl (time to live)
-            if (!(typeof ttl === "boolean" && !ttl)) {
-                window.localStorage.setItem(key + "_ttl", Date.now() + (ttl * 1000));
-            }
-        },
-        get: function(key) {
-            // If there's no support, the kye doesn't exist or it's stale, return null
-            if (!this.supported() || !this.exists(key) || !this.validity(key)) {
-                return null;
-            }
+                try {
+                    result = JSON.parse(window.localStorage.getItem(key));
+                } catch (e) {
+                    result = window.localStorage.getItem(key);
+                }
 
-            var result;
+                return result;
+            },
+            clean: function () {
+                // Bail if no support
+                if (!this.supported()) {
+                    return;
+                }
 
-            try {
-                result = JSON.parse(window.localStorage.getItem(key));
-            }
-            catch(e) {
-                result = window.localStorage.getItem(key);
-            }
+                for (var key in window.localStorage) {
+                    this.validity(key);
+                }
+            },
+            validity: function (key) {
+                if (key + "_ttl" in window.localStorage && window.localStorage[key + "_ttl"] < Date.now()) {
+                    window.localStorage.removeItem(key);
+                    window.localStorage.removeItem(key + "_ttl");
+                    return false;
+                }
+                return true;
+            },
+            exists: function (key) {
+                // Bail if no support
+                if (!this.supported()) {
+                    return false;
+                }
 
-            return result;
-        },
-        clean: function() {
-            // Bail if no support
-            if (!this.supported()) {
-                return;
+                return (key in window.localStorage);
             }
-
-            for (var key in window.localStorage) {
-                this.validity(key);
-            }
-        },
-        validity: function(key) {
-            if (key + "_ttl" in window.localStorage && window.localStorage[key + "_ttl"] < Date.now()) {
-                window.localStorage.removeItem(key);
-                window.localStorage.removeItem(key + "_ttl");
-                return false;
-            }
-            return true;
-        },
-        exists: function(key) {
-            // Bail if no support
-            if (!this.supported()) {
-                return false;
-            }
-
-            return (key in window.localStorage);
-        }
-    };
+        };
 
     // Listeners
     function listeners() {
@@ -119,22 +118,20 @@
 
         $(window)
             .on("message", onMessage)
-            .on("unload", function() {
+            .on("unload", function () {
                 if ($.isFunction(config.onClose) && "checkoutData" in config) {
                     config.onClose(cache.checkoutData);
                 }
             });
     }
 
-    // Check if value is null or empty
-    function isNullOrEmpty(value) {
-        return (typeof value === "undefined" || value === null || value === "");
+    function isNullOrUndefined(value) {
+        return typeof value === "undefined" || value === null;
     }
 
-    // Get size/length of an object
-    Object.size = function(obj) {
-        return Object.keys(obj).length;
-    };
+    function isNullOrEmpty(value) {
+        return isNullOrUndefined(value) || value === "";
+    }
 
     // Generate the selector for the links
     function generateSelector() {
@@ -142,7 +139,7 @@
 
         // Short links
         // e.g. http://selz.co/1abc234 or http://bit.ly/1abc234
-        $.each(config.shortDomain, function(index, value) {
+        $.each(config.shortDomain, function (index, value) {
             selector += "a[href^='" + value + "']" + (index < (config.shortDomain.length - 1) ? "," : "");
         });
 
@@ -158,20 +155,20 @@
     // Fetch the item data
     function getItemData($link, callback) {
         // Get the URL for item
-        var url = $link.attr("href"),
-            useCache = (typeof config.cache === "number");
+        var url = $link.attr("href");
+        var useCache = typeof config.cache === "number";
 
         // Process the callbacks queue
         function processCallbacks(data) {
-            // This should never happen, but just in case
-            if (!(url in callbacks)) {
+            // Bail if the URL has no callbacks or data isn't defined
+            if (!(url in callbacks) || isNullOrUndefined(data) || !Object.keys(data).length) {
                 return;
             }
 
             // Run all callbacks
-            for (var i = callbacks[url].length - 1; i >= 0; i--) {
-                var $link       = callbacks[url][i][0];
-                    callback    = callbacks[url][i][1];
+            callbacks[url].forEach(function (item) {
+                var $link = item[0];
+                var callback = item[1];
 
                 // Plugin callback
                 if ($.isFunction(callback)) {
@@ -183,8 +180,7 @@
                     $link
                         .data("modal-url", data.CheckoutUrl)
                         .attr("href", data.CheckoutUrl);
-                }
-                else {
+                } else {
                     $link.data("modal-url", data.Url);
                 }
 
@@ -192,7 +188,7 @@
                 if ($.isFunction(config.onDataReady)) {
                     config.onDataReady($link, data);
                 }
-            }
+            });
 
             // Delete from queue
             delete callbacks[url];
@@ -211,32 +207,31 @@
         // Try from cache first
         if (useCache && cache.exists(url)) {
             processCallbacks(cache.get(url));
-        }
-        else {
-            $.getJSON(config.domain + "/embed/itemdata/?itemurl=" + url + "&callback=?", function(data) {
-                if(useCache) {
-                    cache.set(url, data, config.cache);
-                }
-                processCallbacks(data);
-            })
-            .fail(function() {
-                // Check for support
-                // https://developer.mozilla.org/en-US/docs/Web/API/Console/error
-                if ("console" in window) {
-                    console.warn("We couldn't find a matching item for that link.");
-                }
-            });
+        } else {
+            $.getJSON(config.domain + "/embed/itemdata/?itemurl=" + url + "&callback=?", function (data) {
+                    if (useCache) {
+                        cache.set(url, data, config.cache);
+                    }
+                    processCallbacks(data);
+                })
+                .fail(function () {
+                    // Check for support
+                    // https://developer.mozilla.org/en-US/docs/Web/API/Console/error
+                    if ("console" in window) {
+                        console.error("We couldn't find a matching item for that link");
+                    }
+                });
         }
     }
 
     // Open the actual overlay
     function openOverlay(event) {
         /*jshint validthis: true */
-        var $trigger = $(this),
-            url      = $trigger.data("modal-url");
+        var $trigger = $(this);
+        var url = $trigger.data("modal-url");
 
         // Bail if the url is not set
-        if(typeof url !== "string") {
+        if (typeof url !== "string") {
             return;
         }
 
@@ -269,19 +264,20 @@
         try {
             var json = JSON.parse(message);
 
-            switch(json.key) {
+            switch (json.key) {
                 case "modal-theme":
                     var theme = {};
 
                     // Convert into new object
-                    $.each(config.theme, function(element, colors) {
-                        switch(element) {
+                    $.each(config.theme, function (element, colors) {
+                        switch (element) {
                             case "button":
-                                $.each(colors, function(key, color) {
-                                    switch(key) {
+                                $.each(colors, function (key, color) {
+                                    switch (key) {
                                         case "bg":
                                             theme.cb = color;
                                             break;
+
                                         case "text":
                                             theme.ct = color;
                                             break;
@@ -290,11 +286,12 @@
                                 break;
 
                             case "checkout":
-                                $.each(colors, function(key, color) {
-                                    switch(key) {
+                                $.each(colors, function (key, color) {
+                                    switch (key) {
                                         case "headerBg":
                                             theme.chbg = color;
                                             break;
+
                                         case "headerText":
                                             theme.chtx = color;
                                             break;
@@ -305,18 +302,17 @@
                     });
 
                     event.source.postMessage(JSON.stringify({
-                        key:    "modal-theme",
-                        data:   (!!Object.size(theme) ? theme : null)
+                        key: "modal-theme",
+                        data: (Object.keys(theme).length ? theme : null)
                     }), config.domain);
 
-                    if(!config.redirect)
-                    {
+                    if (!config.redirect) {
                         event.source.postMessage(JSON.stringify({
-                            key:    "set-redirect",
-                            data:   config.redirect
+                            key: "set-redirect",
+                            data: config.redirect
                         }), config.domain);
                     }
-                    
+
                     // Get tracking parameter if it's set
                     if ($.isFunction(config.getTracking)) {
                         var tracking = config.getTracking(cache.currentTrigger);
@@ -324,8 +320,8 @@
                         // Send to modal frame
                         if (!isNullOrEmpty(tracking)) {
                             event.source.postMessage(JSON.stringify({
-                                key:    "set-tracking",
-                                data:   tracking
+                                key: "set-tracking",
+                                data: tracking
                             }), config.domain);
                         }
                     }
@@ -371,8 +367,7 @@
         $.getScript(window._$elz.m.s.src, function () {
             listeners();
         });
-    }
-    else {
+    } else {
         listeners();
     }
 
@@ -390,7 +385,7 @@
         config.shortDomain.push(config.domain + "/checkout/item/");
 
         // Prefetch data
-        $(generateSelector()).each(function() {
+        $(generateSelector()).each(function () {
             getItemData($(this));
         });
     };

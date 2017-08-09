@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.15</td>
+    <td>Cleanup and minor bug fix. New CDN URLs</td>
+  </tr>
+  <tr>
     <td>1.0.14</td>
     <td>Improved support for iOS and Android devices</td>
   </tr>
@@ -236,9 +240,6 @@ Here's some example data returned by the `onDataReady` callback:
 	CanPickup: true,
 	CanShip: true,
 	Description: "Example of an item description",
-	DownloadFileName: null,
-	DownloadFileSize: null,
-	DownloadUrl: null,
 	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg",
 	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg",
 	IsSoldOut: false,
@@ -373,8 +374,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://jquery.selzstatic.com/1.0.14/jquery.selz.min.css" rel="stylesheet">
-<script src="https://jquery.selzstatic.com/jquery/1.0.14/jquery.selz.min.js"></script>
+<link href="https://jquery.selzstatic.com/1.0.15/jquery.selz.css" rel="stylesheet">
+<script src="https://jquery.selzstatic.com/1.0.15/jquery.selz.js"></script>
 ```
 
 ## Licensed under the MIT
