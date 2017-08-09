@@ -82,11 +82,11 @@ For a very simple installation where you only want the overlay functionality for
 
 #### JavaScript
 
-Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
+Include jQuery (if you haven't already) and `jquery.selz.js` (from `dist`) files, just before the closing `</body>` tag.
 
 ```html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="src/jquery.selz.min.js"></script>
+<script src="dist/jquery.selz.js"></script>
 ```
 
 Then in your document.ready block add the following:
@@ -99,7 +99,7 @@ You can pass extra options as outlined below.
 
 #### CSS
 
-Include `jquery.selz.min.css` or add your stylesheet into the `<head>` of your page
+Include `jquery.selz.css` (from `dist`) into the `<head>` of your page.
 
 ```html
 <link href="src/jquery.selz.min.css" rel="stylesheet">
