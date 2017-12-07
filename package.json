@@ -1,23 +1,22 @@
 {
   "name": "jquery.selz",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
   "main": "gulpfile.js",
   "dependencies": {},
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-concat": "~2.6.0",
-    "gulp-gzip": "^1.0.0",
-    "gulp-less": "~3.0.5",
-    "gulp-minify-css": "~1.2.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-concat": "~2.6.1",
+    "gulp-less": "~3.3.2",
     "gulp-rename": "^1.2.0",
-    "gulp-replace": "^0.5.3",
-    "gulp-s3": "^0.3.0",
+    "gulp-replace": "^0.6.1",
+    "gulp-s3": "^0.11.0",
     "gulp-size": "^2.0.0",
-    "gulp-uglify": "~1.5.1",
-    "gulp-util": "~3.0.7",
-    "run-sequence": "^1.1.4"
+    "gulp-uglify": "~3.0.0",
+    "gulp-util": "~3.0.8",
+    "run-sequence": "^2.1.0"
   },
   "scripts": {
     "preinstall": "npm install -g gulp"
@@ -31,7 +30,7 @@
   ],
   "authors": [
     "Slavo Lukac <slavo@selz.com>",
-    "Sam Potts <me@sampotts.me>"
+    "Sam Potts <sam@selz.com>"
   ],
   "license": "MIT",
   "bugs": {

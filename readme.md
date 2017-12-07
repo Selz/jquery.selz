@@ -10,6 +10,14 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.15</td>
+    <td>Cleanup and minor bug fix. New CDN URLs</td>
+  </tr>
+  <tr>
+    <td>1.0.14</td>
+    <td>Improved support for iOS and Android devices</td>
+  </tr>
+  <tr>
     <td>1.0.13</td>
     <td>Added a new option to override your store auto-redirect checkout settings</td>
   </tr>
@@ -72,17 +80,32 @@ See bundled `index.html` and `index.options.html` file for examples.
 
 For a very simple installation where you only want the overlay functionality for any Selz item, the setup is very easy.
 
-Include jQuery (if you haven't already) and `jquery.selz.min.js` files. These can go in the bottom of your html, just before the closing `</body>` tag
+#### JavaScript
+
+Include jQuery (if you haven't already) and `jquery.selz.js` (from `dist`) files, just before the closing `</body>` tag.
 
 ```html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="src/jquery.selz.min.js"></script>
+<script src="dist/jquery.selz.js"></script>
 ```
-Include `jquery.selz.min.css` or add your stylesheet into the `<head>` of your page
+
+Then in your document.ready block add the following:
+
+```javascript
+$.selz();
+```
+
+You can pass extra options as outlined below.
+
+#### CSS
+
+Include `jquery.selz.css` (from `dist`) into the `<head>` of your page.
 
 ```html
 <link href="src/jquery.selz.min.css" rel="stylesheet">
 ```
+
+#### HTML
 
 Add the short link to your [Selz.com](https://selz.com) products into the `<body>` of your page. This can be found on the share item page within Selz
 
@@ -116,7 +139,6 @@ To install the Selz plugin, you will have to include the following resources in 
     <td>Offers styles that are crucial for the correct display of the Selz overlay. The appearance will break if this is not included. You can customise the styles in the source less file <code>jquery.selz.less</code> or write your own <strong>at your own risk</strong>.</td>
   </tr>
 </table>
-
 
 ## Options
 
@@ -218,15 +240,9 @@ Here's some example data returned by the `onDataReady` callback:
 	CanPickup: true,
 	CanShip: true,
 	Description: "Example of an item description",
-	DirectClicks: 200,
-	DownloadFileName: null,
-	DownloadFileSize: null,
-	DownloadUrl: null,
-	FacebookClicks: 100,
 	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg",
 	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg",
 	IsSoldOut: false,
-	PinterestClicks: 100,
 	Price: "A$9.99",
 	Quantity: 8,
 	QuantityLeft: 8,
@@ -236,9 +252,6 @@ Here's some example data returned by the `onDataReady` callback:
 	ShipPrice: "$10.00",
 	ShortUrl: "http://selz.co/xxxxxx",
 	Title: "Example Item",
-	TotalSales: 0,
-	TotalViews: 0,
-	TwitterClicks: 100,
 	Url: "https://selz.com/items/detail/xxxx",
 	CheckoutUrl: "https://selz.com/checkout/item/xxxx"
 }
@@ -361,8 +374,8 @@ $(function() {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://cdn.selz.com/jquery/1.0.13/jquery.selz.min.css" rel="stylesheet">
-<script src="https://cdn.selz.com/jquery/1.0.13/jquery.selz.min.js"></script>
+<link href="https://jquery.selzstatic.com/1.0.15/jquery.selz.css" rel="stylesheet">
+<script src="https://jquery.selzstatic.com/1.0.15/jquery.selz.js"></script>
 ```
 
 ## Licensed under the MIT
