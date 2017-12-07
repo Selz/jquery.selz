@@ -219,7 +219,7 @@
 			processCallbacks(cache.get(url));
 		}
 		else {
-			$.getJSON(config.domain + "/embed/itemdata/?itemurl=" + url + "&callback=?", function(data) {
+			$.getJSON(config.domain + "/embed/itemdata?itemurl=" + url + "&callback=?", function(data) {
 				if(useCache) {
 					cache.set(url, data, config.cache);
 				}
