@@ -10,6 +10,10 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <th width="85%">Comments</th>
   </tr>
   <tr>
+    <td>1.0.16</td>
+    <td>Fix potential bug with local storage caching</td>
+  </tr>
+  <tr>
     <td>1.0.15</td>
     <td>Cleanup and minor bug fix. New CDN URLs</td>
   </tr>
@@ -70,7 +74,6 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
     <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data</td>
   </tr>
 </table>
-
 
 ## Examples
 
@@ -326,44 +329,51 @@ Here's some example data returned by the `onClose` callback:
 ```javascript
 $(function() {
   $.selz({
-      theme: {
-        button: {
-          bg:             "#5fa9df",
-          text:           "#fff"
-        },
-        checkout: {
-          headerBg:       "#5fa9df",
-          headerText:     "#fff"
-        }
+    theme: {
+      button: {
+        bg: "#5fa9df",
+        text: "#fff"
       },
-      getTracking: function($link) {
-        return $link.data("tracking");
-      },
-      onDataReady: function ($link, data) {
-        // Customise the link with item data
-        $link.html('<img src="' + data.ImageUrlSmall + '" alt="' + data.Title + '">' + data.Title);
-
-        // Skip to checkout
-        // You can set the 'checkout' config option or set the URL yourself
-        $link.data('modal-url', data.CheckoutUrl);
-      },
-      onModalOpen: function ($link) {
-        // Track open in Google Analytics
-        ga('send', 'pageview', $link.attr("href"));
-      },
-      onPurchase: function (data) {
-        // Track purchase
-      },
-      onProcessing: function (data) {
-        // Track processing
-      },
-      onClose: function ($link, data) {
-        // Continue checkout flow
-        if(typeof data.modal_url === "string"){
-          $link.data("modal-url", data.modal_url);
-        }
+      checkout: {
+        headerBg: "#5fa9df",
+        headerText: "#fff"
       }
-    });
+    },
+    getTracking: function($link) {
+      return $link.data("tracking");
+    },
+    onDataReady: function($link, data) {
+      // Customise the link with item data
+      $link.html(
+        '<img src="' +
+          data.ImageUrlSmall +
+          '" alt="' +
+          data.Title +
+          '">' +
+          data.Title
+      );
+
+      // Skip to checkout
+      // You can set the 'checkout' config option or set the URL yourself
+      $link.data("modal-url", data.CheckoutUrl);
+    },
+    onModalOpen: function($link) {
+      // Track open in Google Analytics
+      ga("send", "pageview", $link.attr("href"));
+    },
+    onPurchase: function(data) {
+      // Track purchase
+    },
+    onProcessing: function(data) {
+      // Track processing
+    },
+    onClose: function($link, data) {
+      // Continue checkout flow
+      if (typeof data.modal_url === "string") {
+        $link.data("modal-url", data.modal_url);
+      }
+    }
+  });
 });
 ```
 
