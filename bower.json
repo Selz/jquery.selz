@@ -16,12 +16,12 @@
   "main": [
     "src/jquery.selz.js",
     "src/jquery.selz.less",
-    "src/jquery.selz.min.js",
-    "src/jquery.selz.min.css"
+    "dist/jquery.selz.js",
+    "dist/jquery.selz.css"
   ],
   "ignore": [
     ".gitignore",
-    "README.markdown",
+    "readme.md",
     "bower.json",
     "gulpfile.js",
     "package.json",

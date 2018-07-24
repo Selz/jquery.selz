@@ -1,135 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>jQuery Selz Plugin</title>
-		<link href="http://cdn.selz.com/jquery/1.0.13/jquery.selz.min.css" rel="stylesheet">
-		<style>
-			[hidden] {
-				display: none;
-			}
-			html {
-				font-size: 62.5%;
-			}
-			body, input {
-				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-				font-size: 1.5rem;
-				line-height: 1.5;
-				color: #333;
-			}
-			body {
-				padding: 20px;
-				max-width: 600px;
-				margin: 0 auto;
-			}
-			.btn {
-				display: inline-block;
-				padding: 8px 20px;
-				background: #5FA9DF;
-				color: #fff;
-				font-weight: 700;
-				text-decoration: none;
-				border-radius: 3px;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-			}
-			output {
-				display: block;
-				margin-top: 20px;
-				padding: 10px;
-				font-size: 1.3rem;
-				overflow: auto;
-				border: 1px solid #ddd;
-				border-radius: 3px;
-				white-space: pre;
-			}
-			output div {
-				position: relative;
-				padding-left: 20px;
-			}
-			output small {
-				display: block;
-				font-size: 12px;
-				color: #aaa;
-			}
-			output div::before {
-				content: "";
-				position: absolute;
-				left: 5px;
-				top: 5px;
-				height: 0;
-				width: 0;
-				border-top: 5px solid transparent;
-				border-bottom: 5px solid transparent;
-				border-left: 5px solid currentColor;
-			}
-			output div + div {
-				margin-top: 10px;
-			}
-		</style>
-	</head>
-	<body>
-		<a href="http://selz.co/1gfLTzi" data-tracking="ABCD1234" class="btn">Buy now</a>
-		<output class="js-plugin-output"></output>
 
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="http://cdn.selz.com/jquery/1.0.13/jquery.selz.min.js"></script>
-		<script>
-			// Send beacon fallback
-			navigator.sendBeacon = navigator.sendBeacon || function (url, data) {
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", url, false);
-				xhr.send(data);
-			};
+<head>
+    <title>jQuery Selz Plugin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-			function _log(data, label) {
-				if(typeof data === "object") {
-					data = JSON.stringify(data, null, 4);
-				}
+    <!-- Set viewport -->
+    <meta name="viewport" content="initial-scale=1.0,width=device-width">
+    <link href="https://jquery.selzstatic.com/1.0.15/jquery.selz.css" rel="stylesheet">
+    <style>
+        [hidden] {
+            display: none;
+        }
 
-				$(".js-plugin-output").prepend("<div>" + (label ? label + ": " : "") + data + "<small>" + (new Date()).toLocaleString() + "</small></div>");
-			}
+        html {
+            font-size: 62.5%;
+        }
 
-			$(function () { 
-				$.selz({
-					theme: {
-						button: {
-							bg:             "#5fa9df",
-							text:           "#fff"
-						},
-						checkout: {
-							headerBg:       "#5fa9df",
-							headerText:     "#fff"
-						}
-					},
-					getTracking: function($link) {
-						return $link.data("tracking");
-					},
-					onDataReady: function ($link, data) {
-						_log(data, "onDataReady");
-						console.log(data);
-					},
-					onModalOpen: function ($link) {
-						_log("onModalOpen: " + ($link.data("modal-url") ? $link.data("modal-url") : $link.attr("href")));
-						console.log($link);
-					},
-					onPurchase: function (data) {
-						_log(data, "onPurchase");
-						console.log(data);
-					},
-					onClose: function ($link, data) {
-						if(typeof data.modal_url === "string"){
-							$link.data("modal-url", data.modal_url);
-						}
-						
-						// Log it
-						_log(data, "onClose");
+        body,
+        input {
+            font-family: "Avenir", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #333;
+            -webkit-font-smoothing: antialiased;
+        }
 
-						// Send data to your server on modal/tab/window close
-						navigator.sendBeacon("http://requestb.in/1abpybo1", JSON.stringify(data));
-					}
-				});
-			});
-		</script>
-	</body>
+        body {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #5FA9DF;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 3px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        output {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 1.4rem;
+            overflow: auto;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            white-space: pre;
+        }
+
+        output div {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        output small {
+            display: block;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        output div::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            height: 0;
+            width: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid currentColor;
+        }
+
+        output div+div {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="http://selz.co/1gfLTzi" data-tracking="ABCD1234" class="btn">Buy now</a>
+    <output class="js-plugin-output"></output>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://jquery.selzstatic.com/1.0.15/jquery.selz.js"></script>
+    <script>
+        // Send beacon fallback
+        navigator.sendBeacon = navigator.sendBeacon || function (url, data) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, false);
+            xhr.send(data);
+        };
+
+        function _log(data, label) {
+            if (typeof data === "object") {
+                data = JSON.stringify(data, null, 4);
+            }
+
+            $(".js-plugin-output").prepend("<div>" + (label ? label + ": " : "") + data + "<small>" + (new Date()).toLocaleString() +
+                "</small></div>");
+        }
+
+        $(function () {
+            $.selz({
+                theme: {
+                    button: {
+                        bg: "#5fa9df",
+                        text: "#fff"
+                    },
+                    checkout: {
+                        headerBg: "#5fa9df",
+                        headerText: "#fff"
+                    }
+                },
+                getTracking: function ($link) {
+                    return $link.data("tracking");
+                },
+                onDataReady: function ($link, data) {
+                    _log(data, "onDataReady");
+                    console.log(data);
+                },
+                onModalOpen: function ($link) {
+                    _log("onModalOpen: " + ($link.data("modal-url") ? $link.data("modal-url") :
+                        $link.attr("href")));
+                    console.log($link);
+                },
+                onPurchase: function (data) {
+                    _log(data, "onPurchase");
+                    console.log(data);
+                },
+                onClose: function ($link, data) {
+                    if (typeof data.modal_url === "string") {
+                        $link.data("modal-url", data.modal_url);
+                    }
+
+                    // Log it
+                    _log(data, "onClose");
+
+                    // Send data to your server on modal/tab/window close
+                    // navigator.sendBeacon("https://example.com/endpoint", JSON.stringify(data));
+                }
+            });
+        });
+    </script>
+</body>
+
 </html>

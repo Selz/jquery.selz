@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>jQuery Selz Plugin</title>
-		<link href="http://cdn.selz.com/jquery/1.0.13/jquery.selz.min.css" rel="stylesheet">
-	</head>
-	<body>
-		<ul>
-			<li><a href="http://selz.co/1gfLTzi">Buy now</a></li>
-		</ul>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-		<script src="http://cdn.selz.com/jquery/1.0.13/jquery.selz.min.js"></script>
-	</body>
+
+<head>
+    <title>jQuery Selz Plugin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!-- Set viewport -->
+    <meta name="viewport" content="initial-scale=1.0,width=device-width">
+
+    <link href="https://jquery.selzstatic.com/1.0.15/jquery.selz.css" rel="stylesheet">
+</head>
+
+<body>
+    <ul>
+        <li><a href="http://selz.co/1gfLTzi">Buy now</a></li>
+    </ul>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://jquery.selzstatic.com/1.0.15/jquery.selz.js"></script>
+    <script>
+        $(function () {
+            $.selz();
+        });
+    </script>
+</body>
+
 </html>
