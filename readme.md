@@ -151,10 +151,10 @@ Here's some example data returned by the `onClose` callback:
 
 ```json
 {
-    "id": "xxxx", // Unique checkout ID
-    "expires": "1433122978", // Unix time that the cart will expire
-    "modal_url": "https://...", // URL used for a modal
-    "url": "https://...", // URL used for a page tab
+    "id": "xxxx",
+    "expires": "1433122978",
+    "modal_url": "https://...",
+    "url": "https://...",
     "buyer": {
         "firstname": "John",
         "lastname": "Appleseed",
@@ -174,7 +174,7 @@ Here's some example data returned by the `onClose` callback:
 #### Example setup using options
 
 ```javascript
-$(function() {
+$(() => {
     $.selz({
         theme: {
             button: {
@@ -186,10 +186,10 @@ $(function() {
                 headerText: '#fff',
             },
         },
-        getTracking: function($link) {
+        getTracking: $link => {
             return $link.data('tracking');
         },
-        onDataReady: function($link, data) {
+        onDataReady: ($link, data) => {
             // Customise the link with item data
             $link.html(
                 `<img src="${data.ImageUrlSmall}" alt="${data.Title}">${
@@ -201,17 +201,17 @@ $(function() {
             // You can set the 'checkout' config option or set the URL yourself
             $link.data('modal-url', data.CheckoutUrl);
         },
-        onModalOpen: function($link) {
+        onModalOpen: $link => {
             // Track open in Google Analytics
             ga('send', 'pageview', $link.attr('href'));
         },
-        onPurchase: function(data) {
+        onPurchase: data => {
             // Track purchase
         },
-        onProcessing: function(data) {
+        onProcessing: data => {
             // Track processing
         },
-        onClose: function($link, data) {
+        onClose: ($link, data) => {
             // Continue checkout flow
             if (data.modal_url) {
                 $link.data('modal-url', data.modal_url);
