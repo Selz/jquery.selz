@@ -25,25 +25,24 @@
 
     // Caching using local storage
     const cache = {
-        supported: () => {
+        supported: (() => {
             if (!('localStorage' in window)) {
                 return false;
             }
 
             // Try to use it (it might be disabled, e.g. user is in private mode)
             try {
-                const test = '___support_test';
-                window.localStorage.setItem(test, test);
-                const result = window.localStorage.getItem(test);
-                window.localStorage.removeItem(test);
-                return result === test;
+                const key = '___test';
+                window.localStorage.setItem(key, key);
+                window.localStorage.removeItem(key);
+                return true;
             } catch (e) {
                 return false;
             }
-        },
+        })(),
         set: (key, data, ttl = 3600) => {
             // Bail if no support or no key/data specified
-            if (!cache.supported() || !key || !data) {
+            if (!cache.supported || !key || !data) {
                 return;
             }
 
@@ -64,26 +63,24 @@
         get: key => {
             // If there's no support, the kye doesn't exist or it's stale, return null
             if (
-                !cache.supported() ||
+                !cache.supported ||
                 !cache.exists(key) ||
                 !cache.validity(key)
             ) {
                 return null;
             }
 
-            let result;
+            const result = window.localStorage.getItem(key);
 
             try {
-                result = JSON.parse(window.localStorage.getItem(key));
+                return JSON.parse(result);
             } catch (e) {
-                result = window.localStorage.getItem(key);
+                return result;
             }
-
-            return result;
         },
         clean: () => {
             // Bail if no support
-            if (!cache.supported()) {
+            if (!cache.supported) {
                 return;
             }
 
@@ -104,11 +101,11 @@
         },
         exists: key => {
             // Bail if no support
-            if (!cache.supported()) {
+            if (!cache.supported) {
                 return false;
             }
 
-            return key in window.localStorage;
+            return !isNullOrUndefined(window.localStorage.getItem(key));
         },
     };
 

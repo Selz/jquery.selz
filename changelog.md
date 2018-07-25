@@ -1,3 +1,7 @@
+## 1.0.16
+
+-   Fix potential bug with local storage caching
+
 ## 1.0.15
 
 -   Cleanup and minor bug fix. New CDN URLs
