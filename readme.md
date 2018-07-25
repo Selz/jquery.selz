@@ -192,9 +192,8 @@ $(() => {
         onDataReady: ($link, data) => {
             // Customise the link with item data
             $link.html(
-                `<img src="${data.ImageUrlSmall}" alt="${data.Title}">${
-                    data.Title
-                }`
+                `<img src="${data.ImageUrlSmall}" alt="${data.Title}">
+                ${data.Title}`
             );
 
             // Skip to checkout
