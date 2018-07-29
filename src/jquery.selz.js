@@ -72,6 +72,10 @@
 
             const result = window.localStorage.getItem(key);
 
+            if (!result) {
+                return null;
+            }
+
             try {
                 return JSON.parse(result);
             } catch (e) {
@@ -84,9 +88,9 @@
                 return;
             }
 
-            Object.keys(window.localStorage).forEach(key => {
-                cache.validity(key);
-            });
+            Object.keys(window.localStorage).forEach(key =>
+                cache.validity(key)
+            );
         },
         validity: key => {
             if (
@@ -105,7 +109,10 @@
                 return false;
             }
 
-            return !isNullOrUndefined(window.localStorage.getItem(key));
+            return (
+                !isNullOrUndefined(window.localStorage.getItem(key)) &&
+                cache.validity(key)
+            );
         },
     };
 
@@ -116,9 +123,8 @@
         // Short links
         // e.g. http://selz.co/1abc234 or http://bit.ly/1abc234
         $.each(config.shortDomain, (index, value) => {
-            selector += `a[href^='${value}']${
-                index < config.shortDomain.length - 1 ? ',' : ''
-            }`;
+            const separator = index < config.shortDomain.length - 1 ? ',' : '';
+            selector += `a[href^='${value}']${separator}`;
         });
 
         // Add support for full links
@@ -131,9 +137,7 @@
     }
 
     // Process the callbacks queue
-    function processCallbacks(url) {
-        const data = cache.get(url);
-
+    function processCallbacks(url, data) {
         // Bail if the URL has no callbacks or data isn't defined
         if (!data || !Object.keys(data).length) {
             return;
@@ -187,15 +191,16 @@
 
         // Try from cache first
         if (useCache && cache.exists(url)) {
-            processCallbacks(url);
+            processCallbacks(url, cache.get(url));
         } else {
             $.getJSON(
                 `${config.domain}/embed/itemdata?itemurl=${url}&callback=?`,
                 data => {
+                    processCallbacks(url, data);
+
                     if (useCache) {
                         cache.set(url, data, config.cache);
                     }
-                    processCallbacks(url);
                 }
             ).fail(() => {
                 throw new Error(
@@ -381,13 +386,6 @@
         },
     };
 
-    // Preload _$elz modal script if needed
-    if ($.type(window._$elz.m.open) === 'undefined') {
-        $.getScript(window._$elz.m.s.src, listeners);
-    } else {
-        listeners();
-    }
-
     // Plugin
     $.selz = options => {
         // Extend users options with base config
@@ -402,8 +400,13 @@
         config.shortDomain.push(`${config.domain}/checkout/item/`);
 
         // Prefetch data
-        $(generateSelector()).each((index, element) => {
-            getItemData($(element));
-        });
+        $(generateSelector()).each((index, element) => getItemData($(element)));
+
+        // Preload _$elz modal script if needed
+        if ($.type(window._$elz.m.open) === 'undefined') {
+            $.getScript(window._$elz.m.s.src, listeners);
+        } else {
+            listeners();
+        }
     };
 })(window.jQuery);
