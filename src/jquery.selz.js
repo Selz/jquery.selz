@@ -10,7 +10,8 @@
     const isNullOrEmpty = value => isNullOrUndefined(value) || value === '';
 
     // Plugin config
-    const config = {
+    let config = {};
+    const defaults = {
         domain: 'https://selz.com',
         shortDomain: ['http://selz.co/', 'http://bit.ly/'],
         longDomain: '.selz.com/item/',
@@ -375,26 +376,31 @@
             });
     }
 
-    // Set _$elz global variable
-    window._$elz = window._$elz || {};
+    // Mock the _$elz modal object
+    function mockModal() {
+        // Set _$elz global variable
+        window._$elz = window._$elz || {};
 
-    // Mock _$elz modal
-    window._$elz.m = window._$elz.m || {
-        d: config.domain,
-        s: {
-            src: `${config.domain}/assets/js/embed/modal.js`,
-        },
-    };
+        // Mock _$elz modal
+        window._$elz.m = window._$elz.m || {
+            d: config.domain,
+            s: {
+                src: `${config.domain}/assets/js/embed/modal.js`,
+            },
+        };
+    }
 
     // Plugin
     $.selz = options => {
         // Extend users options with base config
-        $.extend(true, config, options);
+        config = $.extend(true, {}, defaults, options);
 
         // Make shortDomain an array
         if (!$.isArray(config.shortDomain)) {
             config.shortDomain = [config.shortDomain];
         }
+
+        mockModal();
 
         // Push domain to trigger domains to allow skip to checkout
         config.shortDomain.push(`${config.domain}/checkout/item/`);
