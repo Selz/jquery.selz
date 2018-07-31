@@ -4,6 +4,8 @@
 // ==========================================================================
 
 ($ => {
+    const version = '1.0.17';
+
     // Helpers
     const isNullOrUndefined = value =>
         $.type(value) === 'undefined' || value === null;
@@ -50,14 +52,14 @@
             // Store it
             window.localStorage.setItem(
                 key,
-                $.isPlainObject(data) ? JSON.stringify(data) : data
+                $.isPlainObject(data) ? JSON.stringify(data) : data,
             );
 
             // Set a ttl (time to live)
             if ($.isNumeric(ttl)) {
                 window.localStorage.setItem(
                     `${key}_ttl`,
-                    Date.now() + ttl * 1000
+                    Date.now() + ttl * 1000,
                 );
             }
         },
@@ -90,7 +92,7 @@
             }
 
             Object.keys(window.localStorage).forEach(key =>
-                cache.validity(key)
+                cache.validity(key),
             );
         },
         validity: key => {
@@ -116,6 +118,36 @@
             );
         },
     };
+
+    // Parse a URL
+    // https://gist.github.com/jlong/2428561
+    function parseUrl(url = window.location.href) {
+        // Create a faux anchor
+        const parser = document.createElement('a');
+
+        // Set the href to the url to parse
+        parser.href = url;
+
+        // Return the parts we need
+        // Fix pathname for IE
+        const info = {
+            host: parser.host,
+            hostname: parser.hostname,
+            hash: parser.hash,
+            protocol: parser.protocol,
+            pathname:
+                parser.pathname.indexOf('/') !== 0
+                    ? `/${parser.pathname}`
+                    : parser.pathname,
+            search: parser.search,
+        };
+
+        // Get the filename from path
+        const parts = info.pathname.split('/');
+        info.filename = parts[parts.length - 1];
+
+        return info;
+    }
 
     // Generate the selector for the links
     function generateSelector() {
@@ -194,18 +226,20 @@
         if (useCache && cache.exists(url)) {
             processCallbacks(url, cache.get(url));
         } else {
+            const { domain } = config;
+
             $.getJSON(
-                `${config.domain}/embed/itemdata?itemurl=${url}&callback=?`,
+                `${domain}/embed/itemdata?v=${version}&itemurl=${url}&callback=?`,
                 data => {
                     processCallbacks(url, data);
 
                     if (useCache) {
                         cache.set(url, data, config.cache);
                     }
-                }
+                },
             ).fail(() => {
                 throw new Error(
-                    'We could not find a matching item for that link'
+                    'We could not find a matching item for that link',
                 );
             });
         }
@@ -241,8 +275,14 @@
         const event = e.originalEvent;
         const message = event.data;
 
+        const origin = parseUrl(event.origin);
+        const current = parseUrl(config.domain);
+        const allowedOrigin =
+            origin.hostname === current.hostname ||
+            origin.hostname.endsWith(`.${current.hostname}`);
+
         // Listen only to Selz messages
-        if (event.origin !== config.domain || $.type(message) !== 'string') {
+        if (!allowedOrigin || $.type(message) !== 'string') {
             return;
         }
 
@@ -300,7 +340,7 @@
                             key: 'modal-theme',
                             data: Object.keys(theme).length ? theme : null,
                         }),
-                        config.domain
+                        event.origin,
                     );
 
                     if (!config.redirect) {
@@ -309,14 +349,14 @@
                                 key: 'set-redirect',
                                 data: config.redirect,
                             }),
-                            config.domain
+                            event.origin,
                         );
                     }
 
                     // Get tracking parameter if it's set
                     if ($.isFunction(config.getTracking)) {
                         const tracking = config.getTracking(
-                            cache.currentTrigger
+                            cache.currentTrigger,
                         );
 
                         // Send to modal frame
@@ -326,7 +366,7 @@
                                     key: 'set-tracking',
                                     data: tracking,
                                 }),
-                                config.domain
+                                event.origin,
                             );
                         }
                     }
