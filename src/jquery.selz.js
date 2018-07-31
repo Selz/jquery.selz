@@ -6,11 +6,6 @@
 ($ => {
     const version = '1.0.17';
 
-    // Helpers
-    const isNullOrUndefined = value =>
-        $.type(value) === 'undefined' || value === null;
-    const isNullOrEmpty = value => isNullOrUndefined(value) || value === '';
-
     // Plugin config
     let config = {};
     const defaults = {
@@ -21,6 +16,15 @@
         cache: 300,
         checkout: false,
         redirect: false,
+    };
+
+    // Helpers
+    const isNullOrUndefined = value =>
+        $.type(value) === 'undefined' || value === null;
+    const isNullOrEmpty = value => isNullOrUndefined(value) || value === '';
+    const endsWith = (input, search) => {
+        const { length } = input;
+        return input.substring(length - search.length, length) === search;
     };
 
     // Callbacks
@@ -280,7 +284,7 @@
         const current = parseUrl(config.domain);
         const allowedOrigin =
             origin.host === current.host ||
-            origin.host.endsWith(`.${current.host}`);
+            endsWith(origin.host, `.${current.host}`);
 
         // Listen only to Selz messages
         if (!allowedOrigin || $.type(message) !== 'string') {
