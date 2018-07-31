@@ -249,6 +249,7 @@
     function openOverlay(event) {
         const $trigger = $(this);
         const url = $trigger.data('modal-url');
+        const { open } = window._$elz.m;
 
         // Bail if the url is not set
         if ($.type(url) !== 'string') {
@@ -259,7 +260,7 @@
         event.preventDefault();
 
         // Open modal
-        window._$elz.m.open(url, null);
+        open(url);
 
         // User defined callback
         if ($.isFunction(config.onModalOpen)) {
@@ -278,8 +279,8 @@
         const origin = parseUrl(event.origin);
         const current = parseUrl(config.domain);
         const allowedOrigin =
-            origin.hostname === current.hostname ||
-            origin.hostname.endsWith(`.${current.hostname}`);
+            origin.host === current.host ||
+            origin.host.endsWith(`.${current.host}`);
 
         // Listen only to Selz messages
         if (!allowedOrigin || $.type(message) !== 'string') {
