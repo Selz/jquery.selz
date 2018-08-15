@@ -1,57 +1,91 @@
 ﻿// ==========================================================================
 // Gulp build script
 // ==========================================================================
-/*global require, __dirname*/
-/*jshint -W079 */
+/* global require, __dirname */
 
-var fs = require('fs');
-var path = require('path');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var less = require('gulp-less');
-var cleanCss = require('gulp-clean-css');
-var rename = require('gulp-rename');
-var s3 = require('gulp-s3');
-var prefixer = require('gulp-autoprefixer');
-var replace = require('gulp-replace');
-var size = require('gulp-size');
-var run = require('run-sequence');
+const fs = require('fs');
+const path = require('path');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const less = require('gulp-less');
+const cleanCss = require('gulp-clean-css');
+const rename = require('gulp-rename');
+const s3 = require('gulp-s3');
+const prefixer = require('gulp-autoprefixer');
+const replace = require('gulp-replace');
+const size = require('gulp-size');
+const run = require('run-sequence');
+const babel = require('gulp-babel');
 
-// Load json
-function loadJSON(path) {
-    return JSON.parse(fs.readFileSync(path));
-}
+const loadJSON = filePath => JSON.parse(fs.readFileSync(filePath));
 
 // Set paths
-var root = __dirname;
-var paths = {
+const root = __dirname;
+const paths = {
     js: ['src/jquery.selz.js'],
     css: ['src/jquery.selz.less'],
     build: 'dist',
-    docs: [
-        'readme.md',
-        '*.html',
-    ],
+    docs: ['readme.md', '*.html'],
     cdn: {
         root: 'jquery.selzstatic.com',
         upload: path.join(root, 'dist/**'),
     },
 };
 
+const pkg = loadJSON('./package.json');
+const { version } = pkg;
+const maxAge = 31536000; // seconds 1 year
+const options = {
+    headers: {
+        'Cache-Control': `max-age=${maxAge}`,
+        Vary: 'Accept-Encoding',
+    },
+};
+const cdnpath = new RegExp(
+    `${paths.cdn.root}/(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)`,
+    'gi'
+);
+
+// Try and get AWS credentials
+let credentials = {};
+try {
+    credentials = loadJSON('./credentials.json');
+} catch (e) {
+    // Do nothing
+}
+
 // Default development tasks
 // ------------------------------------------
-gulp.task('js', function() {
-    return gulp
+const browsers = ['> 1%'];
+
+gulp.task('js', () =>
+    gulp
         .src(paths.js)
+        .pipe(
+            babel({
+                presets: [
+                    [
+                        'env',
+                        {
+                            targets: {
+                                browsers,
+                            },
+                            useBuiltIns: true,
+                            modules: false,
+                        },
+                    ],
+                ],
+            })
+        )
         .pipe(uglify())
         .pipe(concat('jquery.selz.js'))
-        .pipe(gulp.dest(paths.build));
-});
+        .pipe(gulp.dest(paths.build))
+);
 
-gulp.task('css', function() {
-    return gulp
+gulp.task('css', () =>
+    gulp
         .src(paths.css)
         .pipe(less())
         .on('error', gutil.log)
@@ -66,66 +100,46 @@ gulp.task('css', function() {
                 keepSpecialComments: 0,
             })
         )
-        .pipe(gulp.dest(paths.build));
-});
+        .pipe(gulp.dest(paths.build))
+);
 
-gulp.task('watch', function() {
+gulp.task('watch', () => {
     gulp.watch(paths.js, ['js']);
     gulp.watch(paths.css, ['css']);
 });
 
-gulp.task('default', [
-    'js',
-    'css',
-    'watch',
-]);
+gulp.task('default', () => run('js', 'css', 'watch'));
 
 // Publish to production
 // ------------------------------------------
 // Fetch info from JSON
-var package = loadJSON('package.json');
-var aws = loadJSON('aws.json');
-var version = package.version;
-var maxAge = 31536000; // seconds 1 year
-var options = {
-    headers: {
-        'Cache-Control': 'max-age=' + maxAge,
-        Vary: 'Accept-Encoding',
-    },
-};
-var cdnpath = new RegExp(
-    paths.cdn.root + '/(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)',
-    'gi'
-);
+if (Object.keys(credentials).length) {
+    // Update version references
+    gulp.task('docs', () => {
+        gutil.log(`Updating version references to ${version}`);
 
-// Update version references
-gulp.task('docs', function() {
-    console.log('Updating version references to ' + version);
+        gulp.src(paths.docs)
+            .pipe(replace(cdnpath, `${paths.cdn.root}/${version}`))
+            .pipe(gulp.dest(root));
+    });
 
-    gulp
-        .src(paths.docs)
-        .pipe(replace(cdnpath, paths.cdn.root + '/' + version))
-        .pipe(gulp.dest(root));
-});
+    // Upload to S3
+    gulp.task('upload', () =>
+        gulp
+            .src(paths.cdn.upload)
+            .pipe(
+                size({
+                    showFiles: true,
+                    gzip: true,
+                })
+            )
+            .pipe(
+                rename(filePath => {
+                    filePath.dirname += `/jquery/${version}`;
+                })
+            )
+            .pipe(s3(credentials, options))
+    );
 
-// Upload to S3
-gulp.task('upload', function() {
-    return gulp
-        .src(paths.cdn.upload)
-        .pipe(
-            size({
-                showFiles: true,
-                gzip: true,
-            })
-        )
-        .pipe(
-            rename(function(path) {
-                path.dirname += '/jquery/' + version;
-            })
-        )
-        .pipe(s3(aws, options));
-});
-
-gulp.task('publish', function() {
-    run('js', 'css', 'upload', 'docs');
-});
+    gulp.task('deploy', () => run('js', 'css', 'upload', 'docs'));
+}

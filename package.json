@@ -1,28 +1,32 @@
 {
     "name": "jquery.selz",
-    "version": "1.0.16",
-    "description":
-        "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
+    "version": "1.0.17",
+    "description": "Open Selz.com product hyperlinks in overlay to let your customers complete their purchase directly onto your site.",
     "main": "gulpfile.js",
     "dependencies": {},
     "devDependencies": {
-        "eslint": "^4.13.1",
+        "babel-core": "^6.26.3",
+        "babel-preset-env": "^1.7.0",
+        "eslint": "^5.2.0",
+        "eslint-config-airbnb-base": "^13.0.0",
         "eslint-config-prettier": "^2.9.0",
+        "eslint-plugin-import": "^2.13.0",
         "gulp": "^3.9.1",
-        "gulp-autoprefixer": "^4.0.0",
-        "gulp-clean-css": "^3.9.0",
-        "gulp-concat": "~2.6.1",
-        "gulp-less": "~3.3.2",
-        "gulp-rename": "^1.2.2",
-        "gulp-replace": "^0.6.1",
+        "gulp-babel": "^7.0.1",
+        "gulp-autoprefixer": "^5.0.0",
+        "gulp-clean-css": "^3.9.4",
+        "gulp-concat": "^2.6.1",
+        "gulp-less": "^4.0.1",
+        "gulp-rename": "^1.4.0",
+        "gulp-replace": "^1.0.0",
         "gulp-s3": "^0.11.0",
-        "gulp-size": "^2.1.0",
-        "gulp-uglify": "~3.0.0",
-        "gulp-util": "~3.0.8",
-        "run-sequence": "^2.2.0",
-        "stylelint": "^8.4.0",
-        "stylelint-config-prettier": "^2.0.0",
-        "stylelint-config-standard": "^18.0.0"
+        "gulp-size": "^3.0.0",
+        "gulp-uglify": "^3.0.1",
+        "gulp-util": "^3.0.8",
+        "run-sequence": "^2.2.1",
+        "stylelint": "^9.3.0",
+        "stylelint-config-prettier": "^3.3.0",
+        "stylelint-config-standard": "^18.2.0"
     },
     "scripts": {
         "preinstall": "npm install -g gulp"
@@ -31,8 +35,13 @@
         "type": "git",
         "url": "git://github.com/Selz/jquery.selz.git"
     },
-    "keywords": ["selz"],
-    "authors": ["Slavo Lukac <slavo@selz.com>", "Sam Potts <sam@selz.com>"],
+    "keywords": [
+        "selz"
+    ],
+    "authors": [
+        "Slavo Lukac <slavo@selz.com>",
+        "Sam Potts <sam@selz.com>"
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Selz/jquery.selz/issues"

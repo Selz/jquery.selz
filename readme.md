@@ -4,76 +4,7 @@ Open your [Selz.com](https://selz.com) item links in an overlay to let your cust
 
 ## Changelog
 
-<table class="table" width="100%">
-  <tr>
-    <th width="15%">Version</th>
-    <th width="85%">Comments</th>
-  </tr>
-  <tr>
-    <td>1.0.16</td>
-    <td>Fix potential bug with local storage caching</td>
-  </tr>
-  <tr>
-    <td>1.0.15</td>
-    <td>Cleanup and minor bug fix. New CDN URLs</td>
-  </tr>
-  <tr>
-    <td>1.0.14</td>
-    <td>Improved support for iOS and Android devices</td>
-  </tr>
-  <tr>
-    <td>1.0.13</td>
-    <td>Added a new option to override your store auto-redirect checkout settings</td>
-  </tr>
-  <tr>
-    <td>1.0.12</td>
-    <td>Added a new option to skip the item overlay and go straight to the checkout</td>
-  </tr>
-  <tr>
-    <td>1.0.11</td>
-    <td>Bug fix for privacy mode and client side caching</td>
-  </tr>
-  <tr>
-    <td>1.0.10</td>
-    <td>Performance improvements, caching option, small bug fix for prefetching</td>
-  </tr>
-  <tr>
-    <td>1.0.9</td>
-    <td>Added support for bit.ly (fallback) and full selz.com URLs</td>
-  </tr>
-  <tr>
-    <td>1.0.8</td>
-    <td>Prefetching <em>always</em> (no longer an option), to fix a bug with mobile browsers</td>
-  </tr>
-  <tr>
-    <td>1.0.7</td>
-    <td>Bug fix for click event propagation</td>
-  </tr>
-  <tr>
-    <td>1.0.6</td>
-    <td>Added <code>onClose</code> callback, <code>getTracking</code> option, and extended theme color options</td>
-  </tr>
-  <tr>
-    <td>1.0.5</td>
-    <td>Minor bug fixes</td>
-  </tr>
-  <tr>
-    <td>1.0.4</td>
-    <td>Added to Bower packages: <code>bower install jquery-selz</code></td>
-  </tr>
-  <tr>
-    <td>1.0.3</td>
-    <td>Added <code>onProcessing</code> callback</td>
-  </tr>
-  <tr>
-    <td>1.0.2</td>
-    <td>Added <code>onPurchase</code> callback</td>
-  </tr>
-  <tr>
-    <td>1.0.1</td>
-    <td>Added <code>onDataReady</code> and <code>onModalOpen</code> callbacks and option to prefetch item data</td>
-  </tr>
-</table>
+See [changelog.md](changelog.md).
 
 ## Examples
 
@@ -88,7 +19,7 @@ For a very simple installation where you only want the overlay functionality for
 Include jQuery (if you haven't already) and `jquery.selz.js` (from `dist`) files, just before the closing `</body>` tag.
 
 ```html
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="dist/jquery.selz.js"></script>
 ```
 
@@ -113,150 +44,63 @@ Include `jquery.selz.css` (from `dist`) into the `<head>` of your page.
 Add the short link to your [Selz.com](https://selz.com) products into the `<body>` of your page. This can be found on the share item page within Selz
 
 ```html
-<a href="http://selz.co/1gfLTzi">Buy now</a>
+<a href="https://selz.co/1gfLTzi">Buy now</a>
 ```
 
 ## Installation
 
 To install the Selz plugin, you will have to include the following resources in your page. The JS files should be loaded in the order below. For the CSS file, you can either incorporate it with your site's stylesheet, or load it externally through the `<link>` element in `<head>`.
 
-<table class="table" width="100%">
-  <tr>
-    <th width="10%">Type</th>
-    <th width="25%">File Name</th>
-    <th width="65%">Description</th>
-  </tr>
-  <tr>
-    <td>JS</td>
-    <td><a href="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" target="_blank">jQuery 1.x</a></td>
-    <td><strong>External Dependency</strong>: The <em>latest verson</em> of jQuery 1.x library is needed for the Selz plugin functionality.</td>
-  </tr>
-  <tr>
-    <td>JS</td>
-    <td><code>jquery.selz.js</code></td>
-    <td>Confers the main functionality of the Selz plugin. Alternatively, you can load the minified version, <code>jquery.selz.min.js</code></td>
-  </tr>
-  <tr>
-    <td>CSS</td>
-    <td><code>jquery.selz.min.css</code></td>
-    <td>Offers styles that are crucial for the correct display of the Selz overlay. The appearance will break if this is not included. You can customise the styles in the source less file <code>jquery.selz.less</code> or write your own <strong>at your own risk</strong>.</td>
-  </tr>
-</table>
+| Type       | File Name                                                      | Description                                                                                                                                                                                                                                                                             |
+| ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| JavaScript | [`jquery.min.js`](https://code.jquery.com/jquery-3.3.1.min.js) | The _latest_ verson of jQuery is recommended for the Selz plugin functionality but v1.9 is minimum.                                                                                                                                                                                     |
+| JavaScript | `jquery.selz.js`                                               | Confers the main functionality of the Selz plugin. Alternatively, you can load the minified version, `jquery.selz.min.js`.                                                                                                                                                              |
+| CSS        | `jquery.selz.css`                                              | Offers styles that are crucial for the correct display of the Selz overlay. The appearance will break if this is not included. You can customise the styles in the source less file `jquery.selz.less` or write your own _at your own risk_. Minified version is `jquery.selz.min.css`. |
 
 ## Options
 
 You can also fetch data about your product, customise overlay button colors and add event callbacks.
 
-<table class="table" width="100%">
-  <tr>
-    <th width="20%">Option</th>
-    <th width="15%">Type</th>
-    <th width="15%">Default</th>
-    <th width="50%">Description</th>
-  </tr>
-  <tr>
-    <td><code>cache</code></td>
-    <td>number</td>
-    <td><code>300</code></td>
-    <td>How long to cache the item data, using local storage (if supported). This will improve performance for end users when navigating your site. The default is <code>300</code> (5 minutes). To disable caching, set this to <code>false</code>.</td>
-  </tr>
-  <tr>
-    <td><code>checkout</code></td>
-    <td>boolean</td>
-    <td><code>false</code></td>
-    <td>Bypass the item detail page and go straight to the checkout with the item already in the cart. This speeds up the purchase process.</td>
-  </tr>
-  <tr>
-    <td><code>redirect</code></td>
-    <td>boolean</td>
-    <td><code>false</code></td>
-    <td>Disables redirect after successful purchase (if it's enabled in your store checkout settings).</td>
-  </tr>
-  <tr>
-    <td><code>theme.button.bg</code></td>
-    <td>String</td>
-    <td><code>#6d48cc</code></td>
-    <td>The button base gradient color for primary call to actions within the overlay. This needs to be hex color code. Defaults to the Selz purple.</td>
-  </tr>
-  <tr>
-    <td><code>theme.button.text</code></td>
-    <td>String</td>
-    <td><code>#fff</code></td>
-    <td>Sets the <code>color</code> for the button text. Defaults to white.</td>
-  </tr>
-  <tr>
-    <td><code>theme.checkout.headerBg</code></td>
-    <td>String</td>
-    <td><code>#6d48cc</code></td>
-    <td>The checkout header base gradient <code>color</code>. Defaults to the Selz purple.</td>
-  </tr>
-  <tr>
-    <td><code>theme.checkout.headerText</code></td>
-    <td>String</td>
-    <td><code>#fff</code></td>
-    <td>Sets the <code>color</code> for the checkout header text. Defaults to white.</td>
-  </tr>
-  <tr>
-    <td><code>getTracking</code></td>
-    <td>Function</td>
-    <td><code>null</code></td>
-    <td>This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within the data in your <code>onPurchase</code> callback, a <a href="https://selz.com/support/using-webhooks-selz" target="_blank">webhook</a>, or in your dashboard's order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay.</td>
-  </tr>
-  <tr>
-    <td><code>onDataReady</code></td>
-    <td>Function</td>
-    <td><code>null</code></td>
-    <td>This callback is fired as soon as the item data has loaded allowing you to customise your link with data about the item. The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link as below.</td>
-  </tr>
-  <tr>
-    <td><code>onModalOpen</code></td>
-    <td>Function</td>
-    <td><code>null</code></td>
-    <td>Callback for when the overlay is shown. The function gets passed a single argument, a jQuery object for the link that triggered the overlay being opened.</td>
-  </tr>
-  <tr>
-    <td><code>onPurchase</code></td>
-    <td>Function</td>
-    <td><code>null</code></td>
-    <td>Callback for when the item is purchased. The function gets passed a single argument, the data for the order as below.</td>
-  </tr>
-  <tr>
-    <td><code>onProcessing</code></td>
-    <td>Function</td>
-    <td><code>null</code></td>
-    <td>Callback for when the item purchase is pending processing. The function gets passed a single argument, the data for the processing order.</td>
-  </tr>
-  <tr>
-    <td><code>onClose</code></td>
-    <td>Function</td>
-    <td><code>null</code></td>
-    <td>Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the cart (items, buyers details and address etc) as below if the user had entered any data into the checkout and not completed. Otherwise the object will be empty.</td>
-  </tr>
-</table>
+| Option                      | Type     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------------------------- | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cache`                     | number   | `300`       | How long to cache the product data in seconds, using local storage (if supported). This will improve performance for end users when navigating your site. To disable caching, set this to <code>false</code>.                                                                                                                                                                                                                                    |
+| `checkout`                  | boolean  | `false`     | Bypass the item detail page and go straight to the checkout with the item already in the cart. This speeds up the purchase process.                                                                                                                                                                                                                                                                                                              |
+| `redirect`                  | boolean  | `false`     | Disables redirect after successful purchase (if it's enabled in your store checkout settings).                                                                                                                                                                                                                                                                                                                                                   |
+| `theme.button.bg`           | String   | `#6d48cc`   | The button base gradient color for primary call to actions within the overlay. This needs to be hex color code.                                                                                                                                                                                                                                                                                                                                  |
+| `theme.button.text`         | String   | `#fff`      | Sets the color for the button text.                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `theme.checkout.headerBg`   | String   | `#6d48cc`   | The checkout header base gradient color.                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `theme.checkout.headerText` | String   | `#fff`      | Sets the <code>color</code> for the checkout header text.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `getTracking`               | Function | `undefined` | This function is fired as soon as the overlay is loaded allowing you to pass through your custom tracking ID (max 250 characters long) that can be received after a successful purchase within the data in your `onPurchase` callback, a [webhook](https://selz.com/support/using-webhooks-selz), or in your dashboard's order detail page. The function gets passed a single argument, a jQuery object for the link that triggered the overlay. |  | `onDataReady` | Function | `undefined` | This callback is fired as soon as the item data has loaded allowing you to customise your link with data about the item. The function gets passed two arguments; a jQuery object for the current link that is being parsed and the data for that item link as below. |
+| `onModalOpen`               | Function | `undefined` | Callback for when the overlay is shown. The function gets passed a single argument, a jQuery object for the link that triggered the overlay being opened.                                                                                                                                                                                                                                                                                        |
+| `onPurchase`                | Function | `undefined` | Callback for when the item is purchased. The function gets passed a single argument, the data for the order as below.                                                                                                                                                                                                                                                                                                                            |
+| `onProcessing`              | Function | `undefined` | Callback for when the item purchase is pending processing. The function gets passed a single argument, the data for the processing order.                                                                                                                                                                                                                                                                                                        |
+| `onClose`                   | Function | `undefined` | Callback for when the overlay or window/tab is closed. The function gets passed two arguments; a jQuery object for the current link that triggered overlay and a JSON object containing data for the cart (items, buyers details and address etc) as below if the user had entered any data into the checkout and not completed. Otherwise the object will be empty.                                                                             |
 
 #### Example data returned by onDataReady
 
 Here's some example data returned by the `onDataReady` callback:
 
-```javascript
+```json
 {
-	CanPickup: true,
-	CanShip: true,
-	Description: "Example of an item description",
-	ImageUrlLarge: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg",
-	ImageUrlSmall: "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg",
-	IsSoldOut: false,
-	Price: "A$9.99",
-	Quantity: 8,
-	QuantityLeft: 8,
-	RegularPrice: "$29.99",
-	SellerCountryCode: "US",
-	ShipInternationalPrice: "$20.00",
-	ShipPrice: "$10.00",
-	ShortUrl: "http://selz.co/xxxxxx",
-	Title: "Example Item",
-	Url: "https://selz.com/items/detail/xxxx",
-	CheckoutUrl: "https://selz.com/checkout/item/xxxx"
+    "CanPickup": true,
+    "CanShip": true,
+    "Description": "Example of an item description",
+    "ImageUrlLarge":
+        "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/large.jpg",
+    "ImageUrlSmall":
+        "https://selzimg.s3.amazonaws.com/items/xxxx/xxxx/small.jpg",
+    "IsSoldOut": false,
+    "Price": "A$9.99",
+    "Quantity": 8,
+    "QuantityLeft": 8,
+    "RegularPrice": "$29.99",
+    "SellerCountryCode": "US",
+    "ShipInternationalPrice": "$20.00",
+    "ShipPrice": "$10.00",
+    "ShortUrl": "http://selz.co/xxxxxx",
+    "Title": "Example Item",
+    "Url": "https://selz.com/items/detail/xxxx",
+    "CheckoutUrl": "https://selz.com/checkout/item/xxxx"
 }
 ```
 
@@ -264,27 +108,29 @@ Here's some example data returned by the `onDataReady` callback:
 
 Here's some example data returned by the `onPurchase` callback:
 
-```javascript
+```json
 {
-	BuyerEmail: "johnny@selz.com",
-	BuyerFirstName: "Johnny",
-	BuyerLastName: "Appleseed",
-	Currency: "USD",
-	ReferenceId: "XXXXXXXX",
-	Shipping: 20,
-	Timestamp: 1398921408,
-	TrackingId: "123456",
-	TotalPrice: 29.99,
-	Items = [{
-		ItemId: "xxxx",
-		ItemTitle: "Example Item",
-		ItemVariantTitle: "Variant 1",
-		UnitPrice: 9.99,
-		DiscountCode: "",
-		Quantity: 1,
-		Currency: "USD"
-	}],
-	RedirectUrl: "http://yourdomain.com/purchased?selz_refid=XXXXXXXX&selz_tracking=123456"
+    "BuyerEmail": "johnny@selz.com",
+    "BuyerFirstName": "Johnny",
+    "BuyerLastName": "Appleseed",
+    "Currency": "USD",
+    "ReferenceId": "XXX",
+    "Shipping": 20,
+    "Timestamp": 1398921408,
+    "TrackingId": "123",
+    "TotalPrice": 29.99,
+    "Items": [
+        {
+            "ItemId": "xxxx",
+            "ItemTitle": "Example Item",
+            "ItemVariantTitle": "Variant 1",
+            "UnitPrice": 9.99,
+            "DiscountCode": "",
+            "Quantity": 1,
+            "Currency": "USD"
+        }
+    ],
+    "RedirectUrl": "http://example.com/thanks?selz_refid=XXX&selz_tracking=123"
 }
 ```
 
@@ -303,23 +149,24 @@ Here's some example data returned by the `onProcessing` callback:
 
 Here's some example data returned by the `onClose` callback:
 
-```javascript
+```json
 {
-  id: "xxxx",					// Unique checkout ID
-  expires: "1433122978", 		// Unix time that the cart will expire
-  modal_url: "https://...", 	// URL used for a modal
-  url: "https://...", 		// URL used for a page tab
-  buyer: {
-    firstname: "John",
-    lastname: "Appleseed",
-    email: "example@domain.com",
-    delivery: {
-      city: "San Francisco",
-      country: "US"
-    },
-    billing: {
-      city: "San Francisco",
-      country: "US"
+    "id": "xxxx",
+    "expires": "1433122978",
+    "modal_url": "https://...",
+    "url": "https://...",
+    "buyer": {
+        "firstname": "John",
+        "lastname": "Appleseed",
+        "email": "example@domain.com",
+        "delivery": {
+            "city": "San Francisco",
+            "country": "US"
+        },
+        "billing": {
+            "city": "San Francisco",
+            "country": "US"
+        }
     }
 }
 ```
@@ -327,57 +174,53 @@ Here's some example data returned by the `onClose` callback:
 #### Example setup using options
 
 ```javascript
-$(function() {
-  $.selz({
-    theme: {
-      button: {
-        bg: "#5fa9df",
-        text: "#fff"
-      },
-      checkout: {
-        headerBg: "#5fa9df",
-        headerText: "#fff"
-      }
-    },
-    getTracking: function($link) {
-      return $link.data("tracking");
-    },
-    onDataReady: function($link, data) {
-      // Customise the link with item data
-      $link.html(
-        '<img src="' +
-          data.ImageUrlSmall +
-          '" alt="' +
-          data.Title +
-          '">' +
-          data.Title
-      );
+$(() => {
+    $.selz({
+        theme: {
+            button: {
+                bg: '#5fa9df',
+                text: '#fff',
+            },
+            checkout: {
+                headerBg: '#5fa9df',
+                headerText: '#fff',
+            },
+        },
+        getTracking: $link => {
+            return $link.data('tracking');
+        },
+        onDataReady: ($link, data) => {
+            // Customise the link with item data
+            $link.html(
+                `<img src="${data.ImageUrlSmall}" alt="${data.Title}">
+                ${data.Title}`
+            );
 
-      // Skip to checkout
-      // You can set the 'checkout' config option or set the URL yourself
-      $link.data("modal-url", data.CheckoutUrl);
-    },
-    onModalOpen: function($link) {
-      // Track open in Google Analytics
-      ga("send", "pageview", $link.attr("href"));
-    },
-    onPurchase: function(data) {
-      // Track purchase
-    },
-    onProcessing: function(data) {
-      // Track processing
-    },
-    onClose: function($link, data) {
-      // Continue checkout flow
-      if (typeof data.modal_url === "string") {
-        $link.data("modal-url", data.modal_url);
-      }
-    }
-  });
+            // Skip to checkout
+            // You can set the 'checkout' config option or set the URL yourself
+            $link.data('modal-url', data.CheckoutUrl);
+        },
+        onModalOpen: $link => {
+            // Track open in Google Analytics
+            ga('send', 'pageview', $link.attr('href'));
+        },
+        onPurchase: data => {
+            // Track purchase
+        },
+        onProcessing: data => {
+            // Track processing
+        },
+        onClose: ($link, data) => {
+            // Continue checkout flow
+            if (data.modal_url) {
+                $link.data('modal-url', data.modal_url);
+            }
+        },
+    });
 });
 ```
 
-**Reminder:** If you don't use the default `$` as your jQuery variable name then you will need to use `jQuery.` rather than `$.` when referencing the jQuery core library, incuding in callbacks. For the majority of users, this won't be an issue.
+**Please note:** If you don't use the default `$` as your jQuery variable name then you will need to use `jQuery.` rather than `$.` when referencing the jQuery core library, incuding in callbacks. For the majority of users, this won't be an issue.
 
 ## CDN Hosting
 
