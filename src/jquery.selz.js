@@ -10,7 +10,7 @@
     let config = {};
     const defaults = {
         domain: 'https://selz.com',
-        shortDomain: ['http://selz.co/', 'http://bit.ly/'],
+        shortDomain: ['http://selz.co/', 'https://selz.co/', 'http://bit.ly/'],
         longDomain: '.selz.com/item/',
         theme: {},
         cache: 300,
@@ -158,7 +158,7 @@
         let selector = '';
 
         // Short links
-        // e.g. http://selz.co/1abc234 or http://bit.ly/1abc234
+        // e.g. https://selz.co/1abc234 or http://bit.ly/1abc234
         $.each(config.shortDomain, (index, value) => {
             const separator = index < config.shortDomain.length - 1 ? ',' : '';
             selector += `a[href^='${value}']${separator}`;
