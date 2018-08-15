@@ -227,8 +227,8 @@ $(() => {
 You can use our CDN for the JavaScript and CSS files:
 
 ```html
-<link href="https://jquery.selzstatic.com/1.0.16/jquery.selz.css" rel="stylesheet">
-<script src="https://jquery.selzstatic.com/1.0.16/jquery.selz.js"></script>
+<link href="https://jquery.selzstatic.com/1.0.17/jquery.selz.css" rel="stylesheet">
+<script src="https://jquery.selzstatic.com/1.0.17/jquery.selz.js"></script>
 ```
 
 ## Licensed under the MIT
